@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Caicloud," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Begin　　记录算得上第一次完整的面试吧，Caicloud，之前大学的时候加了一个QQ技术交流群，没想到后面一次偶然的机会发现一次Kubernetes的峰会上去演讲的人就是群主=。=，在欣哥的带领在感觉研究生期间唯一感兴趣的技术就是这个容器和K8s了，可惜大哥们都走了。所以想找个实习继续学点来着……好了好了，不说废话了。。">
+<meta name="keywords" content="Caicloud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Caicloud实习面试">
+<meta property="og:url" content="http://fennudehaogua.top/2018/05/24/caicloud/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="Begin　　记录算得上第一次完整的面试吧，Caicloud，之前大学的时候加了一个QQ技术交流群，没想到后面一次偶然的机会发现一次Kubernetes的峰会上去演讲的人就是群主=。=，在欣哥的带领在感觉研究生期间唯一感兴趣的技术就是这个容器和K8s了，可惜大哥们都走了。所以想找个实习继续学点来着……好了好了，不说废话了。。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://raw.githubusercontent.com/fennudehaogua/hexopictures/master/VM.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/fennudehaogua/hexopictures/master/Docker.png">
+<meta property="og:updated_time" content="2018-05-25T02:31:19.968Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Caicloud实习面试">
+<meta name="twitter:description" content="Begin　　记录算得上第一次完整的面试吧，Caicloud，之前大学的时候加了一个QQ技术交流群，没想到后面一次偶然的机会发现一次Kubernetes的峰会上去演讲的人就是群主=。=，在欣哥的带领在感觉研究生期间唯一感兴趣的技术就是这个容器和K8s了，可惜大哥们都走了。所以想找个实习继续学点来着……好了好了，不说废话了。。">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/fennudehaogua/hexopictures/master/VM.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2018/05/24/caicloud/"/>
+
+
+
+
+
+  <title>Caicloud实习面试 | fennudehaogua.top</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生而为人，我很抱歉。————不装逼，不存在的。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2018/05/24/caicloud/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Caicloud实习面试</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-24T16:17:55+08:00">
+                2018-05-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/面试/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Begin"><a href="#Begin" class="headerlink" title="Begin"></a>Begin</h2><p>　　记录算得上第一次完整的面试吧，Caicloud，之前大学的时候加了一个QQ技术交流群，没想到后面一次偶然的<br>机会发现一次Kubernetes的峰会上去演讲的人就是群主=。=，在欣哥的带领在感觉研究生期间唯一感兴趣的技术就是这个容器和K8s了，可惜大哥们都走了。所以想找个实习继续学点来着……好了好了，不说废话了。。<br><a id="more"></a> </p>
+<h3 id="首先是自我介绍，介绍完随便说了几句就问我有没有看过Docker源码。我说没有，然后就开始问我Docker到底是什么？这就让我很蒙蔽了。。于是就回答了Linux的Namespace技术和Cgroup技术还有文件系统，因为印象里就记得这些。"><a href="#首先是自我介绍，介绍完随便说了几句就问我有没有看过Docker源码。我说没有，然后就开始问我Docker到底是什么？这就让我很蒙蔽了。。于是就回答了Linux的Namespace技术和Cgroup技术还有文件系统，因为印象里就记得这些。" class="headerlink" title="首先是自我介绍，介绍完随便说了几句就问我有没有看过Docker源码。我说没有，然后就开始问我Docker到底是什么？这就让我很蒙蔽了。。于是就回答了Linux的Namespace技术和Cgroup技术还有文件系统，因为印象里就记得这些。"></a>首先是自我介绍，介绍完随便说了几句就问我有没有看过Docker源码。我说没有，然后就开始问我Docker到底是什么？这就让我很蒙蔽了。。于是就回答了Linux的Namespace技术和Cgroup技术还有文件系统，因为印象里就记得这些。</h3><p>  查了下：</p>
+<ul>
+<li>Docker是一套轻量级操作系统虚拟化解决方案，它由go语言编写。它基于Linux容器技术（LXC），Namespace，Cgroup，UnionFS（联合文件系统）等技术。</li>
+<li><strong>namespace（命名空间）</strong>：命名空间是 Linux 内核一个强大的特性。每个容器都有自己单独的名字空间，运行在其中的应用都像是在独立的操作系统中运行一样。名字空间保证了容器之间彼此互不影响。docker实际上一个进程容器，它通过namespace实现了进程和进程所使用的资源的隔离。使不同的进程之间彼此不可见。我们可以把Docker容器想像成进程＋操作系统除内核之外的一套软件。* </li>
+<li><strong>cgroup（控制组）</strong>：是 Linux 内核的一个特性，主要用来对共享资源进行隔离、限制、审计等。只有能控制分配到容器的资源，才能避免当多个容器同时运行时的对系统资源的竞争。控制组技术最早是由 Google 的程序员 2006 年起提出，Linux 内核自 2.6.24 开始支持。控制组可以提供对容器的内存、CPU、磁盘 IO 等资源的限制和审计管理。* </li>
+<li><strong>UnionFS（联合文件系统）</strong>：Union文件系统（UnionFS）是一种分层、轻量级并且高性能的文件系统，它支持对 文件系统的修改作为一次提交来一层层的叠加，同时可以将不同目录挂载到同一个虚拟文件系统下(unite several directories into a single virtual filesystem)。Union 文件系统是 Docker 镜像的基础。镜像可以通过分层来进行继承，基于基础镜像（没有父镜像），可以制作各种具体的应用镜像。另外，不同 Docker 容器就可以共享一些基础的文件系统层，同时再加上自己独有的改动层，大大提高了存储的效率。Docker 中使用的 AUFS（AnotherUnionFS）就是一种 Union FS。 AUFS 支持为每一个成员目录（类似 Git 的分支）设定只读（readonly）、读写（readwrite）和写出（whiteout-able）权限, 同时 AUFS 里有一个类似分层的概念, 对只读权限的分支可以逻辑上进行增量地修改(不影响只读部分的)。* </li>
+<li>Docker 目前支持的 Union 文件系统种类包括 AUFS, btrfs, vfs 和 DeviceMapper。*</li>
+</ul>
+<h3 id="然后再问我到底是什么的时候我也有点懵，然后就说了容器在我看来就跟虚拟机有点类似吧，然后面试官瞬间抛出来了一大堆问题。。。其实这一块当时欣哥跟我们上课的时候说了，不过时间太久了好多都印象比较模糊有点忘了。。巨尴尬"><a href="#然后再问我到底是什么的时候我也有点懵，然后就说了容器在我看来就跟虚拟机有点类似吧，然后面试官瞬间抛出来了一大堆问题。。。其实这一块当时欣哥跟我们上课的时候说了，不过时间太久了好多都印象比较模糊有点忘了。。巨尴尬" class="headerlink" title="然后再问我到底是什么的时候我也有点懵，然后就说了容器在我看来就跟虚拟机有点类似吧，然后面试官瞬间抛出来了一大堆问题。。。其实这一块当时欣哥跟我们上课的时候说了，不过时间太久了好多都印象比较模糊有点忘了。。巨尴尬"></a>然后再问我到底是什么的时候我也有点懵，然后就说了容器在我看来就跟虚拟机有点类似吧，然后面试官瞬间抛出来了一大堆问题。。。其实这一块当时欣哥跟我们上课的时候说了，不过时间太久了好多都印象比较模糊有点忘了。。巨尴尬</h3><p>  首先要从根本上理解什么是Docker容器，Docker所使用的技术都不是新技术，主要就是把以前需要复杂操作的命令结合了起来。而从形态上来看，容器就是 一个进程，只不过是受限制的进程，CGroup限制进程的资源使用，Namespace将资源限定在一个空间，相互间不能访问，分层文件系统就是容器的具体文件。因此，容器如果不加处理，是肯定可以操作内核的，而且是各容器间共用内核，所以这个也是某些人质疑 Docker安全性的原因。容器是肯定，也必须能够访问内核的，而方式就是我们所说的系统调用。任何linux进程操作，基本都会发起系统调用，只是你的调用会受到权限的控制。默认情况，容器是以非privilege方式运行的，因此很多设备和操作是不允许的。在1.10之后，Docker已经增强了安全性，seccomp可以限定什么系统调用不能调用，user namespce可以做用户权限映射。  </p>
+<ol>
+<li>容器跟虚拟机到底有什么区别？<br>先上图，vm与docker框架，直观上来讲vm多了一层guest OS，同时Hypervisor会对硬件资源进行虚拟化，docker直接使用硬件资源，所以资源利用率相对docker低也是比较容易理解的。<br><img src="https://raw.githubusercontent.com/fennudehaogua/hexopictures/master/VM.png" alt="虚拟机"><br><img src="https://raw.githubusercontent.com/fennudehaogua/hexopictures/master/Docker.png" alt="Docker"><br>Hypervisor是一种运行在物理服务器和操作系统之间的中间软件层,可允许多个操作系统和应用共享一套基础物理硬件。Hypervisor是所有虚拟化技术的核心。Guest OS是指一个安装在虚拟机上的操作系统。在虚拟化中，一台电脑可以同时运行多个操作系统，并且客机操作系统可以和主机操作系统不一样。<br>Docker容器与虚拟机是互补的。Docker容器与宿主机贡献操作系统内核，不同的容器之间可以共享部分系统资源，因此容器更加轻量级，消耗的资源也更少。而虚拟机会独占分配给自己的资源，几乎不存在资源共享，各个虚拟机实例之间近乎完全隔离，因此虚拟机更加重量级，也会消耗更多的资源。</li>
+<li>容器为什么可以秒级启动？<br>因为Docker小。Docker中的镜像就是一堆文件，并不像VMware一样是一个完成的操作系统。镜像可以简单到只有个程序文件。ubuntu等基础镜像，就是把依赖的文件放到正确的地方，从而使得绝大部分程序可以正常运行。和VM的镜像是完全不同的概念。</li>
+<li>容器为什么可以那么小？<br>Docker中的镜像就是一堆文件，并不像VMware一样是一个完成的操作系统。镜像可以简单到只有个程序文件。</li>
+<li>容器对比起虚拟机有什么缺点？<br>这个问题我回答的大概意思是虚拟机更擅长于彻底隔离整个运行环境。例如，云服务提供商通常采用虚拟机技术隔离不同的用户。而Docker通常用于隔离不同的应用，例如前端，后端以及数据库。  </li>
+</ol>
+<h3 id="接着就问了的K8S相关的知识点了"><a href="#接着就问了的K8S相关的知识点了" class="headerlink" title="接着就问了的K8S相关的知识点了"></a>接着就问了的K8S相关的知识点了</h3><ol>
+<li>K8S的核心组件及原理还有作用。。面试当天早上看了一下，master节点上的API Server和Controller Manager，Scheduler。</li>
+<li>node节点上面有kube-proxy还有一个啥组件当时死活给忘了。。后面查了一下想吐血。。居然是kubelet！！！还有问kube-proxy的作用，我就记得是代理访问，然后问我具体的我也没回答上来。<br>kubelet作用：kubelet 是 Node 的 agent，当 Scheduler 确定在某个 Node 上运行 Pod 后，会将 Pod 的具体配置信息（image、volume 等）发送给该节点的 kubelet，kubelet 根据这些信息创建和运行容器，并向 Master 报告运行状态。<br>kube-proxy作用：service 在逻辑上代表了后端的多个 Pod，外界通过 service 访问 Pod。service 接收到的请求是如何转发到 Pod 的呢？这就是 kube-proxy 要完成的工作。每个 Node 都会运行 kube-proxy 服务，它负责将访问 service 的 TCP/UPD 数据流转发到后端的容器。如果有多个副本，kube-proxy 会实现负载均衡。<br>kube-proxy 有两种实现 service 的方案：userspace 和 iptables，最新的好像是前几天看华为分享的IPVS。<br>userspace 是在用户空间监听一个端口，所有的 service 都转发到这个端口，然后 kube-proxy 在内部应用层对其进行转发。因为是在用户空间进行转发，所以效率也不高<br>iptables 完全实现 iptables 来实现 service，是目前默认的方式，也是推荐的方式，效率很高（只有内核中 netfilter 一些损耗）。</li>
+<li>看了我简历有写helm模版使用，问了我helm底层实现怎么实现的，我也是一脸懵逼，都停留在使用阶段没有看过底层实现。</li>
+</ol>
+<h3 id="最后就是狗血的算法了-。"><a href="#最后就是狗血的算法了-。" class="headerlink" title="最后就是狗血的算法了=。="></a>最后就是狗血的算法了=。=</h3><p>  简直想哭，问了灵雀云的大佬，他们公司面试问什么，他说不懂的话基本上都是考的算法。啊呜。论算法的重要性！最后这段时间一定好好看看算法相关的东西。<br>问题记得不太清楚了，先问的是一个http相应的需求，我说我没有写过，然后就改成一道抽象的算法题，大概意思就是如何在上亿条字符串中找出匹配的字符串。HashMap，问了我HashMap的底层实现。。我都没有准备基本问算法的时候从头到尾都在“恩恩。。我不知道。。不好意思。。”然后题目变成不定长的字符串，HashMap解决不了应该怎么办？盆友圈大佬们告诉我要用KMP算法。KMP记得考研的时候就有看过，没有看太明白，改天在写一篇仔细看看。</p>
+<p>  HashMap 据说面试谈到海浪数据的时候就是提HashMap的时候了<br>HashMap是基于哈希表的Map接口的非同步实现。此实现提供所有可选的映射操作，并允许使用null值和null键。此类不保证映射的顺序，特别是它不保证该顺序恒久不变。<br>HashMap实际上是一个“链表散列”的数据结构，即数组和链表的结合体。<br>HashMap底层就是一个数组结构，数组中的每一项又是一个链表。当新建一个HashMap的时候，就会初始化一个数组。<br>  HashMap 在底层将 key-value 当成一个整体进行处理，这个整体就是一个 Entry 对象。HashMap 底层采用一个 Entry[] 数组来保存所有的 key-value 对，当需要存储一个 Entry 对象时，会根据hash算法来决定其在数组中的存储位置，在根据equals方法决定其在该数组位置上的链表中的存储位置；当需要取出一个Entry时，<br>也会根据hash算法找到其在数组中的存储位置，再根据equals方法从该位置上的链表中取出该Entry。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">transient Entry[] table;    </span><br><span class="line"> </span><br><span class="line">static class Entry&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; &#123;  </span><br><span class="line">    final K key;  </span><br><span class="line">    V value;  </span><br><span class="line">    Entry&lt;K,V&gt; next;  </span><br><span class="line">    final int hash;  </span><br><span class="line">    ……  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="HashMap和Hashtable的区别"><a href="#HashMap和Hashtable的区别" class="headerlink" title="HashMap和Hashtable的区别"></a>HashMap和Hashtable的区别</h3><ol>
+<li>两者最主要的区别在于Hashtable是线程安全，而HashMap则非线程安全<br>Hashtable的实现方法里面都添加了synchronized关键字来确保线程同步，因此相对而言HashMap性能会高一些，我们平时使用时若无特殊需求建议使用HashMap，在多线程环境下若使用HashMap需要使用Collections.synchronizedMap()方法来获取一个线程安全的集合（Collections.synchronizedMap()实现原理是Collections定义了一个SynchronizedMap的内部类，这个类实现了Map接口，在调用方法时使用synchronized来保证线程同步,当然了实际上操作的还是我们传入的HashMap实例，简单的说就是Collections.synchronizedMap()方法帮我们在操作HashMap时自动添加了synchronized来实现线程同步，类似的其它Collections.synchronizedXX方法也是类似原理）</li>
+<li>HashMap可以使用null作为key，而Hashtable则不允许null作为key<br>虽说HashMap支持null值作为key，不过建议还是尽量避免这样使用，因为一旦不小心使用了，若因此引发一些问题，排查起来很是费事<br>HashMap以null作为key时，总是存储在table数组的第一个节点上</li>
+<li>HashMap是对Map接口的实现，HashTable实现了Map接口和Dictionary抽象类</li>
+<li>HashMap的初始容量为16，Hashtable初始容量为11，两者的填充因子默认都是0.75<br>HashMap扩容时是当前容量翻倍即:capacity<em>2，Hashtable扩容时是容量翻倍+1即:capacity</em>2+1</li>
+<li>两者计算hash的方法不同<br>Hashtable计算hash是直接使用key的hashcode对table数组的长度直接进行取模<br>int hash = key.hashCode();<br>int index = (hash &amp; 0x7FFFFFFF) % tab.length;</li>
+<li>HashMap计算hash对key的hashcode进行了二次hash，以获得更好的散列值，然后对table数组长度取摸  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">static int hash(int h) &#123;  </span><br><span class="line">      	  // This function ensures that hashCodes that differ only by  </span><br><span class="line">        // constant multiples at each bit position have a bounded  </span><br><span class="line">       	 // number of collisions (approximately 8 at default load factor).  </span><br><span class="line">       	 h ^= (h &gt;&gt;&gt; 20) ^ (h &gt;&gt;&gt; 12);  </span><br><span class="line">        return h ^ (h &gt;&gt;&gt; 7) ^ (h &gt;&gt;&gt; 4);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line"> static int indexFor(int h, int length) &#123;  </span><br><span class="line">        return h &amp; (length-1);  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="最后的最后，面试官问我还有什么问题吗。。我二话不说回答没有了。。后来今早看到一篇文章，这个是最烂的答案了，一定要回答有！！而且问的问题最好和刚刚的面试相关。。然后想想早知道我就问问那个不定长字符串到底该怎么解决了。如果实在没有问题就可以问公司对自己的培养计划什么的，一定不能回答没有了-。"><a href="#最后的最后，面试官问我还有什么问题吗。。我二话不说回答没有了。。后来今早看到一篇文章，这个是最烂的答案了，一定要回答有！！而且问的问题最好和刚刚的面试相关。。然后想想早知道我就问问那个不定长字符串到底该怎么解决了。如果实在没有问题就可以问公司对自己的培养计划什么的，一定不能回答没有了-。" class="headerlink" title="最后的最后，面试官问我还有什么问题吗。。我二话不说回答没有了。。后来今早看到一篇文章，这个是最烂的答案了，一定要回答有！！而且问的问题最好和刚刚的面试相关。。然后想想早知道我就问问那个不定长字符串到底该怎么解决了。如果实在没有问题就可以问公司对自己的培养计划什么的，一定不能回答没有了=。="></a>最后的最后，面试官问我还有什么问题吗。。我二话不说回答没有了。。后来今早看到一篇文章，这个是最烂的答案了，一定要回答有！！而且问的问题最好和刚刚的面试相关。。然后想想早知道我就问问那个不定长字符串到底该怎么解决了。如果实在没有问题就可以问公司对自己的培养计划什么的，一定不能回答没有了=。=</h3><h2 id="完！"><a href="#完！" class="headerlink" title="完！"></a>完！</h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Caicloud/" rel="tag"><i class="fa fa-tag"></i> Caicloud</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/22/myfirstpage/" rel="next" title="Hello！Hexo！">
+                <i class="fa fa-chevron-left"></i> Hello！Hexo！
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://plus.google.com/u/0/102058793050907796987" target="_blank" title="Google">
+                  
+                    <i class="fa fa-fw fa-google"></i>
+                  
+                    
+                      Google
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3270404320/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cheneydc.me/" title="聪哥大佬的博客" target="_blank">聪哥大佬的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xiaopijie.top/" title="xiaopijie.top" target="_blank">xiaopijie.top</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Begin"><span class="nav-number">1.</span> <span class="nav-text">Begin</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#首先是自我介绍，介绍完随便说了几句就问我有没有看过Docker源码。我说没有，然后就开始问我Docker到底是什么？这就让我很蒙蔽了。。于是就回答了Linux的Namespace技术和Cgroup技术还有文件系统，因为印象里就记得这些。"><span class="nav-number">1.1.</span> <span class="nav-text">首先是自我介绍，介绍完随便说了几句就问我有没有看过Docker源码。我说没有，然后就开始问我Docker到底是什么？这就让我很蒙蔽了。。于是就回答了Linux的Namespace技术和Cgroup技术还有文件系统，因为印象里就记得这些。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#然后再问我到底是什么的时候我也有点懵，然后就说了容器在我看来就跟虚拟机有点类似吧，然后面试官瞬间抛出来了一大堆问题。。。其实这一块当时欣哥跟我们上课的时候说了，不过时间太久了好多都印象比较模糊有点忘了。。巨尴尬"><span class="nav-number">1.2.</span> <span class="nav-text">然后再问我到底是什么的时候我也有点懵，然后就说了容器在我看来就跟虚拟机有点类似吧，然后面试官瞬间抛出来了一大堆问题。。。其实这一块当时欣哥跟我们上课的时候说了，不过时间太久了好多都印象比较模糊有点忘了。。巨尴尬</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接着就问了的K8S相关的知识点了"><span class="nav-number">1.3.</span> <span class="nav-text">接着就问了的K8S相关的知识点了</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最后就是狗血的算法了-。"><span class="nav-number">1.4.</span> <span class="nav-text">最后就是狗血的算法了=。=</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap和Hashtable的区别"><span class="nav-number">1.5.</span> <span class="nav-text">HashMap和Hashtable的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最后的最后，面试官问我还有什么问题吗。。我二话不说回答没有了。。后来今早看到一篇文章，这个是最烂的答案了，一定要回答有！！而且问的问题最好和刚刚的面试相关。。然后想想早知道我就问问那个不定长字符串到底该怎么解决了。如果实在没有问题就可以问公司对自己的培养计划什么的，一定不能回答没有了-。"><span class="nav-number">1.6.</span> <span class="nav-text">最后的最后，面试官问我还有什么问题吗。。我二话不说回答没有了。。后来今早看到一篇文章，这个是最烂的答案了，一定要回答有！！而且问的问题最好和刚刚的面试相关。。然后想想早知道我就问问那个不定长字符串到底该怎么解决了。如果实在没有问题就可以问公司对自己的培养计划什么的，一定不能回答没有了=。=</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完！"><span class="nav-number">2.</span> <span class="nav-text">完！</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>
