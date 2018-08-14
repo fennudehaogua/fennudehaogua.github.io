@@ -380,17 +380,6 @@
         
           <h3 id="JAVA中创建对象的几种方式"><a href="#JAVA中创建对象的几种方式" class="headerlink" title="JAVA中创建对象的几种方式"></a>JAVA中创建对象的几种方式</h3><p><strong>1. 使用new关键字</strong></p>
 <p>最常见也是最简单的创建对象的方式了。通过这种方式，我们可以调用任意的构造函数(无参的和带参数的)。</p>
-<p><strong>2. 使用clone方法</strong></p>
-<p>1.实现clone的类首先需要继承Cloneable接口。</p>
-<p>2.在类中重写Object的clone方法</p>
-<p>3.在clone方法中调用super.clone()</p>
-<p><strong>3. 使用Class类的newInstance方法</strong></p>
-<p><strong>4. 使用Constructor类的newInstance方法</strong></p>
-<p>1.使用Class类的静态方法forName()，用类的名字获取一个Class实例</p>
-<p>2.获取Class实例</p>
-<p>3.newInstance()方法调用默认构造器（无参数构造器）初始化新建对象。</p>
-<p><strong>5. 使用反序列化</strong></p>
-<p>实现Serializable接口。<br>当我们序列化和反序列化一个对象，JVM会给我们创建一个单独的对象，在反序列化时，JVM创建对象并不会调用任何构造函数。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/06/01/NewObject/#more" rel="contents">
