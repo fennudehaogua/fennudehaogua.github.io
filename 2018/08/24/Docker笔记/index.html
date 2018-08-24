@@ -94,20 +94,20 @@
 
 
 
-<meta name="description" content="在公众号看到的一篇笔记基础性的好文章…现在还记得上次面试别人问我Docker到底是什么，心里总有个声音说Docker和虚拟机很类似， Kubernetes就相当于OpenStack，但是实际到底是怎么回事心里一直没有底，直到前几天无意 看到一个公众号上面写的一篇基础好文章，感觉解决了很多疑惑，记录一下。">
+<meta name="description" content="在公众号看到的一篇笔记基础性的好文章…现在还记得上次面试别人问我Docker到底是什么，心里总有个声音说Docker和虚拟机很类似，Kubernetes就相当于OpenStack，但是实际到底是怎么回事心里一直没有底，直到前几天无意看到一个公众号上面写的一篇基础好文章，感觉解决了很多疑惑，记录一下。">
 <meta name="keywords" content="Docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker笔记">
 <meta property="og:url" content="http://fennudehaogua.top/2018/08/24/Docker笔记/index.html">
 <meta property="og:site_name" content="fennudehaogua.top">
-<meta property="og:description" content="在公众号看到的一篇笔记基础性的好文章…现在还记得上次面试别人问我Docker到底是什么，心里总有个声音说Docker和虚拟机很类似， Kubernetes就相当于OpenStack，但是实际到底是怎么回事心里一直没有底，直到前几天无意 看到一个公众号上面写的一篇基础好文章，感觉解决了很多疑惑，记录一下。">
+<meta property="og:description" content="在公众号看到的一篇笔记基础性的好文章…现在还记得上次面试别人问我Docker到底是什么，心里总有个声音说Docker和虚拟机很类似，Kubernetes就相当于OpenStack，但是实际到底是怎么回事心里一直没有底，直到前几天无意看到一个公众号上面写的一篇基础好文章，感觉解决了很多疑惑，记录一下。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/fennudehaogua/hexopictures/master/Docker_VM.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/fennudehaogua/hexopictures/master/weifuwu1.png">
-<meta property="og:updated_time" content="2018-08-24T09:04:20.475Z">
+<meta property="og:updated_time" content="2018-08-24T09:12:35.762Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker笔记">
-<meta name="twitter:description" content="在公众号看到的一篇笔记基础性的好文章…现在还记得上次面试别人问我Docker到底是什么，心里总有个声音说Docker和虚拟机很类似， Kubernetes就相当于OpenStack，但是实际到底是怎么回事心里一直没有底，直到前几天无意 看到一个公众号上面写的一篇基础好文章，感觉解决了很多疑惑，记录一下。">
+<meta name="twitter:description" content="在公众号看到的一篇笔记基础性的好文章…现在还记得上次面试别人问我Docker到底是什么，心里总有个声音说Docker和虚拟机很类似，Kubernetes就相当于OpenStack，但是实际到底是怎么回事心里一直没有底，直到前几天无意看到一个公众号上面写的一篇基础好文章，感觉解决了很多疑惑，记录一下。">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/fennudehaogua/hexopictures/master/Docker_VM.png">
 
 
@@ -377,11 +377,8 @@
       
 
       
-        <h2 id="在公众号看到的一篇笔记基础性的好文章…"><a href="#在公众号看到的一篇笔记基础性的好文章…" class="headerlink" title="在公众号看到的一篇笔记基础性的好文章…"></a>在公众号看到的一篇笔记基础性的好文章…</h2><pre><code>现在还记得上次面试别人问我Docker到底是什么，心里总有个声音说Docker和虚拟机很类似，
-Kubernetes就相当于OpenStack，但是实际到底是怎么回事心里一直没有底，直到前几天无意
-看到一个公众号上面写的一篇基础好文章，感觉解决了很多疑惑，记录一下。
-</code></pre><a id="more"></a> 
-<h3 id="1-容器的理解误区"><a href="#1-容器的理解误区" class="headerlink" title="1.容器的理解误区"></a><strong>1.容器的理解误区</strong></h3><h4 id="误区一：容器启动速度快，秒级启动"><a href="#误区一：容器启动速度快，秒级启动" class="headerlink" title="误区一：容器启动速度快，秒级启动"></a><strong>误区一：容器启动速度快，秒级启动</strong></h4><p>容器为啥启动快，一是<strong>没有内核</strong>，二是<strong>镜像比较小</strong>。</p>
+        <h2 id="在公众号看到的一篇笔记基础性的好文章…"><a href="#在公众号看到的一篇笔记基础性的好文章…" class="headerlink" title="在公众号看到的一篇笔记基础性的好文章…"></a>在公众号看到的一篇笔记基础性的好文章…</h2><p>现在还记得上次面试别人问我Docker到底是什么，心里总有个声音说Docker和虚拟机很类似，Kubernetes就相当于OpenStack，但是实际到底是怎么回事心里一直没有底，直到前几天无意看到一个公众号上面写的一篇基础好文章，感觉解决了很多疑惑，记录一下。<br><a id="more"></a> </p>
+<h3 id="容器的理解误区"><a href="#容器的理解误区" class="headerlink" title="容器的理解误区"></a><strong>容器的理解误区</strong></h3><h4 id="误区一：容器启动速度快，秒级启动"><a href="#误区一：容器启动速度快，秒级启动" class="headerlink" title="误区一：容器启动速度快，秒级启动"></a><strong>误区一：容器启动速度快，秒级启动</strong></h4><p>容器为啥启动快，一是<strong>没有内核</strong>，二是<strong>镜像比较小</strong>。</p>
 <p>然而容器是有主进程的，也即Entrypoint，<strong>只有主进程完全启动起来了，容器才算真正的启动起来</strong>，一个比喻是容器更像人的衣服，人站起来了，衣服才站起来，人躺下了，衣服也躺下了。衣服有一定的隔离性，但是隔离性没那么好。衣服没有根(内核)，但是衣服可以随着人到处走。</p>
 <p>所以按照一个nginx来评判一个容器的启动速度有意义么？<strong>对于Java应用，里面安装的是tomcat，而tomcat的启动，加载war，并且真正的应用启动起来，如果你盯着tomcat的日志看的话，还是需要一些时间的，根本不是秒级。如果应用启动起来要一两分钟，仅仅谈容器的秒级启动是没有意义的。</strong></p>
 <p>现在OpenStack中的VM的启动速度也优化的越来越快了，启动一个VM的时候</p>
@@ -425,7 +422,7 @@ Kubernetes就相当于OpenStack，但是实际到底是怎么回事心里一直�
 <p>应用有状态：停机会丢数据，如果不知道丢了啥，就算秒级启动有啥用，照样恢复不了，而且还有可能因为丢数据，在没有修复的情况下，盲目重启带来数据混乱。</p>
 <p>进程数量少：两三个进程相互配置一下，不用服务发现，配置不麻烦</p>
 <p>如果是一个传统应用，根本没有必要花费精去容器化，因为白花了力气，享受不到好处。</p>
-<h3 id="2-容器化，微服务，DevOps三位一体"><a href="#2-容器化，微服务，DevOps三位一体" class="headerlink" title="2.容器化，微服务，DevOps三位一体"></a><strong>2.容器化，微服务，DevOps三位一体</strong></h3><p>什么情况下，才应该考虑做一些改变呢？</p>
+<h3 id="容器化，微服务，DevOps三位一体"><a href="#容器化，微服务，DevOps三位一体" class="headerlink" title="容器化，微服务，DevOps三位一体"></a><strong>容器化，微服务，DevOps三位一体</strong></h3><p>什么情况下，才应该考虑做一些改变呢？</p>
 <p>传统业务突然被互联网业务冲击了，应用老是变，三天两头要更新，而且流量增大了，原来支付系统是取钱刷卡的，现在要互联网支付了，流量扩大了N倍。</p>
 <p>没办法，一个字：拆</p>
 <p>拆开了，每个子模块独自变化，少相互影响。</p>
@@ -455,7 +452,7 @@ Kubernetes就相当于OpenStack，但是实际到底是怎么回事心里一直�
 <p>容器是为了<strong>跨环境迁移</strong>的，第一种迁移的场景是开发，测试，生产环境之间的迁移。如果不需要迁移，或者迁移不频繁，虚拟机镜像也行，但是总是要迁移，带着几百G的虚拟机镜像，太大了。</p>
 <p>第二种迁移的场景是<strong>跨云迁移</strong>，跨公有云，跨Region，跨两个OpenStack的虚拟机迁移都是非常麻烦，甚至不可能的，因为公有云不提供虚拟机镜像的下载和上传功能，而且虚拟机镜像太大了，一传传一天。</p>
 <p><strong>所以跨云场景下，混合云场景下，容器也是很好的使用场景。这也同时解决了仅仅私有云资源不足，扛不住流量的问题。</strong></p>
-<h3 id="3-容器的正确使用场景"><a href="#3-容器的正确使用场景" class="headerlink" title="3. 容器的正确使用场景"></a><strong>3. 容器的正确使用场景</strong></h3><p>根据以上的分析，我们发现容器推荐使用在下面的场景下。</p>
+<h3 id="容器的正确使用场景"><a href="#容器的正确使用场景" class="headerlink" title="容器的正确使用场景"></a><strong>容器的正确使用场景</strong></h3><p>根据以上的分析，我们发现容器推荐使用在下面的场景下。</p>
 <pre><code>1. 部署无状态服务，同虚拟机互补使用，实现隔离性
 
 
@@ -766,7 +763,7 @@ gitment.render('container');
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#在公众号看到的一篇笔记基础性的好文章…"><span class="nav-number">1.</span> <span class="nav-text">在公众号看到的一篇笔记基础性的好文章…</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-容器的理解误区"><span class="nav-number">1.1.</span> <span class="nav-text">1.容器的理解误区</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#误区一：容器启动速度快，秒级启动"><span class="nav-number">1.1.1.</span> <span class="nav-text">误区一：容器启动速度快，秒级启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#误区二：容器轻量级，每个主机会运行成百上千个容器"><span class="nav-number">1.1.2.</span> <span class="nav-text">误区二：容器轻量级，每个主机会运行成百上千个容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#误区三：容器有镜像，可以保持版本号，可以升级和回滚"><span class="nav-number">1.1.3.</span> <span class="nav-text">误区三：容器有镜像，可以保持版本号，可以升级和回滚</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#误区四：容器可以使用容器平台管理自动重启实现自修复"><span class="nav-number">1.1.4.</span> <span class="nav-text">误区四：容器可以使用容器平台管理自动重启实现自修复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#误区五：容器可以使用容器平台进行服务发现"><span class="nav-number">1.1.5.</span> <span class="nav-text">误区五：容器可以使用容器平台进行服务发现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#误区六：容器可以基于镜像进行弹性伸缩"><span class="nav-number">1.1.6.</span> <span class="nav-text">误区六：容器可以基于镜像进行弹性伸缩</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#容器理解误区总结"><span class="nav-number">1.1.7.</span> <span class="nav-text">容器理解误区总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-容器化，微服务，DevOps三位一体"><span class="nav-number">1.2.</span> <span class="nav-text">2.容器化，微服务，DevOps三位一体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-容器的正确使用场景"><span class="nav-number">1.3.</span> <span class="nav-text">3. 容器的正确使用场景</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#在公众号看到的一篇笔记基础性的好文章…"><span class="nav-number">1.</span> <span class="nav-text">在公众号看到的一篇笔记基础性的好文章…</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#容器的理解误区"><span class="nav-number">1.1.</span> <span class="nav-text">容器的理解误区</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#误区一：容器启动速度快，秒级启动"><span class="nav-number">1.1.1.</span> <span class="nav-text">误区一：容器启动速度快，秒级启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#误区二：容器轻量级，每个主机会运行成百上千个容器"><span class="nav-number">1.1.2.</span> <span class="nav-text">误区二：容器轻量级，每个主机会运行成百上千个容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#误区三：容器有镜像，可以保持版本号，可以升级和回滚"><span class="nav-number">1.1.3.</span> <span class="nav-text">误区三：容器有镜像，可以保持版本号，可以升级和回滚</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#误区四：容器可以使用容器平台管理自动重启实现自修复"><span class="nav-number">1.1.4.</span> <span class="nav-text">误区四：容器可以使用容器平台管理自动重启实现自修复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#误区五：容器可以使用容器平台进行服务发现"><span class="nav-number">1.1.5.</span> <span class="nav-text">误区五：容器可以使用容器平台进行服务发现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#误区六：容器可以基于镜像进行弹性伸缩"><span class="nav-number">1.1.6.</span> <span class="nav-text">误区六：容器可以基于镜像进行弹性伸缩</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#容器理解误区总结"><span class="nav-number">1.1.7.</span> <span class="nav-text">容器理解误区总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容器化，微服务，DevOps三位一体"><span class="nav-number">1.2.</span> <span class="nav-text">容器化，微服务，DevOps三位一体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容器的正确使用场景"><span class="nav-number">1.3.</span> <span class="nav-text">容器的正确使用场景</span></a></li></ol></li></ol></div>
             
 
           </div>
