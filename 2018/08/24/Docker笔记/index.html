@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Docker," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="在公众号看到的一篇笔记基础性的好文章…现在还记得上次面试别人问我Docker到底是什么，心里总有个声音说Docker和虚拟机很类似， Kubernetes就相当于OpenStack，但是实际到底是怎么回事心里一直没有底，直到前几天无意 看到一个公众号上面写的一篇基础好文章，感觉解决了很多疑惑，记录一下。">
+<meta name="keywords" content="Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker笔记">
+<meta property="og:url" content="http://fennudehaogua.top/2018/08/24/Docker笔记/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="在公众号看到的一篇笔记基础性的好文章…现在还记得上次面试别人问我Docker到底是什么，心里总有个声音说Docker和虚拟机很类似， Kubernetes就相当于OpenStack，但是实际到底是怎么回事心里一直没有底，直到前几天无意 看到一个公众号上面写的一篇基础好文章，感觉解决了很多疑惑，记录一下。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://raw.githubusercontent.com/fennudehaogua/hexopictures/master/Docker_VM.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/fennudehaogua/hexopictures/master/weifuwu1.png">
+<meta property="og:updated_time" content="2018-08-24T09:04:20.475Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker笔记">
+<meta name="twitter:description" content="在公众号看到的一篇笔记基础性的好文章…现在还记得上次面试别人问我Docker到底是什么，心里总有个声音说Docker和虚拟机很类似， Kubernetes就相当于OpenStack，但是实际到底是怎么回事心里一直没有底，直到前几天无意 看到一个公众号上面写的一篇基础好文章，感觉解决了很多疑惑，记录一下。">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/fennudehaogua/hexopictures/master/Docker_VM.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2018/08/24/Docker笔记/"/>
+
+
+
+
+
+  <title>Docker笔记 | fennudehaogua.top</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生而为人，我很抱歉。————不装逼，不存在的。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2018/08/24/Docker笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Docker笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-24T15:34:17+08:00">
+                2018-08-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker学习/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="在公众号看到的一篇笔记基础性的好文章…"><a href="#在公众号看到的一篇笔记基础性的好文章…" class="headerlink" title="在公众号看到的一篇笔记基础性的好文章…"></a>在公众号看到的一篇笔记基础性的好文章…</h2><pre><code>现在还记得上次面试别人问我Docker到底是什么，心里总有个声音说Docker和虚拟机很类似，
+Kubernetes就相当于OpenStack，但是实际到底是怎么回事心里一直没有底，直到前几天无意
+看到一个公众号上面写的一篇基础好文章，感觉解决了很多疑惑，记录一下。
+</code></pre><a id="more"></a> 
+<h3 id="1-容器的理解误区"><a href="#1-容器的理解误区" class="headerlink" title="1.容器的理解误区"></a><strong>1.容器的理解误区</strong></h3><h4 id="误区一：容器启动速度快，秒级启动"><a href="#误区一：容器启动速度快，秒级启动" class="headerlink" title="误区一：容器启动速度快，秒级启动"></a><strong>误区一：容器启动速度快，秒级启动</strong></h4><p>容器为啥启动快，一是<strong>没有内核</strong>，二是<strong>镜像比较小</strong>。</p>
+<p>然而容器是有主进程的，也即Entrypoint，<strong>只有主进程完全启动起来了，容器才算真正的启动起来</strong>，一个比喻是容器更像人的衣服，人站起来了，衣服才站起来，人躺下了，衣服也躺下了。衣服有一定的隔离性，但是隔离性没那么好。衣服没有根(内核)，但是衣服可以随着人到处走。</p>
+<p>所以按照一个nginx来评判一个容器的启动速度有意义么？<strong>对于Java应用，里面安装的是tomcat，而tomcat的启动，加载war，并且真正的应用启动起来，如果你盯着tomcat的日志看的话，还是需要一些时间的，根本不是秒级。如果应用启动起来要一两分钟，仅仅谈容器的秒级启动是没有意义的。</strong></p>
+<p>现在OpenStack中的VM的启动速度也优化的越来越快了，启动一个VM的时候</p>
+<p>，原来需要从Glance下载虚拟机镜像，后来有了一个技术，是的Glance和系统盘共享Ceph存储的情况下，虚拟机镜像无需下载，启动速度就快很多。</p>
+<p>而且容器之所以启动速度快，往往建议使用一个非常小的镜像，例如alpine，里面很多东西都裁剪掉了，启动的速度就更快了。</p>
+<p><strong>“使用原生的OpenStack创建虚拟机需要1~3分钟，而使用改造后的OpenStack仅需要不到10秒钟时间。这是因为nova-compute不再需要通过HTTP下载整个镜像，虚拟机可以通过直接读取Ceph中的镜像数据进行启动。”</strong></p>
+<p>所以对于虚拟机的整体启动时间，现在优化的不错的情况下，一般能够做到十几秒到半分钟以内。这个时间和Tomcat的启动时间相比较，其实不算是负担，和容器的启动速度相比，没有质的差别，可能有人会说启动速度快一点也是快，尤其是对于在线环境的挂掉自修复来讲，不是分秒必争么？关于自修复的问题，我们下面另外说。</p>
+<p><strong>然而虚拟机有一个好处，就是隔离性好，如果容器是衣服，虚拟机就是房子，房子立在那里，里面的人无论站着还是躺着，房子总是站着的，房子也不会跟着人走。使用虚拟机就像人们住在公寓里面一样，每人一间，互补干扰，使用容器像大家穿着衣服挤在公交车里面，看似隔离，谁把公交弄坏了，谁都走不了。</strong></p>
+<p><strong>综上所述，容器的启动速度不足以构成对OpenStack虚拟机的明显优势，然而虚拟机的隔离性，则秒杀容器。</strong></p>
+<h4 id="误区二：容器轻量级，每个主机会运行成百上千个容器"><a href="#误区二：容器轻量级，每个主机会运行成百上千个容器" class="headerlink" title="误区二：容器轻量级，每个主机会运行成百上千个容器"></a><strong>误区二：容器轻量级，每个主机会运行成百上千个容器</strong></h4><p>很多人会做实验，甚至会跟客户说，容器平台多么多么牛，你看我们一台机器上可以运行成百上千个容器，虚拟机根本做不到这一点。</p>
+<p>但是一个机器运行成百上千个容器，有这种真实的应用场景么？<strong>对于容器来讲，重要的是里面的应用，应用的核心在于稳定性和高并发支撑，而不在于密度。</strong></p>
+<p>我在很多演讲的会议上遇到了很多知名的处理双十一和618的讲师，普遍反馈当前的Java应用基本上4核8G是标配，如果遇见容量不足的情况，少部分通过纵向扩容的方式进行，大部分采用横向扩容的方式进行。</p>
+<p>如果4核8G是标配，不到20个服务就可以占满一台物理服务器，一台机器跑成百上千个nginx有意思么？ 这不是一个严肃的使用场景。  </p>
+<h4 id="误区三：容器有镜像，可以保持版本号，可以升级和回滚"><a href="#误区三：容器有镜像，可以保持版本号，可以升级和回滚" class="headerlink" title="误区三：容器有镜像，可以保持版本号，可以升级和回滚"></a><strong>误区三：容器有镜像，可以保持版本号，可以升级和回滚</strong></h4><p>容器有两个特性，一个是<strong>封装</strong>，一个是<strong>标准</strong>。有了容器镜像，就可以将应用的各种配置，文件路径，权限封装起来，然后像孙悟空说“定”,就定在了封装好的那一刻。镜像是标准的，无论在哪个容器运行环境，将同样的镜像运行起来，都能还原当时的那一刻。</p>
+<p>容器的镜像还有版本号，我们可以根据容器的版本号进行升级，一旦升级有错，可以根据版本号进行回滚，回滚完毕则能够保证容器内部还是原来的状态。</p>
+<p>但是OpenStack虚拟机也是有镜像的，虚拟机镜像也是可以打snapshot的，打snapshot的时候，也会保存当时的那一刻所有的状态，而且snapshot也可以有版本号，也可以升级和回滚。</p>
+<p>似乎容器有的这些特性OpenStack虚拟机都有，二者有什么不同呢？</p>
+<p>虚拟机镜像大，而容器镜像小。虚拟机镜像动不动就几十个G甚至上百G，而容器镜像多几百M。</p>
+<p>虚拟机镜像不适合跨环境迁移。例如开发环境在本地，测试环境在一个OpenStack上，开发环境在另一个OpenStack上，虚拟机的镜像的迁移非常困难，需要拷贝非常大的文件。而容器就好的多，因为镜像小，可以很快的从不同的环境之间迁移。</p>
+<p>虚拟机镜像不适合跨云迁移。当前没有一个公有云平台支持虚拟机镜像的下载和上传(安全的原因，盗版的原因)，因而一个镜像在不同的云之间，或者同一个云不同的region直接，无法进行迁移，只能重新做一个镜像，这样环境的一致性就得不到保障。而容器的镜像中心是独立于云之外的，只要能够连上镜像中心，到哪个云上都可以下载，并且因为镜像小，下载速度快，并且镜像是分层的，每次只需要下载差异的部分。</p>
+<p><strong>OpenStack对于镜像方面的优化，基本上还是在一个云里面起作用，一旦跨多个环境，镜像方便的多。</strong></p>
+<h4 id="误区四：容器可以使用容器平台管理自动重启实现自修复"><a href="#误区四：容器可以使用容器平台管理自动重启实现自修复" class="headerlink" title="误区四：容器可以使用容器平台管理自动重启实现自修复"></a><strong>误区四：容器可以使用容器平台管理自动重启实现自修复</strong></h4><p>容器的自修复功能是经常被吹嘘的。因为容器是衣服，人躺下了，衣服也躺下了，容器平台能够马上发现人躺下了，于是可以迅速将人重新唤醒工作。而虚拟机是房子，人躺下了，房子还站着，因而虚拟机管理平台不知道里面的人能不能工作，所以容器挂了会被自动重启，而虚拟机里面的应用挂了，只要虚拟机不挂，很可能没人知道。</p>
+<p>这些说法都没错，但是人们慢慢发现了另外的场景，就是容器里面的应用没有挂，所以容器看起来还启动着，但是应用以及不工作没有反应了。当启动容器的时候，<strong>虽然容器的状态起来了，但是里面的应用还需要一段时间才能提供服务</strong>。所以针对这种场景，容器平台会提供对于容器里面应用的<strong>health check</strong>，不光看容器在不在，还要看里面的应用能不能用，如果不能，可自动重启。</p>
+<p>一旦引入了health check，和虚拟机的差别也不大了，因为有了health check，虚拟机也能看里面的应用是否工作了，不工作也可以重启应用。</p>
+<p>还有就是容器的启动速度快，秒级启动，如果能够自动重启修复，那就是秒级修复，所以应用更加高可用。</p>
+<p>这个观点当然不正确，应用的高可用性和重启的速度没有直接关系。<strong>高可用性一定要通过多个副本来实现，在任何一个挂掉之后，不能通过这一个应用快速重启来解决，而是应该靠挂掉的期间，其他的副本马上把任务接过来进行解决。</strong>虚拟机和容器都可以有多副本，在有多个副本的情况下，重启是一秒还是20秒，就没那么重要了，重要的是挂掉的这段时间内，程序做了什么，如果程序做的是无关紧要的操作，那么挂了20秒，也没啥关系，如果程序正在进行一个交易和支付，那挂掉一秒也不行，也必须能够修复回来。所以应用的高可用性要靠应用层的重试，幂等去解决，而不应该靠基础设施层重启的快不快来解决。</p>
+<p>对于无状态服务，在做好重试的机制的情况下，通过自动重启修复是没有问题的，因为无状态的服务不会保存非常重要的操作。</p>
+<p>对于有状态服务，容器的重启不但不是推荐的，而且可能是灾难的开始。一个服务有状态，例如数据库，在高并发场景下，一旦挂了，哪怕只有一秒，我们必须要弄清楚这一秒都发生了什么，哪些数据保存了，哪些数据丢了，而不能盲目的重启，否则会很可能造成数据的不一致性，后期修都没法修。例如高频交易下的数据库挂了，按说DBA应该严格审核丢了哪些数据，而不是在DBA不知情的情况下，盲目的重启了，DBA还觉得没什么事情发生，最终很久才能发现问题。</p>
+<p>所以<strong>容器比较适合部署无状态服务的，随便重启都可以。</strong></p>
+<p>有状态的服务自动重启不是不可用，需要足够专业才行。</p>
+<h4 id="误区五：容器可以使用容器平台进行服务发现"><a href="#误区五：容器可以使用容器平台进行服务发现" class="headerlink" title="误区五：容器可以使用容器平台进行服务发现"></a><strong>误区五：容器可以使用容器平台进行服务发现</strong></h4><p>容器平台swarm, kubernetes，mesos都是支持服务发现的，当一个服务访问另一个服务，都会有服务名转化为VIP，然后访问具体的容器。</p>
+<p>然而人们会发现，基于Java写的应用，服务之间的调用多不会用容器平台的服务发现，而是用Dubbo或者spring cloud的服务发现。因为容器平台层的服务发现，还是做的比较基础，基本是一个域名映射的过程，对于熔断，限流，降级都没有很好的支持，然而既然使用服务发现，还是希望服务发现中间件能够做到这一点，因而服务之间的服务发现之间使用容器平台的少，越是需要高并发的应用，越是如此。</p>
+<p>那容器平台的服务发现没有用了么？不是，慢慢你会发现，内部的服务发现是一方面，这些Dubbo和spring cloud能够搞定，而外部的服务发现就不同了，比如访问数据库，缓存等，到底是应该配置一个数据库服务的名称，还是IP地址呢？如果使用IP地址，会造成配置十分复杂，因为很多应用配置之所以复杂，就是依赖了太多的外部应用，也是最难管理的一方面。如果有了外部的服务发现，配置就会简单很多，也只需要配置外部服务的名称就可以了，如果外部服务地址变了，可以很灵活的改变外部的服务发现。</p>
+<h4 id="误区六：容器可以基于镜像进行弹性伸缩"><a href="#误区六：容器可以基于镜像进行弹性伸缩" class="headerlink" title="误区六：容器可以基于镜像进行弹性伸缩"></a><strong>误区六：容器可以基于镜像进行弹性伸缩</strong></h4><p>在容器平台上，容器有副本数的，只要将副本数从5改到10，容器就基于镜像进行了弹性伸缩。其实这一点虚拟机也能做到，AWS的Autoscaling就是基于虚拟机镜像的，如果在同一个云里面，就没有区别。</p>
+<p>当然如果跨云无状态容器的弹性伸缩，容器方便很多，可以实现混合云模式，当高并发场景下，将无状态容器扩容到公有云，这一点虚拟机是做不到的。</p>
+<h4 id="容器理解误区总结"><a href="#容器理解误区总结" class="headerlink" title="容器理解误区总结"></a><strong>容器理解误区总结</strong></h4><p><img src="https://raw.githubusercontent.com/fennudehaogua/hexopictures/master/Docker_VM.png" alt="K8s"></p>
+<p>如果部署的是一个传统的应用，这个应用启动速度慢，进程数量少，基本不更新，那么虚拟机完全能够满足需求。</p>
+<p>应用启动慢：应用启动15分钟，容器本身秒级，虚拟机很多平台能优化到十几秒，两者几乎看不出差别</p>
+<p>内存占用大：动不动32G，64G内存，一台机器跑不了几个。</p>
+<p>基本不更新：半年更新一次，虚拟机镜像照样能够升级和回滚</p>
+<p>应用有状态：停机会丢数据，如果不知道丢了啥，就算秒级启动有啥用，照样恢复不了，而且还有可能因为丢数据，在没有修复的情况下，盲目重启带来数据混乱。</p>
+<p>进程数量少：两三个进程相互配置一下，不用服务发现，配置不麻烦</p>
+<p>如果是一个传统应用，根本没有必要花费精去容器化，因为白花了力气，享受不到好处。</p>
+<h3 id="2-容器化，微服务，DevOps三位一体"><a href="#2-容器化，微服务，DevOps三位一体" class="headerlink" title="2.容器化，微服务，DevOps三位一体"></a><strong>2.容器化，微服务，DevOps三位一体</strong></h3><p>什么情况下，才应该考虑做一些改变呢？</p>
+<p>传统业务突然被互联网业务冲击了，应用老是变，三天两头要更新，而且流量增大了，原来支付系统是取钱刷卡的，现在要互联网支付了，流量扩大了N倍。</p>
+<p>没办法，一个字：拆</p>
+<p>拆开了，每个子模块独自变化，少相互影响。</p>
+<p>拆开了，原来一个进程扛流量，现在多个进程一起扛。</p>
+<p>所以称为微服务。</p>
+<p><img src="https://raw.githubusercontent.com/fennudehaogua/hexopictures/master/weifuwu1.png" alt="K8s"></p>
+<p><strong>微服务场景下，进程多，更新快，于是出现100个进程，每天一个镜像。</strong></p>
+<p>容器乐了，每个容器镜像小，没啥问题，虚拟机哭了，因为虚拟机每个镜像太大了。</p>
+<p><strong>所以微服务场景下，可以开始考虑用容器了。</strong></p>
+<p>虚拟机怒了，老子不用容器了，微服务拆分之后，用Ansible自动部署是一样的。</p>
+<p>这样说从技术角度来讲没有任何问题。</p>
+<p>然而问题是从组织角度出现的。</p>
+<p>一般的公司，开发会比运维多的多，开发写完代码就不用管了，环境的部署完全是运维负责，运维为了自动化，写Ansible脚本来解决问题。</p>
+<p>然而这么多进程，又拆又合并的，更新这么快，配置总是变，Ansible脚本也要常改，每天都上线，不得累死运维。</p>
+<p>所以这如此大的工作量情况下，运维很容易出错，哪怕通过自动化脚本。</p>
+<p>这个时候，容器就可以作为一个非常好的工具运用起来。</p>
+<p>除了容器从技术角度，能够使得<strong>大部分的内部配置可以放在镜像里面之外</strong>，更重要的是<strong>从流程角度，将环境配置这件事情，往前推了，推到了开发这里，要求开发完毕之后，就需要考虑环境部署的问题，而不能当甩手掌柜。</strong></p>
+<p>这样做的好处就是，虽然进程多，配置变化多，更新频繁，但是对于某个模块的开发团队来讲，这个量是很小的，因为5-10个人专门维护这个模块的配置和更新，不容易出错。</p>
+<p>如果这些工作量全交给少数的运维团队，不但信息传递会使得环境配置不一致，部署量会大非常多。</p>
+<p>容器是一个非常好的工具，就是让每个开发仅仅多做5%的工作，就能够节约运维200%的工作，并且不容易出错。</p>
+<p>然而本来原来运维该做的事情开发做了，开发的老大愿意么？开发的老大会投诉运维的老大么？</p>
+<p>这就不是技术问题了，其实这就是DevOps，DevOps不是不区分开发和运维，而是公司从组织到流程，能够打通，看如何合作，边界如何划分，对系统的稳定性更有好处。<br>所以微服务，DevOps，容器是相辅相成，不可分割的。</p>
+<p>不是微服务，根本不需要容器，虚拟机就能搞定，不需要DevOps，一年部署一次，开发和运维沟通再慢都能搞定。</p>
+<p>所以，容器的本质是基于镜像的跨环境迁移。</p>
+<p>镜像是容器的根本性发明，是封装和运行的标准，其他什么namespace，cgroup，早就有了。这是技术方面。</p>
+<p>在流程方面，镜像是DevOps的良好工具。</p>
+<p>容器是为了<strong>跨环境迁移</strong>的，第一种迁移的场景是开发，测试，生产环境之间的迁移。如果不需要迁移，或者迁移不频繁，虚拟机镜像也行，但是总是要迁移，带着几百G的虚拟机镜像，太大了。</p>
+<p>第二种迁移的场景是<strong>跨云迁移</strong>，跨公有云，跨Region，跨两个OpenStack的虚拟机迁移都是非常麻烦，甚至不可能的，因为公有云不提供虚拟机镜像的下载和上传功能，而且虚拟机镜像太大了，一传传一天。</p>
+<p><strong>所以跨云场景下，混合云场景下，容器也是很好的使用场景。这也同时解决了仅仅私有云资源不足，扛不住流量的问题。</strong></p>
+<h3 id="3-容器的正确使用场景"><a href="#3-容器的正确使用场景" class="headerlink" title="3. 容器的正确使用场景"></a><strong>3. 容器的正确使用场景</strong></h3><p>根据以上的分析，我们发现容器推荐使用在下面的场景下。</p>
+<pre><code>1. 部署无状态服务，同虚拟机互补使用，实现隔离性
+
+
+
+2. 如果要部署有状态服务，需要对里面的应用十分的了解
+
+
+
+3. 作为持续集成的重要工具，可以顺利在开发，测试，生产之间迁移
+
+
+
+4. 适合部署跨云，跨Region，跨数据中心，混合云场景下的应用部署和弹性伸缩
+
+
+
+5. 以容器作为应用的交付物，保持环境一致性，树立不可变更基础设施的理念
+
+
+
+6. 运行进程基本的任务类型的程序
+
+
+
+7. 用于管理变更，变更频繁的应用使用容器镜像和版本号，轻量级方便的多
+
+
+
+8. 使用容器一定要管理好应用，进行health check和容错的设计
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag"></i> Docker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/15/欣哥的面经/" rel="next" title="欣哥的面经...">
+                <i class="fa fa-chevron-left"></i> 欣哥的面经...
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://plus.google.com/u/0/102058793050907796987" target="_blank" title="Google">
+                  
+                    <i class="fa fa-fw fa-google"></i>
+                  
+                    
+                      Google
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3270404320/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cheneydc.me/" title="聪哥大佬的博客" target="_blank">聪哥大佬的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xiaopijie.top/" title="xiaopijie.top" target="_blank">xiaopijie.top</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#在公众号看到的一篇笔记基础性的好文章…"><span class="nav-number">1.</span> <span class="nav-text">在公众号看到的一篇笔记基础性的好文章…</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-容器的理解误区"><span class="nav-number">1.1.</span> <span class="nav-text">1.容器的理解误区</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#误区一：容器启动速度快，秒级启动"><span class="nav-number">1.1.1.</span> <span class="nav-text">误区一：容器启动速度快，秒级启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#误区二：容器轻量级，每个主机会运行成百上千个容器"><span class="nav-number">1.1.2.</span> <span class="nav-text">误区二：容器轻量级，每个主机会运行成百上千个容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#误区三：容器有镜像，可以保持版本号，可以升级和回滚"><span class="nav-number">1.1.3.</span> <span class="nav-text">误区三：容器有镜像，可以保持版本号，可以升级和回滚</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#误区四：容器可以使用容器平台管理自动重启实现自修复"><span class="nav-number">1.1.4.</span> <span class="nav-text">误区四：容器可以使用容器平台管理自动重启实现自修复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#误区五：容器可以使用容器平台进行服务发现"><span class="nav-number">1.1.5.</span> <span class="nav-text">误区五：容器可以使用容器平台进行服务发现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#误区六：容器可以基于镜像进行弹性伸缩"><span class="nav-number">1.1.6.</span> <span class="nav-text">误区六：容器可以基于镜像进行弹性伸缩</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#容器理解误区总结"><span class="nav-number">1.1.7.</span> <span class="nav-text">容器理解误区总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-容器化，微服务，DevOps三位一体"><span class="nav-number">1.2.</span> <span class="nav-text">2.容器化，微服务，DevOps三位一体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-容器的正确使用场景"><span class="nav-number">1.3.</span> <span class="nav-text">3. 容器的正确使用场景</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>
