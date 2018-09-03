@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="链表," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="链表汇总题目描述1.链表的倒置（拆解法和头插法，头插法比较类似，就是创建了一个temp-head）    备份next指针   修改head.next   移动head与new-head  2.链表的部分倒置(从m到n，记录四个重要的节点，pre-head倒置前头结点的前节点，modify-list-tail倒置前的尾节点，new-head相当于逆置后的head，head相当于逆置后的尾节点的后继">
+<meta name="keywords" content="链表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="链表总结">
+<meta property="og:url" content="http://fennudehaogua.top/2018/09/03/链表总结/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="链表汇总题目描述1.链表的倒置（拆解法和头插法，头插法比较类似，就是创建了一个temp-head）    备份next指针   修改head.next   移动head与new-head  2.链表的部分倒置(从m到n，记录四个重要的节点，pre-head倒置前头结点的前节点，modify-list-tail倒置前的尾节点，new-head相当于逆置后的head，head相当于逆置后的尾节点的后继">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-03T03:31:13.670Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="链表总结">
+<meta name="twitter:description" content="链表汇总题目描述1.链表的倒置（拆解法和头插法，头插法比较类似，就是创建了一个temp-head）    备份next指针   修改head.next   移动head与new-head  2.链表的部分倒置(从m到n，记录四个重要的节点，pre-head倒置前头结点的前节点，modify-list-tail倒置前的尾节点，new-head相当于逆置后的head，head相当于逆置后的尾节点的后继">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2018/09/03/链表总结/"/>
+
+
+
+
+
+  <title>链表总结 | fennudehaogua.top</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生而为人，我很抱歉。————不装逼，不存在的。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2018/09/03/链表总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">链表总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T10:43:09+08:00">
+                2018-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="链表汇总"><a href="#链表汇总" class="headerlink" title="链表汇总"></a>链表汇总</h3><p><strong>题目描述</strong><br>1.链表的倒置（拆解法和头插法，头插法比较类似，就是创建了一个temp-head）  </p>
+<ul>
+<li>备份next指针  </li>
+<li>修改head.next  </li>
+<li>移动head与new-head</li>
+</ul>
+<p>2.链表的部分倒置<br>(从m到n，记录四个重要的节点，<br>pre-head倒置前头结点的前节点，<br>modify-list-tail倒置前的尾节点，<br>new-head相当于逆置后的head，<br>head相当于逆置后的尾节点的后继节点）    </p>
+<ul>
+<li>将head向后移动m-1个位置到达逆置前的头结点，记录该节点以及该节点的前驱节点  </li>
+<li>从head开始，逆置n-m+1个节点  </li>
+<li>将pre-head与new-head连接，modify-list-tail与head连接  </li>
+</ul>
+<p>3.判断链表是否有环，环的起点，环的长度  </p>
+<ul>
+<li>快慢指针  </li>
+<li>当两个指针相遇就代表有环  </li>
+<li>相遇的时候将快指针移动至head位置，两个指针再同时以相同的速度移动，再相遇的位置即为环的起点  </li>
+<li>快慢指针相遇后，一个指针不懂，另一个移动直到两个指针相遇即为环的长度  </li>
+</ul>
+<p>4.链表的划分：已知链表头指针head与数值x，小于的放前面，大于的放后面，保持相对位置  </p>
+<ul>
+<li>新创建两个头结点，遍历链表，一个存小的一个存大的，再将两个链表连接起来</li>
+</ul>
+<p>5.复杂链表的深度拷贝  </p>
+<ul>
+<li>Hashmap存储Random节点  </li>
+<li>在每个节点N的后面创建复制的节点N’，复制连接，然后拆分成两个链表。奇数位上的连起来就是原链表，偶数位的链接起来就是复制的链表。</li>
+</ul>
+<p>6.排序链表的合并  </p>
+<ul>
+<li>遍历两个链表，逐渐对比两个链表的数值取小的插入新链表中即可。</li>
+</ul>
+<p>7.多个排序链表的合并  </p>
+<pre><code>package offer;
+
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.PriorityQueue;
+
+/**
+ * Created by fennudehaogua on 2018/8/29.
+ */
+public class leetcode_lianbiao {
+    public static class ListNode implements Comparator&lt;ListNode&gt;{
+        int val;
+        ListNode next = null;
+        ListNode(int val){
+            this.val = val;
+        }
+
+
+        @Override
+        public int compare(ListNode o1, ListNode o2) {
+            return val-o2.val;
+        }
+    }
+    public static class  RandomListNode{
+        int val;
+        RandomListNode next = null;
+        RandomListNode randomListNode = null;
+        RandomListNode(int val){
+            this.val = val;
+        }
+    }
+public static void main(String[] args){
+    ListNode listNode1 =new ListNode(1);
+    ListNode listNode2 =new ListNode(2);
+    ListNode listNode3 =new ListNode(3);
+    ListNode listNode4 =new ListNode(4);
+    ListNode listNode5 =new ListNode(5);
+    listNode1.next = listNode2;
+    listNode2.next = listNode3;
+    listNode3.next = listNode4;
+    listNode4.next = listNode5;
+    listNode5.next = null;
+    leetcode_lianbiao test1 = new leetcode_lianbiao();
+
+    ListNode reverse1 = test1.ReverseList(listNode1);
+    System.out.println(&quot;链表倒置：&quot;);
+    while (reverse1!= null){
+        System.out.println(reverse1.val);
+        reverse1 = reverse1.next;
+    }
+    ListNode reverse3 = test1.ReverseList_headinsert(listNode5);
+    System.out.println(&quot;链表倒置：&quot;);
+    while (reverse3!= null){
+        System.out.println(reverse3.val);
+        reverse3 = reverse3.next;
+    }
+    //倒置后链表变成5,4,3,2,1
+
+    ListNode reverse2 = test1.ReverseList1(listNode1,2,4);
+    System.out.println(&quot;部分倒置：&quot;);
+    while (reverse2!= null){
+        System.out.println(reverse2.val);
+        reverse2 = reverse2.next;
+    }
+
+
+    ListNode listNode6 =new ListNode(6);
+    ListNode listNode7 =new ListNode(7);
+    ListNode listNode8 =new ListNode(8);
+    ListNode listNode9 =new ListNode(9);
+    ListNode listNode10 =new ListNode(10);
+    ListNode listNode11 =new ListNode(11);
+    ListNode listNode12 =new ListNode(12);
+    listNode6.next = listNode7;
+    listNode7.next = listNode8;
+    listNode8.next = listNode9;
+    listNode9.next = listNode10;
+    listNode10.next = listNode11;
+    listNode11.next = listNode12;
+    listNode12.next = listNode8;
+
+
+    System.out.println(&quot;是否有环：&quot;);
+    System.out.println(test1.jiaoDian(listNode6));
+
+    System.out.println(&quot;有环的话环的起点是：&quot;);
+    System.out.println(test1.start_Node(listNode6).val);
+
+    System.out.println(&quot;有环的话环的长度是：&quot;);
+    System.out.println(test1.length_circle(listNode6));
+
+
+
+
+    //链表划分
+    ListNode listNode13 =new ListNode(1);
+    ListNode listNode14 =new ListNode(4);
+    ListNode listNode15 =new ListNode(3);
+    ListNode listNode16 =new ListNode(2);
+    ListNode listNode17 =new ListNode(5);
+    ListNode listNode18 =new ListNode(2);
+    listNode13.next = listNode14;
+    listNode14.next = listNode15;
+    listNode15.next = listNode16;
+    listNode16.next = listNode17;
+    listNode17.next = listNode18;
+    listNode18.next = null;
+
+    System.out.println(&quot;链表划分：&quot;);
+    ListNode huafen = test1.partition_Node(listNode13,3);
+    while (huafen != null){
+        System.out.println(huafen.val);
+        huafen = huafen.next;
+    }
+
+
+
+
+
+    ListNode listNode21 =new ListNode(1);
+    ListNode listNode22 =new ListNode(2);
+    ListNode listNode23 =new ListNode(3);
+    ListNode listNode24 =new ListNode(4);
+    ListNode listNode25 =new ListNode(5);
+    listNode21.next = listNode22;
+    listNode22.next = listNode23;
+    listNode23.next = listNode24;
+    listNode24.next = listNode25;
+    listNode25.next = null;
+    ListNode listNode31 =new ListNode(1);
+    ListNode listNode32 =new ListNode(4);
+    ListNode listNode33 =new ListNode(6);
+    ListNode listNode34 =new ListNode(45);
+    ListNode listNode35 =new ListNode(234);
+    listNode31.next = listNode32;
+    listNode32.next = listNode33;
+    listNode33.next = listNode34;
+    listNode34.next = listNode35;
+    listNode35.next = null;
+    System.out.println(&quot;排序链表合并：&quot;);
+    ListNode hebin = test1.combine_two_sorted_listnode(listNode21,listNode31);
+    while (hebin != null){
+        System.out.println(hebin.val);
+        hebin = hebin.next;
+    }
+
+}
+
+//链表的倒置
+public ListNode ReverseList(ListNode head){
+    ListNode new_head = null;
+
+    while (head != null){
+        ListNode next = head.next;
+        head.next = new_head;
+        new_head = head;
+        head = next;
+    }
+    return new_head;
+}
+//头插法
+public ListNode ReverseList_headinsert(ListNode head){
+    ListNode temp_head = new ListNode(0);
+    while (head != null){
+        ListNode next = head.next;
+        head.next = temp_head.next;
+        temp_head.next = head;
+        head = next;
+    }
+    return temp_head.next;
+
+}
+
+//链表的部分倒置
+public ListNode ReverseList1(ListNode head,int m,int n){
+    int change_len = n - m + 1;
+    ListNode pre_head = null;
+    ListNode result = head;
+    while ((head != null) &amp;&amp; (--m &gt; 0)){
+        pre_head = head;
+        head = head.next;
+    }
+
+
+
+    ListNode modify_list_tail = head;
+    ListNode new_head = null;
+    while ((head != null) &amp;&amp; (change_len&gt;0)){
+        ListNode next = head.next;
+        head.next = new_head;
+        new_head = head;
+        head = next;
+        change_len--;
+    }
+
+    modify_list_tail.next = head;
+
+    if (pre_head==null){
+        return new_head;
+    }else {
+        pre_head.next = new_head;
+
+    }
+
+return result;
+}
+
+//求链表是否有环
+public boolean jiaoDian(ListNode head){
+    ListNode slow = head;
+    ListNode fast = head;
+    if (fast.next == null){
+        return false;
+    }
+    while (fast.next != null){
+        slow = slow.next;
+        fast = fast.next.next;
+        if (fast == null){
+            return false;
+        }
+        if (slow.val == fast.val){
+            break;
+        }
+
+    }
+    return true;
+}
+
+//求链表有环的话环的起点
+public ListNode start_Node(ListNode head){
+    ListNode slow = head;
+    ListNode fast = head;
+    if (fast.next == null){
+        return null;
+    }
+    while (fast.next != null){
+        slow = slow.next;
+        fast = fast.next.next;
+        if (fast == null){
+            return null;
+        }
+        if (slow.val == fast.val){
+            break;
+        }
+    }
+    fast = head;
+    while (fast != slow){
+        fast = fast.next;
+        slow = slow.next;
+    }
+    return fast;
+}
+//求链表有环的话环的长度
+public int length_circle(ListNode head){
+    ListNode slow = head;
+    ListNode fast = head;
+    if (fast.next == null){
+        return 0;
+    }
+    while (fast.next != null){
+        slow = slow.next;
+        fast = fast.next.next;
+        if (fast == null){
+            return 0;
+        }
+        if (slow.val == fast.val){
+            break;
+        }
+    }
+    slow = slow.next;
+    int length = 1;
+    while (fast != slow){
+        slow = slow.next;
+        length++;
+    }
+    return length;
+}
+
+
+//划分链表
+public ListNode partition_Node(ListNode head,int target){
+    ListNode less_head = new ListNode(0);
+    ListNode more_head = new ListNode(0);
+    ListNode less_head1 = less_head;
+    ListNode more_head1 = more_head;
+    while (head != null){
+        if (head.val &lt; target){
+            less_head.next = head;
+            less_head = less_head.next;
+        }else {
+            more_head.next = head;
+            more_head = more_head.next;
+        }
+        head = head.next;
+    }
+    more_head.next = null;
+    less_head.next = more_head1.next;
+    return less_head1.next;
+}
+
+
+
+//链表的深度拷贝
+//两种方法 Hashmap 和 每个节点N后面加上N&apos;，然后定位链接，最后拆分为两个链表，奇数位置为原始链表，偶数位置为复制位置。
+
+public RandomListNode clone(RandomListNode pHead){
+
+    if(pHead == null){
+        return null;
+    }
+    HashMap&lt;RandomListNode, RandomListNode&gt; map = new HashMap&lt;&gt;();
+    RandomListNode pClonedHead = new RandomListNode(pHead.val); //复制链表的头结点
+    RandomListNode pNode = pHead, pClonedNode = pClonedHead;
+    map.put(pNode, pClonedNode);
+
+    //第一步，hashMap保存，原链表节点映射复制链表节点
+    while(pNode.next != null){
+        pClonedNode.next = new RandomListNode(pNode.next.val);
+        pNode = pNode.next;
+        pClonedNode = pClonedNode.next;
+        map.put(pNode, pClonedNode);
+    }
+
+    //第二步：找到对应的randomListNode
+    pNode = pHead;
+    pClonedNode = pClonedHead;
+    while(pClonedNode!=null){
+        pClonedNode.randomListNode = map.get(pNode.randomListNode);
+        pNode = pNode.next;
+        pClonedNode = pClonedNode.next;
+    }
+    return pClonedHead;
+}
+
+
+//两个有序链表的合并
+public ListNode combine_two_sorted_listnode(ListNode listNode1,ListNode listNode2){
+    ListNode result = new ListNode(0);
+    ListNode result1 = result;
+    while (listNode1 != null &amp;&amp; listNode2 != null){
+        if (listNode1.val &lt; listNode2.val){
+            result1.next = listNode1;
+            listNode1 = listNode1.next;
+        }else {
+            result1.next = listNode2;
+            listNode2 = listNode2.next;
+        }
+        result1 = result1.next;
+    }
+
+    if (listNode1 == null){
+        result1.next = listNode2;
+    }
+    if (listNode2 == null){
+        result1.next = listNode1;
+    }
+    return result.next;
+
+}
+
+//多个有序链表的合并
+//方法一：优先队列
+//基于优先级队列，我们可以将K个链表的头结点全部添加到队列，
+// 由于优先级队列采用了最小堆数据结构，堆顶为队列的最小元素，
+// 我们将其取出添加到结果链表中，取出元素对应的链表下移一个节点，并将这个节点添加到优先级队列中；
+// 然后我们继续取出堆顶元素，...，直到优先级队列为空，那么其中所有元素取尽，
+// K个链表的元素已经全部排序到结果链表。
+
+//方法二
+//归并排序”（Merging Sort）：将两个或两个以上的有序表组合成一个新的有序表，
+// 无论是顺序存储结构还是链式存储结构，对于任何两个长度分别为m和n的有序表，
+// 其组合都可在O(m+n)的时间复杂度量级上完成。对于K个有序表，假设共有N个元素，
+// 且这些有序表初始状态都不为空，每个有序表平均拥有N/K个元素。
+// 最常用的方法是采用“二分”的思想进行两两合并：
+// 第一轮循环，有序表lists[0]与lists[(K+1)/2]，lists[1]与lists[(K+1)/2+1]，
+// lists[2]与lists[(K+1)/2+2]....，lists[K/2-1]与lists[K-1]。
+// 这样K个有序表就被组合成了K/2个有序表；第二轮循环后将减少为K/4个有序表；
+// 直到组合成一个具有N个元素的有序表。总的时间复杂度：O(NKlogK)。
+//
+
+//详见：https://blog.csdn.net/jin_kwok/article/details/51582176
+public ListNode mergeKLists(ListNode[] lists ){
+    int len=lists.length;
+
+    if(lists==null||len==0)
+        return null;
+    if(len==1)
+        return lists[0];
+
+    while(len&gt;1)//基于“二分”思想进行链表的两两组合
+    {
+        int mid=(len+1)/2;//二分
+        for(int i=0;i&lt;len/2;i++)
+        {
+            lists[i]=mergeTwoLists(lists[i],lists[i+mid]);
+        }
+        len=mid;
+    }
+    return lists[0];
+}
+
+public ListNode mergeTwoLists(ListNode L1,ListNode L2)
+{
+    if(L1==null)return L2;
+    if(L2==null)return L1;
+
+    ListNode head=new ListNode(0);//保存结果的链表，头结点初始化
+    ListNode phead=head;
+
+    while(L1!=null&amp;&amp;L2!=null)//两个链表归并排序
+    {
+        if(L1.val &lt;=L2.val)
+        {
+            phead.next=L1;//接入结果链表
+            phead=phead.next;//移动指针
+            L1=L1.next;
+        }
+        else
+        {
+            phead.next=L2;
+            phead=phead.next;
+            L2=L2.next;
+        }
+    }
+    if(L1!=null)
+        phead.next=L1;
+    else
+        phead.next=L2;
+
+    return head.next;//初始化的第一个节点不属于结果
+}
+
+
+
+
+public ListNode mergeKLists1(ListNode[] lists)
+{
+    if(lists==null||lists.length==0)
+        return null;
+    if(lists.length==1)
+        return lists[0];
+
+
+    PriorityQueue&lt;ListNode&gt; PQ=new PriorityQueue&lt;&gt;();
+
+    ListNode head=new ListNode(0);
+    ListNode phead=head;
+
+    for(ListNode list:lists)
+    {
+        if(list!=null)
+            PQ.offer(list);
+    }
+    while(!PQ.isEmpty())
+    {
+        ListNode temp=PQ.poll();
+        phead.next=temp;
+        phead=phead.next;
+
+        if(temp.next!=null)
+            PQ.add(temp.next);
+    }
+    return head.next;
+}
+</code></pre><p>}</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/链表/" rel="tag"><i class="fa fa-tag"></i> 链表</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/24/Docker笔记/" rel="next" title="Docker笔记">
+                <i class="fa fa-chevron-left"></i> Docker笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://plus.google.com/u/0/102058793050907796987" target="_blank" title="Google">
+                  
+                    <i class="fa fa-fw fa-google"></i>
+                  
+                    
+                      Google
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3270404320/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cheneydc.me/" title="聪哥大佬的博客" target="_blank">聪哥大佬的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xiaopijie.top/" title="xiaopijie.top" target="_blank">xiaopijie.top</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#链表汇总"><span class="nav-number">1.</span> <span class="nav-text">链表汇总</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>
