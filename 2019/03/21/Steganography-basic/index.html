@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JEPG Steganography," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="JEPG基础图像处理    1DCT变换    1量化    3编码    3Jsteg隐写    5F3隐写    6F4隐写    8F5隐写    9OutGuess隐写    10MB隐写    13总结    16   一、JEPG基础图像处理 DCT变换 量化 编码   二、Jsteg隐写 三、F3隐写 四、F4隐写 五、F5隐写 六、Outguess隐写 七、MB隐写   JEPG基">
+<meta name="keywords" content="JEPG Steganography">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Steganography(basic)">
+<meta property="og:url" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="JEPG基础图像处理    1DCT变换    1量化    3编码    3Jsteg隐写    5F3隐写    6F4隐写    8F5隐写    9OutGuess隐写    10MB隐写    13总结    16   一、JEPG基础图像处理 DCT变换 量化 编码   二、Jsteg隐写 三、F3隐写 四、F4隐写 五、F5隐写 六、Outguess隐写 七、MB隐写   JEPG基">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/1.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/2.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/3.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/4.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/5.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/6.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/7.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/8.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/9.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/10.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/11.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/12.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/12.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/13.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/14.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/15.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/16.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/17.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/18.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/19.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/20.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/21.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/21.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/21.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/21.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/21.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/21.png">
+<meta property="og:updated_time" content="2019-03-21T11:08:31.756Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Steganography(basic)">
+<meta name="twitter:description" content="JEPG基础图像处理    1DCT变换    1量化    3编码    3Jsteg隐写    5F3隐写    6F4隐写    8F5隐写    9OutGuess隐写    10MB隐写    13总结    16   一、JEPG基础图像处理 DCT变换 量化 编码   二、Jsteg隐写 三、F3隐写 四、F4隐写 五、F5隐写 六、Outguess隐写 七、MB隐写   JEPG基">
+<meta name="twitter:image" content="http://fennudehaogua.top/2019/03/21/Steganography-basic/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2019/03/21/Steganography-basic/"/>
+
+
+
+
+
+  <title>Steganography(basic) | fennudehaogua.top</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?727b9992a1a14607aebb47500e5bcc08";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2019/03/21/Steganography-basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Steganography(basic)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-21T17:07:32+08:00">
+                2019-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Steganography/" itemprop="url" rel="index">
+                    <span itemprop="name">Steganography</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>JEPG基础图像处理    1<br>DCT变换    1<br>量化    3<br>编码    3<br>Jsteg隐写    5<br>F3隐写    6<br>F4隐写    8<br>F5隐写    9<br>OutGuess隐写    10<br>MB隐写    13<br>总结    16</p>
+<!-- GFM-TOC -->
+<ul>
+<li><a href="#JEPG基础图像处理">一、JEPG基础图像处理</a><ul>
+<li><a href="#DCT变换">DCT变换</a></li>
+<li><a href="#量化">量化</a></li>
+<li><a href="#编码">编码</a></li>
+</ul>
+</li>
+<li><a href="#Jsteg隐写">二、Jsteg隐写</a></li>
+<li><a href="#F3隐写">三、F3隐写</a></li>
+<li><a href="#F4隐写">四、F4隐写</a></li>
+<li><a href="#F5隐写">五、F5隐写</a></li>
+<li><a href="#Outguess隐写">六、Outguess隐写</a></li>
+<li><a href="#MB隐写">七、MB隐写</a></li>
+</ul>
+<!-- GFM-TOC -->
+<h1 id="JEPG基础图像处理"><a href="#JEPG基础图像处理" class="headerlink" title="JEPG基础图像处理"></a>JEPG基础图像处理</h1><p>JPEG不是一种文件格式，而是一类图像压缩算法。<br>图像压缩, 以huffman编码为例, 对图像每个byte做频率统计，构造huffman树重新编码, 以减小编码长度。但是，直接对图像做huffman编码的压缩并不好，因为需要对256个像素值都编码，码长不会显著减小。如果能将图像变换到一个含有比较少的不同值的空间中，huffman编码效果将会显著提升。这就是jpeg的核心思想。<br>研究发现对于图像压缩, RGB的表示不是最佳的.人脑对亮度和色差的微小变化不敏感。 YCbCr用一层亮度和两层色差表示RGB图像，Y是亮度通道, Cb和Cr是色差通道。YUV与RGB可以互相转换。<br>Y=0.299R+0.587G+0.114B<br>U=0.148R-0.289G+0.473B<br>V=0.615R-0.515G-0.1B    </p>
+<h2 id="DCT变换"><a href="#DCT变换" class="headerlink" title="DCT变换"></a>DCT变换</h2><p>先将RGB转成YcbCr，然后将图像切割成一堆8×8的小块，考虑一个8×8的块，这个块在原图像中所占的比例是非常小的，在大部分情况下，这个块中pixel数值变化是很平滑的。如图1，这块的pixel值在50-52之间变化，若要用cos函数的组合去拟合这段离散的数值, 这些函数的频率会很高。这些变化也被称为高频信息, 而人眼对高频信息不敏感, 对低频信息比较敏感. 如果一个块罩在墙和背景交界的地方, 块的pixel数值会出现不平滑的变化,跨度很大, 这时要用函数组合去拟合这段离散数值时, 就会出现低频。<br>JPEG使用的变换就是DCT(Discrete Cosine Transformation), 图2就是DCT矩阵, 任何8×8块都可以用DCT矩阵表示。通过DCT，空间表达式可以转换成频谱表达式或频率域，在频域中只用少量的数据就可以表示空间域中大量的数据，从而达到数据压缩的目的。A经过DCT变换(保留小数点后三位)得到矩阵B, 可以发现除了左上角407,其他的值都接近0，如图3。</p>
+<p>图1  一个8*8的块矩阵:  </p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/1.png"> </div><br><br>图2  DCT矩阵:  </p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/2.png"> </div><br><br>图3  矩阵A经过DCT变换得到的矩阵B:  </p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/3.png"> </div><br><br>DCT变换的定义如下：  </p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/4.png"> </div><br>   </p>
+<p>DCT系数中，左上角部分为直流和低频系数，右下角部分为高频系数，中间区域为中频系数。低频代表图像之间慢变化，高频代表像素之间的快变化。 高频部份代表图像中的噪声部份，这些部分容易通过有损压缩或者滤波等处理被去掉；中低频部分包含了图像的大部分能量，对人的视觉最重要的信息部分，都集中在中低频；一般图像的压缩和处理，为了保持图像的可视性，都保留了图像的中低频部分；因为低频部分的改变有可能引起图像较大的变动；为了将隐藏的信息与载体图像的视觉重要部分绑定，一般都将隐藏信息嵌入在载体的中频部分，达到既不引起视觉变化，又不会被轻易破坏的目的。<br>结合图像压缩的核心思想, 用较少的不同数值来表示图像, 就需要找到一种变换, 将图像高频的信息和低频的信息区分开来, 并将人眼不敏感的低频信息映射到接近或等于0，也就是我们的下一步骤——量化。</p>
+<h2 id="量化"><a href="#量化" class="headerlink" title="量化"></a>量化</h2><p>所谓量化就是用像素值÷量化表对应值所得的结果。  </p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/5.png"> </div><br>   </p>
+<p>由于量化表左上角的值较小，右下角的值较大，这样就起到了保持低频分量，抑制高频分量的目的。JPEG使用的颜色是YUV格式。我们提到过，Y分量代表了亮度信息，UV分量代表了色差信息。相比而言，Y分量更重要一些。我们可以对Y采用细量化，对UV采用粗量化，可进一步提高压缩比。所以上面所说的量化表通常有两张，一张是针对Y的；一张是针对UV的，如图4所示。<br>通过量化可以达到通低频减高频的效果。<br>图4  量化表  </p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/6.png"> </div><br><br>比如左边那个量化表，右下角的高频÷16，这样原先DCT后[-128,127]的范围就变成了[-7,7]，固然减少了码字（从8位减至4位）。<br>因为有取整操作，所以JPEG是有损压缩，压缩比例就是通过控制量化的多少来控制。比如，对于量化矩阵Q，如果我把矩阵的每个数都扩大，那就会出现更多的0，这样编码时就可以更省空间啦，N个0只要一个游程编码搞定，数据量超小。但也意味着，恢复时，会带来更多的误差，图像质量也会变差了。  </p>
+<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><p>编码信息分两类，一类是每个8<em>8格子F中的[0,0]位置上元素，这是DC（直流分量），代表8</em>8个子块的平均值，JPEG中对F[0,0]单独编码，由于两个相邻的8×8子块的DC系数相差很小，所以对它们采用差分编码DPCM，可以提高压缩比，也就是说对相邻的子块DC系数的差值进行编码。<br>另一类是8×8块的其它63个子块，即交流(AC)系数，采用行程编码（游程编码Run-length encode,RLE）。这里出现一个问题：这63个系数应该按照怎么样的顺序排列？为了保证低频分量先出现，高频分量后出现，以增加行程中连续“0”的个数，这63个元素采用了“之”字型(Zig-Zag)的排列方法，如图5所示。<br>图5  Zig-Zag排列方法：  </p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/7.png"> </div><br>   </p>
+<p>我们得到了DC码字和AC行程码字。为了进一步提高压缩比，需要对RLE编码结果再进行熵编码，这里选用Huffman编码。<br>1）DC系数的差分脉冲调制编码<br>8<em>8的图像块经过DCT变换之后得到的DC系数有两个特点：<br>（1）系数的数值比较大；<br>（2）相邻的8</em>8图像块的DC系数值变化不大；<br>根据这两个特点，DC系数一般采用差分脉冲调制编码DPCM，即：取同一个图像分量中每个DC值与前一个DC值的差值来进行编码。对差值进行编码所需要的位数会比对原值进行编码所需要的位数少了很多。假设某一个8<em>8图像块的DC系数值为15，而上一个8</em>8图像块的DC系数为12，则两者之间的差值为3。<br>2）DC系数的中间格式计算<br>JPEG中为了更进一步节约空间，并不直接保存数据的具体数值，而是将数据按照位数分为16组，保存在表里面。这也就是所谓的变长整数编码VLI。即，第0组中保存的编码位数为0，其编码所代表的数字为0；第1组中保存的编码位数为1，编码所代表的数字为-1或者1……等等，如图6所示。<br>图6  VLI编码表   </p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/8.png"> </div><br>   </p>
+<p>3）AC系数的行程长度编码(RLC)<br>     量化之后的AC系数的特点是，63个系数中含有很多值为0的系数。因此，可以采用行程编码RLC（Run Length Coding）来更进一步降低数据的传输量。利用该编码方式，可以将一个字符串中重复出现的连续字符用两个字节来代替，其中，第一个字节代表重复的次数，第二个字节代表被重复的字符串。<br>4）AC系数的中间格式<br>根据前面提到的VLI表格，只处理每对数右边的那个数据，对其进行VLI编码。如57在第6组当中，因此，可以将其写成(0,6),57的形式，该形式，称之为AC系数的中间格式。<br>5）熵编码<br>在得到DC系数的中间格式和AC系数的中间格式之后，为进一步压缩图像数据，有必要对两者进行熵编码。JPEG标准具体规定了两种熵编码方式：Huffman编码和算术编码。JPEG基本系统规定采用Huffman编码。<br>综上，我们可以看到对于JEPG图像信息嵌入与取出的处理流程如图7所示。<br>图7  JPEG信息嵌入与取出系统流程图：   </p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/9.png"> </div><br><br>嵌入信息的过程：首先，我们得到图像的一个8*8方块的亮度值。 由于一个字节是0~255，为了减小绝对值波动，先把数值移位一下，变成-128~127。 接着，根据DCT变换公式，计算获得临时结果。 然后，根据亮度量化表量化后得到的量化系数矩阵 ，新的矩阵系数很多是0，完全可以用游程编码，大大缩小数据量。接着将秘密信息嵌入到量化系数矩阵中，对其进行熵编码（Huffman编码），最终得到我们的载密JEPG图像。<br>提取信息的过程：对我们的载密图像进行熵解码（Huffman解码），接下来即可提取出我们的加密信息。  </p>
+<h1 id="Jsteg隐写"><a href="#Jsteg隐写" class="headerlink" title="Jsteg隐写"></a>Jsteg隐写</h1><p>论文（2-F5-A steganographic algorithm High capacity despite better steganalysis(2001,IH,CR1118)<br>Jsteg方法将秘密信息藏在JPEG文件中DCT系数的LSB里，从而保证在隐写之后人眼无法分辨隐写图与原图的差别。提取秘密消息时，只需将载密图像中不等于0、l的量化DCT系数的LSB取出即。<br>基本思想：用秘密信息比特直接替换JPEG图像中量化后DCT系数的最低比特位，但若量化后DCT系数为0或者1，则不进行处理。<br>嵌入过程：<br>1) 部分解码JPEG图像，得到二进制存储的AC系数，判断该AC系数是否等于1或0，若等于则跳过该AC系数，否则，执行下一步；<br>2) 判断二进制存储的AC系数的LSB是否与要嵌入的秘密信息比特相同，若相同，则不对其进行更改；否则，执行下一步；<br>3) 用秘密信息比特替换二进制存储的AC系数的LSB；将修改后的AC系数重新编码得到隐密JPEG图像。<br>提取过程：部分解码JPEG图像，得到二进制存储的AC 系数，取出不等于1和0的AC系数的LSB，组成秘密信息。<br>嵌入方式示意图见图8所示：<br>图8  Jsteg嵌入方式：  </p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/10.png"> </div><br><br>我们可以观察到嵌入秘密信息后，偶数代表信息“0”；奇数代表信息“1”。<br>DCT系数中0和1的处理：<br>DCT系数中“0”的比例最大(一般可达到60%以上，取决于图像质量和压缩因子), 压缩编码是利用大量出现连零实现的，如果改变DCT系数中“0”的话，就不能很好的实现压缩.<br>DCT系数中的“1”若变为“0”, 由于接受端无法区分未使用的“0”和嵌入消息后得到的“0”，从而无法实现秘密消息的提取。<br>大量的实验数据显示JPEG图像的DCT系数具有如下两个特性：<br>1.绝对值越大的DCT系数，出现的频率越低，对应其在直方图中的值就越小；<br>2.随着DCT系数绝对值的增加，其出现的频率下降的幅度减小，如直方图中间部分相邻两列的差值比边缘两列的差值要大。<br>Jsteg算法虽然简单易用，但是由于会引起系数直方图出现值对趋于相等的特点，用卡方分析可以很容易检测出秘密信息的存在，因此安全性较差。<br>JSteg隐写对直方图的影响如图9所示：  </p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/11.png"> </div><br>    </p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/12.png"> </div><br><br>JSteg隐写的特点：<br>1.简单，容易实现<br>2.容量可观，相对容量(嵌入容量与文件自身大小比值)与空域LSB方法相当<br>3.由于DCT系数统计直方图的异常，可以很容易的被卡方攻击方法检测出秘密消息的存在。<br>源码地址（golang）：<a href="https://github.com/lukechampine/jsteg" target="_blank" rel="noopener">https://github.com/lukechampine/jsteg</a><br>（matlab）<a href="http://www.pudn.com/Download/item/id/2240308.html" target="_blank" rel="noopener">http://www.pudn.com/Download/item/id/2240308.html</a>  </p>
+<h1 id="F3隐写"><a href="#F3隐写" class="headerlink" title="F3隐写"></a>F3隐写</h1><p>论文（2-F5-A steganographic algorithm High capacity despite better steganalysis(2001,IH,CR1118)<br>为了克服Jsteg隐写不能抵抗卡方分析的缺陷，F3隐写对JSteg隐写进行了改进，具体嵌入策略如下：<br>嵌入过程：<br>1.信息嵌入时，若DCT系数的LSB与要嵌入的秘密信息比特相同，则不做改动；否则，将该DCT系数的绝对值减1；<br>2.秘密信息嵌入在非0的DCT系数上，为0的系数不嵌入信息。当在绝对值为1的系数上嵌入比特0时，会产生新的0系数，则此次嵌入无效，在下一个系数中重新嵌入。<br>提取过程：<br>对F3隐写后的秘密信息提取时，只要将非0的DCT系数的LSB提取即可。<br>嵌入方式示意图见图10所示：<br>图10  F3嵌入方式:  </p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/12.png"> </div><br>  </p>
+<p>我们可以观察到嵌入秘密信息后，偶数代表信息“0”；奇数代表信息“1”。<br>F3隐写对直方图的影响如图11所示：<br>图11  嵌入前and隐写后:  </p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/13.png"> </div><br>    </p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/14.png"> </div><br>    </p>
+<p>F3隐写的特点：<br>1.保持了DCT系数统计分布关于0的对称性；<br>2.在DCT系数1或者-1中嵌入消息0得到0，此时检测器不能分辨DCT系数中消息嵌入产生的0和未使用的0，从而不能正确提取消息位，因而必须重传这一消息0；<br>3.嵌入了更多的零，这一异常可以被利用于隐写分析;<br>4.重传导致DCT系数中偶数明显增多(除0外)。原始图像一般来说DCT系数中奇数总数多于偶数总数(不包括零)，这样很容易区分开原始图像和载密图像。<br>源码地址为（python）：<a href="https://github.com/uuuup/F3_stegano" target="_blank" rel="noopener">https://github.com/uuuup/F3_stegano</a><br>（matlab）<a href="http://www.pudn.com/Download/item/id/3190169.html" target="_blank" rel="noopener">http://www.pudn.com/Download/item/id/3190169.html</a><br>实验结果如下图所示：  </p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/15.png"> </div><br>   </p>
+<h1 id="F4隐写"><a href="#F4隐写" class="headerlink" title="F4隐写"></a>F4隐写</h1><p>论文（2-F5-A steganographic algorithm High capacity despite better steganalysis(2001,IH,CR1118)<br>嵌入过程：<br>由于F3隐写嵌入了更多的零，并且重传导致DCT系数中偶数明显增多，这两个明显的缺点可以被利用于隐写分析。所以F4隐写对F3隐写进行了改进，具体嵌入过程如下：<br>若系数所代表的比特位（x&amp;1，源码见图14)与要嵌入的信息相同，则不做改动；若不同，则将系数的绝对值减1。<br>产生新的0系数时，视为无效嵌入，在下一个系数中重新嵌入。<br>图12  F4嵌入方式:</p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/16.png"> </div><br><br>我们可以观察到正奇系数和负偶系数代表1，正偶系数和负奇系数代表0，值为0的DCT系数仍不负载秘密信息。<br>F4隐写对直方图的影响如图13所示： (嵌入前andF4隐写后)</p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/17.png"> </div><br>     </p>
+<p>图14  F4隐写嵌入的JAVA源码:  </p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/18.png"> </div><br>     </p>
+<p>F4隐写的特点：<br>1.正偶数和负奇数代表消息0；负偶数和正奇数代表1；<br>2.若当前系数代表的消息位与待嵌入的消息位不一致，该系数的绝对值减小1;<br>3.系数绝对值减小1后若为0，则重新编码当前消息位;<br>4.重传的消息比特0和1的个数近似相等。<br>5.F4隐写后，图像的DCT系数直方图特性得到了保持。    </p>
+<h1 id="F5隐写"><a href="#F5隐写" class="headerlink" title="F5隐写"></a>F5隐写</h1><p>论文（2-F5-A steganographic algorithm High capacity despite better steganalysis(2001,IH,CR1118)<br>F4隐写使直方图特性得到了保持，但F4隐写是顺序嵌入的，这就使得LSB的修改集中在图像的某一部分，可能导致图像质量的不均匀；另外，当嵌入信息时，对系数的LSB更改的概率为1/2，所以在嵌入较多信息时，系数的更改会比较多，检测者据此很可能发现秘密信息的存在。所以F5隐写在F4隐写基础上，引入混洗和矩阵编码技术。混洗使得隐密图像的质量比较均衡。矩阵编码将减少嵌入对系数的更改，以提高嵌入效率。<br>嵌入过程：<br>1) 获取载体图像，进行JPEG压缩，得到量化后的DCT系数；<br>2) 对1)中得到的AC系数进行混洗，混洗的方法作为密钥；<br>3) 对可用的AC系数计数，并根据欲嵌入的秘密信息长度计算得到嵌入信息所使用的三元组(1, n, k);<br>4) 取出个混洗后的非0的AC 系数及欲嵌入的比特信息，采用矩阵编码进行嵌入：<br>① 计算载体数据是否需要更改。若不需要，则继续下一组的嵌入，若需要，则更改相应的数据LSB；<br>② 对经过更改后的数据，判断是否产生了新的值为0的系数，若有，则此次嵌入无效，重新取出n比特数据(包含上次嵌入中没有改变的n-1比特和1比特的新数据)，执行①；若没有，重复执行4)，直到秘密信息全部嵌入；<br>5) 逆混洗，恢复DCT系数为原来的顺序；<br>6) 生成隐密图像。<br>矩阵编码：<br>F5隐写引入矩阵编码使得嵌入效率得到很大的提高。嵌入的效率就是每个更改能够负载的秘密信息比特数。在通常的LSB隐写中，嵌入1比特的信息对LSB平均更改的概率使1/2，也就是说每个更改平均只能嵌入2比特的信息。而在F3隐写，F4隐写中，由于会出现无效的嵌入，所以嵌入效率会耕地，矩阵编码的目的就是以最少的更改嵌入更多的秘密信息。<br>以每次嵌入2比特信息x1 x2为例，此时，嵌入2比特信息只需用载体数据的3（22-1）个LSB：a1，a2，a3且最多改动其中的一个ai即可实现2比特数据的嵌入，分四种情况来分析：<br>若x_1=a_1⊕a_3,x_2=a_2⊕a_3，则不作任何改变，<br>若x_1≠a_1⊕a_3,x_2=a_2⊕a_3，改动a1<br>若x_1=a_1⊕a_3,x_2≠a_2⊕a_3，改动a2<br>若x_1≠a_1⊕a_3,x_2≠a_2⊕a_3，改动a3<br>假设存在码字a，具有n个可修改的位置，用来嵌入k比特的秘密消息x。<br>对于任意a和x的组合找到码字a’，是否存在变换f和一个确定的值d，使得x=f(a’)，且a与a’之间的汉明距离满足d(a, a’)≤d<br>长度为n的码字在改变其中不超过d个比特时嵌入k比特信息，这个问题用三元组(d, n, k)来表示。<br>(1, n, k)码的性能指标：<br>改变的比特的比例为：D(k)=1/(n+1)=1/2k<br>嵌入率为：R(k)=k/n=k/(2k-1)<br>嵌入效率为：W(k)=R(k)/D(k)=2k*k/(2k-1)<br>F5隐写后，图像的DCT系数直方图特性依然得到了保持，几种用F5创建的JPEG文件的比较 如下所示。<br> <div align="center"> <img src="/2019/03/21/Steganography-basic/19.png"> </div><br><br>源码地址（java）：<a href="https://github.com/matthewgao/F5-steganography" target="_blank" rel="noopener">https://github.com/matthewgao/F5-steganography</a><br>（matlab nsF5）<a href="http://dde.binghamton.edu/download/nsf5simulator/" target="_blank" rel="noopener">http://dde.binghamton.edu/download/nsf5simulator/</a><br>运行结果如下图所示：  </p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/20.png"> </div><br>      </p>
+<h1 id="OutGuess隐写"><a href="#OutGuess隐写" class="headerlink" title="OutGuess隐写"></a>OutGuess隐写</h1><p>论文（1-Defending Against Statistical Steganalysis(2001,Usenix,CR743))<br>OutGuess算法是Niels Provos针对Jsteg类算法的缺陷提出的一种方法，主要分两个部分:<br>嵌入过程不修改DCT系数值为0，1的DCT系数，利用伪随机数发生器产生间隔以决定下一个要嵌入的DCT系数的位置。（随机间隔）<br>纠正过程消除对效应的出现，方法是利用那些未被修改的DCT系数进行修改来维持直方图保持不变。<br>嵌入信息时的冗余比特选取方式：<br>b0=0, bi=bi-1+Ri(x), i=1,2,…<br>其中bi表示第i个比特嵌入的位置，Ri(x)表示PRNG产生的伪随机数，Ri(x)介于1与x之间。每嵌入8比特, 重新计算x=2m/H ，m表示剩余的冗余比特数，H表示尚未嵌入的秘密信息长度。<br>嵌入状态字时的冗余比特选取方式：<br>同上，不同的是x是确定的。<br>但是上述过程存在有以下两方面的缺陷：<br>1.选取的冗余比特序列中某些比特可能已经被锁定，即对这些比特进行修改会引起图像显著的变化，或者在多重嵌入时，这些比特位置可能已经被嵌入过了秘密信息。当遇到以上两种情况时，对冗余比特进行更改将使得隐秘图像易于被检测，或使得其中一方无法接收到正确信息。<br>2.不管如何减少对系数的更改，嵌入仍然会改变原始图像DCT系数直方图的特性，从而使得扩展的卡方检测能够检测。<br>因此，对隐写过程进行了两方面的修正：纠错编码与RC4流加密。<br>提取过程：<br>1.对秘密信息进行纠错编码，然后根据密钥K使用RC4流加密方法对编码后的秘密信息进行加密处理。<br>RC4是一个可变密钥长度、面向字节操作的流密码。流密码的结构是，密钥输入到一个伪随机数(比特)发生器，该伪随机数发生器产生一串随机的8比特数.简单地说，一个伪随机流就是在不知道输入密钥的情况下不可预知的流。发生器的输出称为密钥流，通过与同一时刻一个字节的明文流进行异或(XOR)操作产生密文流。如果发生器产生的下一字节为01101100，而下一明文字节为11001100，则得出的密文字节为:10100000。<br>2.寻找合适的种子，使得选取的冗余比特（非0和1的系数的LSB）序列与秘密信息的差别最小，并且与锁定位置间的冲突最小。<br>3.对由16比特种子和16比特的秘密信息长度组成的状态信息进行纠错编码，然后根据密钥K用RC4流加密的方法对编码后的状态信息进行加密。<br>4.根据密钥K采用b0=0, bi=bi-1+Ri(x)方法选取冗余比特位置，嵌入加密后的状态信息。<br>5.根据状态信息中的种子，采用b0=0, bi=bi-1+Ri(x)和x=2m/H方法选取冗余比特序列，并依据下列方法嵌入信息：<br>1）当选取的系数的LSB与带嵌入的信息相同时，不对系数进行更改。<br>2）当选取的系数的LSB与带嵌入的信息不相同时，若该系数被锁定，不对系数进行更改。否则，对系数的LSB取反。<br>6.直方图修正操作。<br>嵌入秘密信息时引入直方图修正，以保持DCT系数直方图的特性不变。如，需更改第j个DCT系数DCT(j)：若DCT(j)=2i，则将其更改为2i+1，同时，应选取一个值为2i+1的系数DCT(k)，将其更改为2i。<br>容量要求<br>用h(i)表示载体中值为i的系数数量，a表示信息长度与冗余比特数量间的比率。若h(2i)&gt;h(2i+1)，则嵌入后直方图为：<br>                   h’(2i)=h(2i)-a/2(h(2i)-h(2i+1))<br>                   h’(2i+1)=h(2i+1)+a/2(h(2i)-h(2i+1))<br>显然，值为2i的系数减少，而值为2i+1的系数增多，它们减少和增多的数量都为a/2(h(2i)-h(2i+1))为了保持直方图不变，需要将部分未含信息的值为2i+1的系数更改为2i. 而未含信息的值为2i+1的系数为h(2i+1)(1-a/2).<br>因此，为了有足够的系数用于修正，信息比率a应满足 h(2i+1)(1-a/2)≥a/2(h(2i)-h(2i+1))即a≤2h(2i+1)/(h(2i)+h(2i+1))<br>OutGuess算法的基本步骤由 C 代码表述如下<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> coef,mesg,hide_reference;<span class="comment">//coef 和 mesg 分别存储当前 DCT 系数和下一信息比特  </span></span><br><span class="line">PRNG *prng; <span class="comment">//声明伪随机数列指针  </span></span><br><span class="line">prng=JPhide_PRNG ( get_user_key ( ) );<span class="comment">//由用户密码产生伪随机数列  </span></span><br><span class="line"><span class="keyword">if</span> ( ! ( ALL_MESSAGE_EMBEDDED&amp;&amp;PIC_NOT_FULL ) )<span class="comment">//信息未隐藏完毕且图像未满时继续隐藏  </span></span><br><span class="line">&#123;  </span><br><span class="line">jump (prng );<span class="comment">//由 PRNG 的值决定跳过的 DCT 系数个数  </span></span><br><span class="line"><span class="keyword">if</span> (coef&amp;<span class="number">1</span>!=coef ) <span class="comment">//跳过 DCT 系数 0 和 1  </span></span><br><span class="line">&#123;  </span><br><span class="line">mesg=get_next_bit; <span class="comment">//获得下一比特信息</span></span><br><span class="line">mes|=~<span class="number">1</span>; <span class="comment">//mesg 取反准备写入</span></span><br><span class="line">coef&amp;=mesg; <span class="comment">//写入 LSB</span></span><br><span class="line">&#125; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>在此基础上 OutGuess0.2 版本还引入了对 DCT 系数直方图的修正，即在加密过程完成后采用一种算法修改一些冗余的 DCT 系数 是图像加密前后值相同的 DCT 系数其总个数不变这就使得用 DCT 系数直方图检测的算法完全失去了用武之地，伪代码如下：<br> <div align="center"> <img src="/2019/03/21/Steganography-basic/21.png"> </div><br><br>F5 算法和 OutGuess0.2 算法有以下的几个共同特征 第一 除了对 DCT 系数值为 1 和 0 的系数外 这两种算法均对所有的 DCT系数做相同的修改 而且所修改的 DCT 系数都尽量均匀的随机分布于整副图像 第二，写入的数据都与伪随机序列作过处理 所以写入的比特流可视为 0 ，1 等概出现。<br>源码地址（C++）：<a href="https://github.com/crorvick/outguess" target="_blank" rel="noopener">https://github.com/crorvick/outguess</a><br>运行结果如图15所示。<br> 图15 outguess运行结果:  </p>
+<p><div align="center"> <img src="/2019/03/21/Steganography-basic/21.png"> </div><br>     </p>
+<h1 id="MB隐写"><a href="#MB隐写" class="headerlink" title="MB隐写"></a>MB隐写</h1><p>论文（3-Model-Based Steganography(2003,IWDW,CR504))<br>Sallee于2004年提出了基于模型（Model-based，MB）的隐写框架，是隐写安全性研究成果与隐写方法设计的良好结合。<br>基本思想：<br>将载体信号建模为由两部分组成的随机变量X=(Xdet, Xindet)，其中Xdet和Xindet分别表示确定的和非确定的部分。隐写时，将只更改Xindet，从而保持它的分布不变，而且将确保隐密对象的非确定部分服从一定的分布模型。<br>计算确定部分的概率分别，并根据假设的模型，计算非确定部分相对确定部分的条件概率。<br>用熵解码器把均匀分布的秘密信息比特解码成服从上述条件概率分布的数据。<br>用得到的数据替换X中的非确定部分，得到隐密对象。<br>基于MB模型隐写的嵌入过程如图16所示，提取过程如图17所示：<br> 图16  基于MB模型隐写的嵌入过程结构框图<br>   <div align="center"> <img src="/2019/03/21/Steganography-basic/21.png"> </div><br><br>图17  基于MB模型隐写的图提取过程结构框图<br>  <div align="center"> <img src="/2019/03/21/Steganography-basic/21.png"> </div><br><br>Sallee将MB隐写框架应用于JPEG图像，提出了基于广义Cauchy模型的JPEG隐写，简称为Cauchy MB隐写。由于该算法是基于MB隐写框架设计的第一个隐写算法，也被称为MB1隐写。<br>h_k^((i,j))表示量化后AC系数的直方图，在这里称之为高精度直方图，其中(i, j)表示该直方图所统计的系数在8×8分块中的位置，k表示量化后的AC系数值。将量化后的DCT系数值进行分组。<br>前面介绍的几种常见的JPEG图像的隐写算法都是通过改变图像DCT系数的最低比特位来嵌入秘密消息的，MB算法亦类似，它将秘密消息先进行编码再嵌入到量化后的AC系数的LSB上，且原始值为0的AC系数除外。其嵌入机制如图18所示。<br> 图18  MB隐写的嵌入机制：<br>  <div align="center"> <img src="/2019/03/21/Steganography-basic/21.png"> </div><br><br>与常用的高斯分布、广义拉普拉斯分布等相比，柯西分布能够更好地拟合AC系数直方图。尤其在柯西分布的尾部，能够对直方图进行非常好的拟合。<br>柯西分布具有封闭形式的概率分布函数，这使得能够方便地计算每个直方图方条的概率。<br>图19  （2，2）的AC系数直方图及其拟合的柯西曲线<br>  <div align="center"> <img src="/2019/03/21/Steganography-basic/21.png"> </div><br><br>为了保持分组内各系数值所占的比例与用柯西分布拟合所得到的一致，MB1隐写将秘密信息、每个系数值在分组内的相对位置及其条件概率传至熵解码器，以解码得到隐写后的每个系数值在分组内的相对位置，从而得到隐密系数。<br>为了避免只改变图像的一部分而引起的与未含秘密信息部分的视觉差异，用于隐写信息的系数顺序将随机确定。<br>嵌入过程：<br>1) 给定JPEG格式的载体图像，加密后的信息。得到载体图像AC系数值的低精度直方图（系数值分组长度大于1）作为Xdet；<br>2) 采用最大似然拟合每个直方图的模型参数和；<br>3) 由系数值在各自分组内的偏移组成Xindet, 利用模型的条件概率密度函数计算每个系数的值所在的分组内所有可能的偏移相对其分组的条件概率；<br>4) 选取一个伪随机置乱，以确定系数顺序；<br>5) 以4)中确定的顺序将秘密信息、系数偏移、3)中计算得到的条件概率传至一个非自适应算术解码器。解码得到含秘密信息的偏移；<br>6) 根据系数值所在的分组和解码得到的系数值在分组内的偏移，得到隐写后的系数。<br>提取过程：<br>1)-4)与嵌入过程相同。<br>5) 以4)中确定的顺序将系数偏移、3)中计算得到的偏移概率传至非自适应算术编码器。编码得到秘密信息。<br>之后，考虑到MB1隐写将增大图像8×8块间的不连续性，即分块效应，Phil Sallee只在至多一半的非0系数上进行MB1隐写，然后对剩下的非0系数值进行调整，以减小分块效应，从而提出MB2隐写。<br>源码地址（matlab）：<a href="http://www.pudn.com/Download/item/id/1748692.html" target="_blank" rel="noopener">http://www.pudn.com/Download/item/id/1748692.html</a>    </p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>关于信息隐藏的基础论文，翟师兄给我分为了两个部分，第一个部分是关于隐写论文，<br>前3篇是IPEG图像的隐写算法（OutGuess、F5，MB），第4篇是空域图像的隐写算法（EA）。第二部分为隐写分析，前3篇是JPEG图像的隐写分析，第4篇是空域图像的隐写分析。<br>在本周中，主要按照翟师兄布置的隐写论文前三篇进行学习。对JEPG图像一些处理，如：DCT变换，量化，图像置乱，Huffman编码，差分脉冲调制编码，行程长度编码都有了一定的认识。然后正式进入了最基础的Jsteg隐写的学习，Jsteg隐写简单，容易实现并且有可观的信息隐藏容量，但是很容易引起系数直方图出现值对趋于相等的特点，能够使用卡方检验很容易检验出来。F3隐写在Jsteg隐写进行了改进，使它能够抵抗卡方检测，但是由于F3隐写嵌入了更多的零，并且重传导致DCT系数中偶数明显增多，这两个明显的缺点可以被利用于隐写分析。所以F4隐写对F3隐写进行了改进，使得.重传的消息比特0和1的个数近似相等，图像的DCT系数直方图特性得到了保持。但F4隐写是顺序嵌入的，这就使得LSB的修改集中在图像的某一部分，可能导致图像质量的不均匀；另外，当嵌入信息时，对系数的LSB更改的概率为1/2，所以在嵌入较多信息时，系数的更改会比较多，检测者据此很可能发现秘密信息的存在。所以F5隐写在F4隐写基础上，引入混洗和矩阵编码技术。混洗使得隐密图像的质量比较均衡。矩阵编码将减少嵌入对系数的更改，以提高嵌入效率。<br>OutGuess算法是Provos针对Jsteg类算法的缺陷提出的一种方法，主要分两个部分:首先嵌入过程不修改DCT系数值为0，1的DCT系数，利用伪随机数发生器产生间隔以决定下一个要嵌入的DCT系数的位置。（随机间隔）其次，纠正过程消除对效应的出现，方法是利用那些未被修改的DCT系数进行修改来维持直方图保持不变。该算法在载体图像的JPEG量化系数中随机选择嵌入位置，通过LSB替换的方式嵌入秘密信息。它能够根据秘密信息的长度自动调整嵌入位置的间隔距离，使得秘密信息的均匀分布在载体图像上，从而提高隐写的安全性。在嵌入过程中，隐写口令与秘密信息的长度共同决定嵌入位置的选择。具体的，秘密信息的长度决定了每次随机选择嵌入位置的偏移量的范围;而以隐写口令作为种子生成的伪随机序列决定具体偏移量。在其它参数保持不变的情况下，不同的隐写口令决定了不同的嵌入位置。提取消息时，同样需要隐写口令计算出嵌入位置，才能正确提取出消息内容。<br>基于JPEG图像的MB算法的提出即是从保持载体图像的统计模型这一角度出发的，因此，载密图像和载体图像的统计期望模型是一致的。但是，载密图像比载体图像和统计期望模型吻合的更好，根据这一点Bohme设计了可以衡量待检测图像与期望模型接近程度的统计量，实现了对MB算法的检测。<br>总的来说感觉自己对Jsteg，F3，F4，F5隐写都有了比较清晰的认识，对OutGuess与MB隐写还需要重复多看几遍翟师兄给的论文进一步提高。  </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JEPG-Steganography/" rel="tag"><i class="fa fa-tag"></i> JEPG Steganography</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/13/操作系统/" rel="next" title="操作系统">
+                <i class="fa fa-chevron-left"></i> 操作系统
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100017135643802" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                    
+                      FB Page
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/6862942751/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://isujin.com/" title="素锦" target="_blank">素锦</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://imkira.com/" title="Kira" target="_blank">Kira</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JEPG基础图像处理"><span class="nav-number">1.</span> <span class="nav-text">JEPG基础图像处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DCT变换"><span class="nav-number">1.1.</span> <span class="nav-text">DCT变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#量化"><span class="nav-number">1.2.</span> <span class="nav-text">量化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编码"><span class="nav-number">1.3.</span> <span class="nav-text">编码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Jsteg隐写"><span class="nav-number">2.</span> <span class="nav-text">Jsteg隐写</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#F3隐写"><span class="nav-number">3.</span> <span class="nav-text">F3隐写</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#F4隐写"><span class="nav-number">4.</span> <span class="nav-text">F4隐写</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#F5隐写"><span class="nav-number">5.</span> <span class="nav-text">F5隐写</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OutGuess隐写"><span class="nav-number">6.</span> <span class="nav-text">OutGuess隐写</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MB隐写"><span class="nav-number">7.</span> <span class="nav-text">MB隐写</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>
