@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JEPG Steganography," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="信息安全系统通常，信息安全系统分为两大类，一类是加密，另一类是信息隐藏。这两个类别都负责保护信息，但他们的技术不同。信息隐藏一般分为两个部分，隐写术与数字水印。 隐写术是在数据通信期间，保护消息的另一种方法。隐写术和密码学的最终目标是相同的，但他们的方法是不同的。隐写术不会改变数据或消息的格式并保持其实际数据的存在，而密码术通过将数据转换为不可读的形式来保密数据。即使原始数据已加密，加密方法的缺点">
+<meta name="keywords" content="JEPG Steganography">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Steganograph(notes)">
+<meta property="og:url" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="信息安全系统通常，信息安全系统分为两大类，一类是加密，另一类是信息隐藏。这两个类别都负责保护信息，但他们的技术不同。信息隐藏一般分为两个部分，隐写术与数字水印。 隐写术是在数据通信期间，保护消息的另一种方法。隐写术和密码学的最终目标是相同的，但他们的方法是不同的。隐写术不会改变数据或消息的格式并保持其实际数据的存在，而密码术通过将数据转换为不可读的形式来保密数据。即使原始数据已加密，加密方法的缺点">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/ad120d13150b84346708dd56da0d92d2.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/4dfd143832d64b981c0c77ebbf53162b.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/9eb5ddf0f2cc32d2da409817c600f5a7.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/fe17a8afaebdfafce8e6d6db697850f6.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/5fe3d2498b830aa28de8a549615a3b5b.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/4b4f4ae0c197af119d0268424bdc0952.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/6108e4883cdf4af23c39b9673ceda43c.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/e561f983c3aca4c845c792046fb7b9ec.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/9c713df657d70bf210eb8388558ea5ca.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/888f28dfc39141cd9d1d8ff041f6e9aa.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/44a5663293b38170c16e03e4bdc9f5bd.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/2b472520e202dce86b85ac212d6ea03d.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/6f5ba89b3ee27f6fb5eee8d55d135558.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/61ca8b6b2037096f0d9b74f849472cf3.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/cc061f708e1e4361efb84af59c84b390.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/a7fe24a194483ef0022062b922c3abed.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/789a195a7e6ae07c8a11db6995666644.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/36dfb8910a4d2714e9dd9f546f28e28e.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/7a438cffc3213ba6e11eb16cb258be8d.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/cf131b76829f094da7ae3d8b62fe7c0c.jpg">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/52b0170d91d5e047bfa3e209a4024878.jpg">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/debacd448109cf17840f18b10c11c372.jpg">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/689fdd7db25a75b8f475c6ad4bbad2a8.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/01936f0a0d982a4a8dabd3d56ce32c70.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/1425a7591982207fb450c99a34b15e48.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/b30045ff30252d643f32aa73d29b2729.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/48b51c0405f15eb97034b42982b2af31.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/1f3d7915d498f65afefae40b17d78d3b.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/89606b9be73e3410177b1d22eb11d0e4.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/c1d792b88e84c9330d7b6a9765f18ced.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/069ee4e010acd567362d175d68ef8077.png">
+<meta property="og:updated_time" content="2019-03-22T13:03:20.726Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Steganograph(notes)">
+<meta name="twitter:description" content="信息安全系统通常，信息安全系统分为两大类，一类是加密，另一类是信息隐藏。这两个类别都负责保护信息，但他们的技术不同。信息隐藏一般分为两个部分，隐写术与数字水印。 隐写术是在数据通信期间，保护消息的另一种方法。隐写术和密码学的最终目标是相同的，但他们的方法是不同的。隐写术不会改变数据或消息的格式并保持其实际数据的存在，而密码术通过将数据转换为不可读的形式来保密数据。即使原始数据已加密，加密方法的缺点">
+<meta name="twitter:image" content="http://fennudehaogua.top/2019/03/20/Steganograph-notes/media/ad120d13150b84346708dd56da0d92d2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2019/03/20/Steganograph-notes/"/>
+
+
+
+
+
+  <title>Steganograph(notes) | fennudehaogua.top</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?727b9992a1a14607aebb47500e5bcc08";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2019/03/20/Steganograph-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Steganograph(notes)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-20T20:58:26+08:00">
+                2019-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Steganography/" itemprop="url" rel="index">
+                    <span itemprop="name">Steganography</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="信息安全系统"><a href="#信息安全系统" class="headerlink" title="信息安全系统"></a>信息安全系统</h1><p>通常，信息安全系统分为两大类，一类是加密，另一类是<a href="https://www.sciencedirect.com/topics/computer-science/information-hiding" target="_blank" rel="noopener">信息隐藏</a>。这两个类别都负责保护信息，但他们的技术不同。信息隐藏一般分为两个部分，隐写术与数字水印。</p>
+<p>隐写术是在数据通信期间，保护消息的另一种方法。隐写术和密码学的最终目标是相同的，但他们的方法是不同的。隐写术不会改变数据或消息的格式并保持其实际数据的存在，而密码术通过将数据转换为不可读的形式来保密数据。即使原始数据已加密，加密方法的缺点在于原始数据的存在。因此，隐写术技术是加密技术的附加安全性。通过两者的结合，它在数据通信期间为消息提供了额外的安全层。</p>
+<p>每当数据安全性成为问题时，水印就会浮出水面。它是一种流行的数据安全技术，它使用身份验证和版权方法来实现其目的。将数字数据嵌入多媒体数据中的过程称为水印。基于其对文件的可见性（例如可见水印和不可见水印），水印可以进一步分为两种方式。水印处理可防止媒体文件和伪拥有权声明的不道德重复。它对于一对多通信很有用。水印背后的主要动机是在媒体文件或文档上生成安全，健壮且有效的水印，这是未经授权的一方永久且不可更改的。水印和隐写术的最终目标是不同的，因为隐写术旨在通过将秘密数据嵌入另一数字对象（例如数字图像和水印）中来提供安全的数据通信，旨在提供保护以免受版权侵犯。指纹识别和水印相似的方式都需要标记对象。唯一的区别是每个指纹识别需要不同的指纹来证明它们的所有权，而水印标记在不同的物体上标记相同的水印。</p>
+<p>水印和隐写技术的另一个主要区别是，隐写术可以选择一个对象来隐藏其中的秘密信息，但是在水印的情况下，需要特定的对象来覆盖并且不能忽略。安全系统的分类以及隐写术，水印，加密技术的比较见图1-1。</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/ad120d13150b84346708dd56da0d92d2.png" alt=""></p>
+<p><img src="/2019/03/20/Steganograph-notes/media/4dfd143832d64b981c0c77ebbf53162b.png" alt=""></p>
+<p>图1</p>
+<h1 id="隐写术"><a href="#隐写术" class="headerlink" title="隐写术"></a>隐写术</h1><p>隐写术，旨在把秘密信息传送给指定的接收方，而不引起第三方的注意。隐写术利用数字媒体（如图像、视频、音频、文本等）的冗余性，对数字媒体进行修改以隐藏秘密信息。隐写术通过隐藏秘密信息的存在性，不引起监控者的注意，可达到成功传输秘密信息的目的。隐写术的一般流程如图1-2所示。</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/9eb5ddf0f2cc32d2da409817c600f5a7.png" alt=""></p>
+<p>图2</p>
+<p>任何隐写系统主要有三个基本属性，即安全性，鲁棒性和隐藏容量。</p>
+<p>安全性：在隐写系统中，“安全”一词间接地指“不可感知”或“不可检测性”。因此，如果秘密数据在被攻击者检测到之后无法通过统计方法检测或移除，则任何隐写术技术都被认为是安全的。隐写过程的关键要求是秘密数据的安全传输。因此，安全性是首要考虑因素，以避免未经授权的人员或计算机在通过开放频道进行传输时访问数据。</p>
+<p>不可感知性：任何数据嵌入的最高优先级要求是不可察觉的，因为任何隐写技术的关键目标都是将秘密数据隐藏在数字图像中，这样就无法用肉眼或使用统计数据来理解。简而言之，如果stego文件和原始数据文件的统计数据相似，则数据通信的安全性更好。虽然在cover中嵌入秘密数据会增加一些噪音，但在通过不安全的通道共享时，cover图像的质量不应该降低。</p>
+<p>隐藏容量：高效的隐写系统始终旨在使用最少的cover发送最大的信息。这将有助于减少通过不安全网络发送时拦截的可能性，因此通常需要高嵌入容量。Venkatraman等将嵌入率定义为隐藏的信息量（以比特为单位）除以cover图像的大小。在不牺牲不可感知性和安全性的情况下保持更高的有效载荷能力是隐写术中的主要挑战。</p>
+<p>鲁棒性：鲁棒性是指在经历多种无意或有意的信号处理过程后<br>，数字水印仍能保持完整性或仍能被准确鉴别 。</p>
+<p>隐写表现评估：</p>
+<p><strong>有效载荷能力</strong>：它是cover图像中隐藏的信息量的度量。它通常表示为每像素位数（BPP），其中：</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/fe17a8afaebdfafce8e6d6db697850f6.png" alt=""></p>
+<p>有效载荷容量在隐写系统中更为重要，因为通信开销将与最大有效载荷容量一致。</p>
+<p><strong>峰值信噪比（PSNR）</strong>:<br>当改变cover图像以嵌入秘密数据时，cover图像像素值将发生变化。需要对这些变化进行分析，因为它直接影响输出Stego图像的不可感知性。PSNR是用于通过分析Cover和Stego图像之间的均方误差值来测量Stego图像质量的流行且一流的度量标准之一。对于8位图像，PSNR计算为:</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/5fe3d2498b830aa28de8a549615a3b5b.png" alt=""></p>
+<p>其中MSE是比较cover和stego图像时的均方误差，N是cover图像像素的数量，$$C_{i}^{‘}$$<br>代表stego图像中第i个像素的强度 ，$$C_{i}$$ 代表cover图像中第i个像素的强度 。</p>
+<p><strong>结构相似性指数测量（SSIM）：</strong>SSIM是一种比较度量模式，用于检查两个图像之间的相似性。它的计算方法是：</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/4b4f4ae0c197af119d0268424bdc0952.png" alt=""></p>
+<p>其中μx和μy是图像x和y的平均强度值。<br>σx2是x的方差，σy2是y的方差，σxy2是x和y的协方差。<br>C1和C2是两个稳定参数，L是动态变化的像素值，常数k1=0.01，k2=0.03。 </p>
+<p><strong>相关因素：</strong></p>
+<p>相关因子（相关系数）计算为：</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/6108e4883cdf4af23c39b9673ceda43c.png" alt=""></p>
+<p>其中<em>N</em>是cover图像像素值，$$C_{i}^{‘}$$<br>代表stego图像中第i个像素的强度 ，$$C_{i}$$<br>代表cover图像中第i个像素的强度 。<em>μ s</em>和<em>μ Ç</em>分别stego图像和cover图像的平均像素值。</p>
+<p>还有一些其他的指标也可以测量stego和cover之间的图像质量，例如：加权峰值信噪比（WPSNR），Kullback-Leibler发散（K-L发散），PSNR-HSV，接收器工作特性曲线（ROC），通用图像质量指数（UIQI），最大平均差异（MMD），欧几里德距离（ED）和曼哈顿距离（MD）。</p>
+<h2 id="图像隐写技术的分类"><a href="#图像隐写技术的分类" class="headerlink" title="图像隐写技术的分类"></a>图像隐写技术的分类</h2><p>分类可以依赖于所使用的cover图像的类型（2D或3D图像），目标应用类型或检索过程（可逆或不可逆），嵌入过程（空间或变换域）的性质和自适应隐写术。基于研究范围，图1-3给出了图像隐写技术的分类。</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/e561f983c3aca4c845c792046fb7b9ec.png" alt=""></p>
+<p>图3</p>
+<h3 id="cover图像的类型"><a href="#cover图像的类型" class="headerlink" title="cover图像的类型"></a>cover图像的类型</h3><p>图像可以用多种格式表示。它包括诸如灰度或二值图像的二维图像，诸如三色RGB图像的 3D <a href="https://www.sciencedirect.com/topics/computer-science/rgb-image" target="_blank" rel="noopener">图像</a>，或诸如MRI的多切片图像。基于所使用的cover图像的尺寸，隐写系统可以分为2D图像隐写术或3D图像隐写术。</p>
+<h3 id="基于检索性质的分类"><a href="#基于检索性质的分类" class="headerlink" title="基于检索性质的分类"></a>基于检索性质的分类</h3><p>在隐写过程中，通常秘密数据位嵌入在cover中，并且在接收器处，嵌入数据与stego分离。该过程可以设计有两个动机：可逆和不可逆类型在前者中，cover/host和秘密数据都可以恢复而不会丢失任何数据，在后一种类型中，无错误的检索仅适用于秘密数据，并且cover图像可能会被破坏。</p>
+<p>不可逆的隐写术：这是图像隐写术中的一个流行领域，其中重要的是秘密数据，并且cover图像仅用作隐藏秘密消息的包装器。通常，广泛已知的公共图像被用作cover图像，因此，cover的无损检索不是主要关注点。这种类型的算法旨在提高可感知性，有效载荷容量，鲁棒性（在stego图像失真中保存秘密数据），秘密数据的无损检索等。</p>
+<p>通常，在不可逆技术中，cover图像比特以不可逆的方式被改变，并且实际上不可以从stego图像中检索改变的cover图像比特。因此，该技术对于不需要将cover图像中的相关信息传递给接收器。</p>
+<p>可逆型隐写术：可逆图像隐写术是一种数据隐藏系统模式，其中cover图像和秘密图像都很重要，并且它们都需要以无损方式与stego图像分离。通常，该技术在诸如军事和医学应用之类的高级通信场景中具有重要意义，而不是普通的隐写通信。在水印中，通常使用可逆型隐写术<em> </em>。这种类型中，cover数据可能比stego图像的数据更重要，并且这些细节中的泄漏或丢失将是关键的，算法应被设计为使得检索精度很高的那种。</p>
+<h3 id="基于嵌入域的分类"><a href="#基于嵌入域的分类" class="headerlink" title="基于嵌入域的分类"></a>基于嵌入域的分类</h3><p>用于在cover图像上隐藏秘密数据的嵌入过程是隐写过程的主要部分。由于有可能在cover图像的空域和变换域上嵌入秘密数据，所以可以基于嵌入域进行分类。</p>
+<h4 id="空域图像隐写术"><a href="#空域图像隐写术" class="headerlink" title="空域图像隐写术"></a>空域图像隐写术</h4><p>数字图像中数据嵌入的最简单的方法是修改空域本身中的cover图像像素值。这些技术直接或间接地使用cover图像像素强度值水平来编码秘密消息比特。这些方法在嵌入和解码复杂性方面属于一些最简单的机制。空间或图像域技术使用逐位方法，使用简单机制应用位插入和噪声操作。属于空域技术的主要隐写方案，包括最低有效位（LSB），像素值差分（PVD），直方图移位，基于扩展，基于多个位平面，基于量化，基于调色板，基于图案和基于像素强度调制的隐写术。</p>
+<h5 id="最低有效位（LSB）隐写术"><a href="#最低有效位（LSB）隐写术" class="headerlink" title="最低有效位（LSB）隐写术"></a>最低有效位（LSB）隐写术</h5><p>最低有效位（LSB）技术是最简单且因此流行的空间图像隐写方法之一。这种方法背后的想法是，在图像中，最低有效位仅表示微弱信息，并且人眼无法检测到这些位中的微小变化。在基于LSB的空域技术中，通过改变所选像素的最低有效位而不扭曲视觉质量，秘密数据直接嵌入载体图像中。当该技术用于仅具有人类攻击的通信信道时，入侵者无法发现视觉质量下降。但从统计学上讲，嵌入过程会产生平均比特嵌入率的50％（每像素的嵌入比特）范围内的噪声。早期的LSB隐写术只是集中精力设计系统，通过利用大部分cover图像像素来增加有效载荷容量。随着时间的推移，隐写分析领域已经变得足够强大，可以使用统计分析打破这种系统。然后使研究问题变得更加专注于开发基于密码学-隐写术的复杂稳健的LSB技术，这种技术可以逃避这种隐写分析攻击。</p>
+<p>为了提高效率，在研究中进行了许多基于LSB的图像隐写的改进版本。重要的是使用LSB 匹配算法，基于图像特征的自适应LSB嵌入，如强度，纹理内容或边缘像素的性质，基于学习方法的优化LSB替换等。此外，为了增加嵌入容量，LSB技术可以以降低的不可感知性为代价扩展到4<br>LSB平面。LSB技术的主要优点是嵌入和解码过程简单。由于大多数图像格式使用8位表示来表示各个像素，因此根据秘密数据调制cover<br>图像的一些或所有像素强度值的最低有效位（通常为第6至第8位）。使用24位彩色图像作为cover时，每个颜色平面（红色，绿色和蓝色）的最低有效位根据数据进行更改。然而，LSB方法容易受到统计攻击，而stego图像中的操作很少。由于LSB隐写术主要是cover图像的空间像素值的修改，即使我们忽略了入侵者的攻击，其解码性能取决于通信信道中的噪声，压缩量化等的影响。</p>
+<h5 id="像素值差分（PVD）隐写术"><a href="#像素值差分（PVD）隐写术" class="headerlink" title="像素值差分（PVD）隐写术"></a>像素值差分（PVD）隐写术</h5><p>在该方法中，通过比较两个连续像素的像素值之间的差异来隐藏秘密消息。在基本PVD方法中，在嵌入时，将秘密消息和cover图像划分为具有两个<a href="https://www.sciencedirect.com/topics/computer-science/adjacent-pixel" target="_blank" rel="noopener">相邻像素的</a><a href="https://www.sciencedirect.com/topics/computer-science/nonoverlapping-block" target="_blank" rel="noopener">非重叠块</a>，然后将每个块中的像素的<a href="https://www.sciencedirect.com/topics/computer-science/difference-value" target="_blank" rel="noopener">差值存储</a>到多个组中。基于从低保真度到高频率的强度值变化的人类视觉灵敏度来选择范围间隔的选择。对于密集嵌入场景，PVD显示出比LSB方法更好的精度，因为在PVD技术中嵌入更平滑。该<a href="https://www.sciencedirect.com/topics/computer-science/systems-design" target="_blank" rel="noopener">系统的设计</a>是在这样的方式中改变将在指定范围内的间隔的界限。</p>
+<p>在PVD隐写术领域，通过分析像素的相关性提出了许多方法。使用不同的邻域方案（例如，五个，六个，七个和八个邻域）来找到差异以预测cover像素中最优化的嵌入水平。与大多数其他PVD方法相比，视觉扭曲似乎很微弱。这种PVD方法的主要缺点是缺乏安全性，即使它提供了更好的图像感知因子。为了改善PVD方法的这种安全因素，标准PVD方案中包括许多其他<a href="https://www.sciencedirect.com/topics/computer-science/security-feature" target="_blank" rel="noopener">安全特征</a>，例如Hussain等提出了一种数据隐藏方法，该方法通过使用两种嵌入过程模式来提高安全性。这些过程改进了最右边的数字替换（iRMDR）和奇偶校验位像素值差（PBPVD）。另一<a href="https://www.sciencedirect.com/topics/computer-science/enhanced-security" target="_blank" rel="noopener">增强安全性</a>的示例是基于易攻击的PVD提出的<a href="https://www.sciencedirect.com/topics/computer-science/histogram-analysis" target="_blank" rel="noopener">直方图分析</a>。为了结合不同嵌入方案的优点，提出了混合嵌入方案。（即采用PVD和LSB替代的隐写方法）。为了提高效率，研究了许多基于PVD的图像隐写的改进版本。重要的是使用自适应PVD块，采用伪随机数机制来选择块并通过优化策略解决PVD中的衰减边界问题。</p>
+<h5 id="基于直方图移位的隐写术"><a href="#基于直方图移位的隐写术" class="headerlink" title="基于直方图移位的隐写术"></a>基于直方图移位的隐写术</h5><p>该方法的核心策略是通过移动cover的直方图水平。确定cover<a href="https://www.sciencedirect.com/topics/computer-science/image-histogram" target="_blank" rel="noopener">图像直方图中</a>的谷底（最低）和峰值点（最高），然后通过改变这些谷底和峰值点来嵌入过程。该方法保留了不可感知性并提供了更高的有效荷载能力。基于直方图的图像隐藏的主要优点是，该方案支持可逆数据隐藏。该技术还可以防止超过255和低于0的强度值的灰度值。用于避免溢出和下溢问题并增加数据<a href="https://www.sciencedirect.com/topics/computer-science/hiding-capacity" target="_blank" rel="noopener">隐藏容量</a>，提出了一种通过二叉树结构在直方图中嵌入最大和最小点的替代解决方案。代替来自直方图的常规参考点选择，这里采用基于图像像素强度的选择过程。在嵌入过程之前，图像强度范围被分成非重叠段。与基于其他直方图移位的技术类似，通过在峰值的相同段内改变峰值点像素强度来处理秘密数据嵌入。由于每像素嵌入发生的变化非常小，因此可以在不损害cover图像的可感知性和秘密信息的无差错检索的情况下进行多层嵌入。与其他基于直方图的技术类似，这是一种可逆的Stegano系统，其中cover图像也可以与秘密数据一起提取。该<a href="https://www.sciencedirect.com/topics/computer-science/intensity-level" target="_blank" rel="noopener">强度等级</a>分段将嵌入的变化限制在一个安全范围内，从而产生高质量的stego图像。缺点在于有效载荷容量，其中在使用各种测试图像进​​行测试时观察到至多有0.5bpp的有效载荷容量。此外，该方案不能与压缩的stego图像一起使用，也不能用于容易受到诸如缩放或附加噪声等几何失真的通信信道。</p>
+<h5 id="差异扩展隐写术"><a href="#差异扩展隐写术" class="headerlink" title="差异扩展隐写术"></a>差异扩展隐写术</h5><p>基于差分展开的隐写系统是指在差分像素对上嵌入秘密数据。<br>使用不同的技术来扩展差值，并且在该扩展的差值范围上嵌入秘密数据比特 。大多数的差分扩展技术都是在可逆隐写体制下实现的，在接收端既可以提取隐藏图像，又可以提取秘密数据，没有任何差错。<br>在基于差分展开的图像隐写系统中，不同的研究者提出了不同的工作，并对一些最新的相关文章进行了讨论。 在A<br>difference expansion based reversible information hiding scheme with high stego<br>image visual quality中，使用预处理来防止下溢和上溢问题。<br>这有助于避免嵌入像素的值可能大于cover图像中的最大和最小范围的值的情况。<br>此处保存cover图像的LSB位，使系统成为可逆系统。<br>Huffman编码用于压缩LSB数据比特大小，并在嵌入阶段与秘密数据一起隐藏。 为了预测活动嵌入部分，使用基于GAP[Context-based,<br>adaptive, lossless image coding]方法的预测方案。<br>然后从实际cover和预测cover生成差分图像。<br>然后，秘密数据被嵌入到实际差分图像的扩展版本上，并且可以通过控制扩展范围来增加或减少嵌入容量。<br>扩展的范围越大，嵌入率越高，图像质量越差。<br>因此，确定扩展范围以保持图像不可感知性和有效载荷容量之间的折衷。<br>差分图像中的阈值以及在高差值处使用标志位有助于限制无害间隔中的误差。<br>Jung等人解释了另一种基于差分展开的隐写算法（High-capacity reversible data hiding<br>method using block expansion in digital<br>images）。这里，使用基于块级差分扩展的嵌入策略以及插值预测机制。<br>cover图像被扩展到多个尺度(>1级），并尝试在每个尺度空间中嵌入。<br>在每个尺度级别，将输入图像划分为子块，并为每个扩展子块确定嵌入比特。<br>嵌入容量可以使用关键缩放参数进行调整。<br>在缩放极限为3且视觉质量为PSNR的约30dB时，观察到有效载荷容量为约4bpp。该方法克服了可逆技术的所有缺点，包括对几何攻击和统计攻击的防御能力差。<br>High capacity reversible hiding scheme based on interpolation, difference<br>expansion, and histogram<br>shifting还介绍了另一种大容量可逆图像隐写系统。 这里的关键过程是基于来自cover的参考像素来找到实际cover数据和预测图像之间的差异图像。<br>秘密数据被嵌入到错误图像上，并用作通信的隐写图像。<br>嵌入被限制在差值高于阈值的像素位置，并且该控制有助于保持系统不存在上溢和下溢错误。<br>在接收端，基于像素值和预定阈值，可以识别参考像素，并且反向嵌入过程有助于从隐写图像中分离秘密比特。<br>该方案的主要吸引之处在于，嵌入不需要从直方图中选择昂贵的参考峰值。<br>嵌入率也可以根据需要以较低的视觉质量为代价进行改变。 </p>
+<p>总体而言，差异扩展方法仅限于cover图像至关重要且通信信道不易受到入侵者攻击的目标应用程序。 </p>
+<h5 id="基于位平面的隐写术"><a href="#基于位平面的隐写术" class="headerlink" title="基于位平面的隐写术"></a>基于位平面的隐写术</h5><p>该技术于2006年首次引入，作为基本LSB替换技术的扩展，其中位平面用于隐藏秘密数据位。通常，位平面隐写系统与其他方法一起使用以提高整个系统的性能。<br>因此，它通常也属于图像隐写术中的其他主要类别。 文献Image steganography using<br>BitPlane complexity segmentation and hessenberg QR<br>method给出了位平面分段隐写系统。<br>这里，在嵌入处理之前首先评估每个位平面的复杂性。<br>选择噪声较高的位平面，生成相应的Hessenberg矩阵。<br>然后对该Hessenberg矩阵进行Q-R分解，并将秘密图像的子块嵌入到分解矩阵的Q部分。<br>嵌入过程完成后，将分解后的Q分量和R分量进行组合，生成隐写图像。 如果cover图像的选择是最优的，则位平面的选择将是完美的，并且可以在不降低视觉质量的情况下嵌入秘密位。<br>该系统的主要缺点是，如果位片的选择不当，图像的不可感知性可能会消失。该方法还存在与平均LSB技术相关的其他缺点。在[High<br>Capacity Image Steganography Using Adjunctive Numerical Representations With<br>Multiple Bit-Plane Decomposition<br>Methods]中，作者提出了一种使用像素强度值的位平面来进行秘密数据包装的方法。<br>第一级是将系统分成多个位平面，并使用ANR255序列选择所需数目的平面。为了保持更高的安全性，在实际的嵌入过程之前对秘密数据进行加密。该方法使用13位平面ANR编码器，并且秘密数据位嵌入在这些扩展位片上。<br>嵌入处理后的cover图像在用作stego图像之前被转换回标准的8位表示。 扩展位平面编码有两个优点。其一，它可以容纳比普通8位LSB技术更多的秘密位。其次，嵌入的随机性程度较高，使得系统对入侵者的隐写分析过程具有较强的鲁棒性。该系统的另一个优点是，不需要在发送方和接收方共享预定义的字典。其主要缺点是，隐写图像容易受到几何攻击，即使像素对齐的微小变化也可能导致嵌入数据的加扰。 </p>
+<h5 id="基于调色板的隐写术"><a href="#基于调色板的隐写术" class="headerlink" title="基于调色板的隐写术"></a>基于调色板的隐写术</h5><p>基于调色板的隐写术[High capacity and secure digital steganography to<br>palette-based images]使用基于调色板的图像作为cover媒体。<br>PNG、GIF和TIFF等图像格式适用于此方法。<br>使用密钥生成伪随机数，并将选定的秘密数据位刻在单个cover像素上。<br>嵌入过程使用与调色板中的秘密位具有相同奇偶校验的颜色，而不是原始颜色。<br>通常，基于调色板的隐写系统可分为两类:在第一类中，调色板颜色被改变以使失真在一个小范围内。在这样的系统中，嵌入容量似乎较小。另一种类型保留cover数据的颜色细节，但根据秘密数据位对调色板条目进行调制，并支持密集嵌入。<br>基于调色板的隐写术的主要吸引力在于，与其他空间方法相比，隐写图像的整体失真较小。该方法的主要缺点是需要图像采用特定的无损压缩格式。<br>该方法不能应用于常见的图像格式，如JPEG。<br>由于这些缺点，该方法不太受欢迎，并且很少用于实际应用。 </p>
+<p>Imaizumi等人 [Multibit embedding algorithm for steganography of palette-based<br>images]提出了一种基于调色板的密写系统的密集图像嵌入方案，该方案使图像的视觉质量保持在一个足够好的水平上，从而使通信无法被检测到。<br>在使用欧几里得距离度量评估差异之后，可以在这里在单个像素上嵌入秘密数据的多个比特，其中大多数调色板系统遵循每个像素1比特的策略。<br>该方案使用奇偶校验来减少嵌入错误。<br>此隐藏方案的一个条件是在发送方和接收方之间共享嵌入位置映射，以确保以正确的顺序检索机密数据。<br>与其他基于调色板的系统相比，有效载荷容量略高，PSNR值约为40dB时的视觉质量更高。</p>
+<p>为了改进安全性特征，随机像素选择被选择用于嵌入过程[Design of a color palette<br>based image steganography algorithm for fractal image]。<br>嵌入过程从基于初始给定参数生成Julia集分形图像开始。<br>提取颜色通道，然后对调色板进行相应的分类。<br>然后采用随机像素选择，根据最匹配的秘密比特更新调色板索引，并相应地更新隐写图像像素。<br>嵌入索引需要在接收端共享，通过将实际索引与嵌入索引进行比较来提取秘密数据。<br>该方法有助于将视觉质量保持在大约60分贝的范围内，但这里没有很好地考虑隐写术的所有其他方面。<br>在考虑高级LSB隐写系统时，基于调色板的隐写术的总体评估是不够的。</p>
+<h5 id="基于像素强度调制的隐写术"><a href="#基于像素强度调制的隐写术" class="headerlink" title="基于像素强度调制的隐写术"></a>基于像素强度调制的隐写术</h5><p>像素强度调制或基于调整的隐写术系统被引入作为像素强度调整嵌入的一种修改，如在LSB隐写术类型。<br>这里，秘密数据比特被嵌入到相邻像素之间或相邻块之间的强度调整中，这取决于嵌入方案的性质。<br>由于这种间接嵌入过程，这些方法有助于在与LSB修改系统相比较的同时提供更高质量的隐写图像[A<br>framework for pixel intensity modulation based image steganography]。<br>为了提高边缘检测的安全性，文献[Robust edge based image steganography through<br>pixel intensity adjustment]提出了基于像素强度调制的边缘检测方法。<br>为了增加容量和感知质量，解释了另一种先进的像素强度调制技术[Block-based colour<br>image steganography using smart<br>pixel-adjustment]。这里，秘密比特被嵌入到主机图像子块中。<br>通过基于秘密数据位的智能像素调整来更新子块平均。<br>使用足够的阈值将调整值保持在最大强度值（溢出）内。<br>提取过程与嵌入阶段使用的方法是相反的。通过回顾这些技术，可以评估该方法在不可察觉性、安全性和鲁棒性方面优于平均LSB调制技术。<br>但是，LSB系统的其他缺点仍然存在，仍需要研究来解决这些缺陷。 </p>
+<h5 id="基于量化的隐写术"><a href="#基于量化的隐写术" class="headerlink" title="基于量化的隐写术"></a>基于量化的隐写术</h5><p>在这一类中，隐写术系统使用任何压缩编码系统来隐藏秘密数据位。<br>编码系统可以是任何标准的压缩编解码器，如JPEG、矢量量化等。通常，秘密数据被分成小块数据子样本，这些小数据片段与编码后的载波图像一起嵌入。<br>在接收端，在隐写图像上应用相同的编码，并使用反向嵌入过程取回秘密数据。<br>[Quantization-based image steganography without data hiding position<br>memorization]中给出了一种在JPEG编码器上嵌入秘密数据的图像隐写系统。JPEG编码器使用8×8像素块进行压缩处理，并将秘密数据分割成小片段以隐藏在这些变换后的系数上。<br>秘密数据可能需要多个编码器系数来承载全部片段。<br>类似地，整个秘密片段被嵌入到一个或多个压缩系数上，并且在接收端，对隐写图像应用的反向处理和秘密比特然后被组合以生成原始形式。<br>该系统不需要关于系数位置的任何信息，并且基于图像统计自适应地选择嵌入位置。<br>作者声称，该方法适用于任何编码器，并提供了额外的优势。<br>但该方案不能满足几何攻击和隐写分析的需要。 在增强容量和最小失真方面，研究领域讨论了许多基于量化的图像隐写术的改进方案。<br>其中一种方法是对彩色图像采用改进的DCT量化表[Colour image steganography based on<br>modified quantization table]，基于简单最优量化的自适应隐藏隐写[Optimal<br>quantization-based steganography for adaptive hiding]。 </p>
+<h4 id="变换域图像隐写术"><a href="#变换域图像隐写术" class="headerlink" title="变换域图像隐写术"></a>变换域图像隐写术</h4><p>变换域值还可用于将秘密比特集成到cover图像中。<br>在基于变换域的方法中，秘密比特隐藏在子带频率系数下。<br>嵌入和解码的过程在变换域中比在时域中使用的技术更复杂。 这将提高系统的安全性。<br>另一个优点是大多数频域技术受压缩、剪切、缩放和旋转攻击的影响较小。<br>因此，基于变换的系统在保持隐写图像质量方面更有效，并且使得在不安全信道中可检测性更低。 变换域方法在隐写术领域得到了广泛的应用，常用的变换域方法有离散傅立叶变换(DFT)、离散余弦变换(DCT)、离散小波变换(DWT)以及这些基本变换的不同版本。<br>如整数小波变换(IWT)、复数小波变换(CWT)、双树复数小波变换(DTCWT)、压缩感知都是此类技术的示例。<br>以下各节将分析这一领域的一些相关研究工作。</p>
+<h5 id="基于离散傅立叶变换-DFT-的隐写术"><a href="#基于离散傅立叶变换-DFT-的隐写术" class="headerlink" title="基于离散傅立叶变换(DFT)的隐写术"></a>基于离散傅立叶变换(DFT)的隐写术</h5><p>DFT是信号处理中常用的变换技术之一。<br>二维傅立叶变换已被定义为图像的变换，并被广泛应用于各种图像处理技术[Image blur<br>recognition using under-sampled discrete Fourier transform]。<br>使用DFT，可以将图像分解为相应的频率分量（正弦和余弦）。<br>在图像隐写术中，这些变换系数也可以根据秘密信息进行调制，从而成为图像数据隐藏的一个重要工具。<br>然后将调制后的变换系数转换回图像形式，并可用作隐写图像。<br>在接收端，将隐写图像再次分解为频率元素，从中提取隐藏数据。 [An optimized color<br>image steganography using LFSR and DFT techniques]、[Image steganography using<br>discrete fractional Fourier transform]、[Discrete Fourier transform-based<br>information steganography] 在DFT隐写术等领域提出了多种图像系统。 </p>
+<p>一种基于改进傅里叶变换技术的隐写术，离散分数傅里叶变换(DFRFT)是文献[Image<br>steganography using discrete fractional Fourier transform]提出的。<br>在DFRFT中，时间和频率信息都存在于变换系数中，并且这些系数包含秘密数据位。这里，嵌入位通过LSB替换技术驻留在系数上。该方法通过调整DFRFT变换的阶数，获得了较好的视觉效果。这里没有采取步骤来增强系统的安全性或鲁棒性，并且由于正向和反向变换的量化，存在更高检索错误的可能性。 </p>
+<h5 id="基于离散余弦变换-DCT-的隐写术"><a href="#基于离散余弦变换-DCT-的隐写术" class="headerlink" title="基于离散余弦变换(DCT)的隐写术"></a>基于离散余弦变换(DCT)的隐写术</h5><p>DCT是将图像从空域转换到频域的最常用和最有效的图像变换技术之一。<br>在基本的基于DCT的隐写术中，DCT系数是根据秘密数据位进行修改的。在DCT隐写术中，图像被分解成相应的高、中、低频分量。<br>最重要的细节在于低频子带，而高保真细节在于高频带。隐藏在DCT系数中的秘密数据比特遵循JPEG压缩模型。文献[Current<br>status and key issues in image<br>steganography]给出了一种在JPEG编码器上嵌入秘密数据的图像隐写系统。<br>将基于DCT变换的隐写术中的cover图像划分为8×8像素块的非重叠部分。然后，通过使用每个块被转换成DCT系数。量化表用于量化DCT系数。量化表用于量化DCT系数。量化后的DCT系数嵌入秘密数据，然后利用组合编码对秘密数据进行编码。然后，隐写媒体打算通过不安全的通信信道共享。</p>
+<p>不同的隐写方法使用不同类型的嵌入方案。<br>该方法利用了许多DCT量化系数接近于零的事实[DCT-based compressed image with<br>reversibility using modified quantization]。<br>在该方案中，在每个块中选择两个相邻的系数，它们的值作为一个组接近于零，然后在每个组中隐藏数据比特。<br>这里，仅用一个单位来修改所选择的系数，使得隐写图像能够保持高的图像质量。<br>该方法既保证了图像的质量，又提高了隐写图像的嵌入容量。<br>但该方法对某些图像可能不起作用，因为某些图像的系数分布可能是随机的，并且分组效果不好，可能降低嵌入容量。<br>因此，该方案需要一种更为复杂的隐藏策略，通过评估隐藏系数的分布来达到高效隐藏的目的。</p>
+<p>文献[Data hiding inside JPEG images with high resistance to steganalysis using a<br>novel technique:<br>DCT-M3]提出了一种改进的变换域不可逆DCT隐写技术，该技术具有较高的嵌入性能，同时在载体图像中引入了较小的波动。<br>该方法使用两个DCT系数之间的差的模3，用于以压缩形式嵌入秘密文本消息的两个比特。<br>为了得到更好的结果，在嵌入之前对机密数据进行两个阶段的压缩。<br>在第一阶段，通过删除一些单词并用常用缩写词替换一些表达式来压缩消息。<br>在第二阶段，使用霍夫曼无损压缩技术再次压缩得到的压缩消息。 最后，基于cover图像的DCT系数之差的模3将压缩版本的秘密消息植入cover图像中，同时将其保存为JPEG图像。<br>嵌入量大，但嵌入过程密集，不易察觉。<br>该方案也没有使用任何特定的策略来覆盖对隐写图像的几何攻击。<br>为了提高嵌入容量和不可感知性，Tamer和Ibrahim[High-capacity steganography: a<br>global-adaptive-region discrete cosine transform<br>approach]提出了一种基于全局自适应块的DCT彩色图像隐写算法。 文献[A new adaptive<br>image steganography scheme based on DCT and chaotic<br>map]提出了一种基于混沌映射的DCT域隐写算法，以提高算法的安全性和不可感知性。 </p>
+<p>正如我们在前一节中所讨论的，DCT变换表示图像中每个块在水平和垂直方向上强度值的变化。<br>用于该转换的基函数太长，在正向和反向转换期间可能导致较高的量化误差。<br>这些问题会影响隐写术的准确性。<br>因此，利用更好的频率变换，如小波变换，隐写术得到了进一步的扩展。</p>
+<h5 id="基于离散小波变换-DWT-的隐写术"><a href="#基于离散小波变换-DWT-的隐写术" class="headerlink" title="基于离散小波变换(DWT)的隐写术"></a>基于离散小波变换(DWT)的隐写术</h5><p>数字图像的小波变换提供时域和频域的定位。<br>小波变换涉及到一系列滤波和下采样来寻找子带图像。<br>基于小波变换的不同性质，小波变换可以应用于图像隐写术。<br>在基于小波变换的图像隐写方法中，通常采用cover图像的小波变换，并根据秘密信息比特的大小对系数空间进行修改。<br>DWT优于DCT和其他类似变换的主要原因是高低频细节的投影方式。<br>较短的基函数用于投影高保真度细节，较大的基向量用于低频细节，以提供优化的空间频率定位。<br>根据所用小波的分解级别和性质， 基于离散小波变换的隐写术根据需要提供了许多嵌入选项。<br>由于这些系数同时代表图像的空间和频率特征，因此高效的嵌入方案可以提供更好的图像不可感知性和隐藏数据的不可恢复性。<br>由于这些优点，基于离散小波变换的嵌入方案在变换域隐写术中占有很大的份额，如 [A<br>modified DWT-based image steganography technique]、[High capacity steganography<br>technique based on wavelet transform]、[Binary image Steganography in wavelet<br>domain]、[A DWT based perfect secure and high capacity image steganography<br>method]。 </p>
+<p>在基本的离散小波变换系统中，缺乏智能嵌入方法是实现最大可能精度的障碍。<br>为此，对小波变换系统进行了一些改进，以提高嵌入式系统的性能。<br>Samer等人讨论了一种类似的在小波系数之间嵌入秘密比特的改进DWT方案[Secure and<br>imperceptible digital image steganographic algorithm based on diamond encoding<br>in DWT domain]。<br>与标准的小波变换方法相比，该文提出了小波变换中的菱形编码方法(DE)，以提高图像的保密性，减少图像的失真。<br>这里使用DE-DWT算法将机密消息转换为以5为基数的数组。<br>将cover图像的标准小波系数子带进行分块，并在这些子带系数对上刻画秘密阵列比特。<br>与类似的基于小波变换的嵌入方案相比，减少隐写图像的失真是其主要优点。<br>该算法的主要缺点是嵌入容量有限。另一个重要的缺陷是，如果压缩因子小于95%，隐写图像就变得毫无用处。<br>为了减少标准小波变换的一些主要缺陷，本文提出了冗余小波变换(RDWT)和QR分解[Image<br>steganography using redundant discrete wavelet transform and QR factorization]。<br>RDWT避免了常规小波中的抽取步骤。<br>为了提高安全性，对秘密图像进行了加密算法的预处理（Arnold变换）。<br>为了更好地嵌入图像，本文还选择了一种cover图像的定位方法。<br>该方法的主要缺点是对入侵者攻击和图像压缩的抵抗力差，有效载荷能力差。<br>与其他现有技术相比，检索错误率相当高。</p>
+<p>传统的小波变换是用分数值表示的，由于大多数嵌入技术都是用整数值进行数据隐藏，因此需要对小波变换进行预处理，使其成为整数格式。<br>在不可逆类型隐写术中，将分数截断为整数并不是主要问题。<br>但是在可逆型隐写术中需要考虑这种舍入，其中职业数据和秘密数据都需要恢复而没有任何错误。<br>这可以通过涉及整数小波变换(IWT)来实现。</p>
+<h5 id="基于整数小波变换-IWT-的隐写术"><a href="#基于整数小波变换-IWT-的隐写术" class="headerlink" title="基于整数小波变换(IWT)的隐写术"></a>基于整数小波变换(IWT)的隐写术</h5><p>IWT是一种可逆的整数到整数小波分析算法。<br>IWT是小波变换的一种改进表示，它可以用多分辨率特征来表示图像细节。<br>IWT提供了一种对不同分辨率和采样空间的图像像素进行无损分解的技术。<br>通过使用具有下限和上限函数的提升方案，可以在不进行量化的情况下获得整数系数，因此可逆操作是可能的。<br>IWT中的预测系数和更新系数与离散小波变换中的低频分量和高频分量相似。<br>IWT广泛应用于高保真度、无误差压缩特征的大尺寸图像的分解。<br>与其他变换系数类似，IWT系数也用于隐藏隐写系统中的秘密数据比特[An adaptive image<br>steganography algorithm using successive pixel difference embedding and integer<br>wavelet transform]、[Digital image steganography based on Integer Wavelet<br>Transform and assignment algorithm]、[Efficient self-adaptive image<br>steganography scheme based on iterative blending and integer wavelet<br>transform]、[Adaptive digital audio steganography based on integer wavelet<br>transform]。Miri和Faez[An image steganography method based on integer wavelet<br>transform]提出了一种基于小波变换的隐写术。<br>这里，使用IWT对cover图像进行变换，并且通过检查子带图像中的MSB来对子带图像中的边缘系数进行分组。<br>嵌入的方式可以防止MSB发生变化，从而使接收器能够以最小的误差提取信息。<br>与其他基于小波变换的算法相比，该算法具有更好的峰值信噪比，这是该算法的一个优点。<br>该方案的主要优点是隐蔽性和降低检索错误率。<br>这里也没有讨论防止隐写攻击的防御步骤和针对图像处理操作的性能，例如旋转、压缩和缩放。<br>IWT系数中常用的两种方法是直方图平移和压缩技术，它们都具有可逆性。<br>在后一类方案中，高频子带被压缩cover和秘密数据所代替。 Shet等人提出了另一种基于小波变换的图像隐藏方案。<br>[Image steganography using integer wavelet transform based on color space<br>approach]，其中cover图像的YCbCr颜色空间用于嵌入处理。<br>由于CB和CR分量表示色度细节，Y表示强度特征，因此其思想是在强度平面以外的分量上嵌入秘密比特。<br>这有助于减少在视觉检查中对嵌入数据的检测。 色度平面通过无损IWT变换。<br>然后使用lsb替换将二值化的秘密比特隐藏在这些小波系数下。<br>然后，将嵌入的系数转换为图像的相应色度分量，然后将其恢复为rgb格式并用作隐写图像。<br>接收端的反向处理产生秘密数据。<br>本文提出的LSB嵌入方法有助于减小IWT系数的量化误差，从而将检索误差限制在一个较小的范围内。 这种不可察觉性很好，因为它有助于为高清图像提供约40dB的视觉质量。<br>但隐写术的所有其他方面，如有效载荷容量、鲁棒性和安全性，在这里没有得到适当的处理。<br>某些方法试图在嵌入过程中结合多种转换，从而提高安全性和不可察觉性[DWT-DCT-SVD<br>based blind watermarking technique of gray image in electrooculogram signal]。<br>但是，与普通的单个转换技术相比，它们可能是缓慢的过程。 </p>
+<p>基于DWT和IWT的隐写术的研究现状表明，基于DWT和IWT的隐写术的共同缺点是有效载荷能力差，对几何攻击的防御能力差。<br>另外，通常情况下，在大多数隐写技术中使用小波变换，其中使用实系数滤波器，从而得到实值近似。<br>因此，小波变换消除了局部相位信息。<br>为了避免这些缺陷，提出了小波变换的扩展形式，其中最流行的模型是复小波变换(CWT)。<br>下面介绍几种基于连续小波变换的隐写系统。 </p>
+<h5 id="基于复小波变换-CWT-的隐写术"><a href="#基于复小波变换-CWT-的隐写术" class="headerlink" title="基于复小波变换(CWT)的隐写术"></a>基于复小波变换(CWT)的隐写术</h5><p>CWT是基础DWT的更新版本。 这里的系数本质上是复杂的。<br>这是2D小波变换的另一个更新版本，它从图像中获得多分辨率的有益特征。<br>由于小波系数的复表示同时提供了实部和虚部系数，因此连续小波变换包含了图像的相位信息。<br>连续小波变换是图像水印和隐写术的核心研究领域。 [Discrete Wavelet Transform based<br>steganography for transmitting images]、[Digital image watermarking using<br>complex wavelet transform]、[Watermarking algorithm based on kernel fuzzy<br>clustering and singular value decomposition in the complex wavelet transform<br>domain]、[Watermarking using complex wavelets with resistance to geometric<br>distortion]、[Robust image steganography using complex wavelet transform]、[Data<br>hiding techniques based on wavelet-like transform and complex wavelet<br>transforms] 提出了许多基于连续小波变换的基本研究工作。<br>这些工作大多未能充分利用连续小波变换附加系数平面的优点。<br>此外，它还具有保持高度移位不变性的另一个优点。<br>因此，大多数被高度引用的工作使用混合算法来提高性能。<br>Singh等人解释了这种方法[Robust image steganography using complex wavelet<br>transform]。 提出了一种基于连续小波变换、混沌序列和奇异值分解的数据隐藏方案。 </p>
+<h5 id="基于双树复数小波变换（DT-CWT）的隐写术"><a href="#基于双树复数小波变换（DT-CWT）的隐写术" class="headerlink" title="基于双树复数小波变换（DT-CWT）的隐写术"></a>基于双树复数小波变换（DT-CWT）的隐写术</h5><p>DT-CWT在图像压缩[A comparative analysis among dual tree complex wavelet and<br>other wavelet transforms based on image compression]、恢复与增强[The dual-tree<br>complex wavelet transform: a new efficient tool for image restoration and<br>enhancement]、分类[ Texture classification using dual-tree complex wavelet<br>transform]等信号与图像处理中成为最流行的工具之一。 然后提出了DTCWT算法。<br>DTCWT与标准CWT的主要区别在于DTCWT采用了对偶树复小波分解。<br>采用两组滤波器和多级子带图像实现了对偶树结构。<br>这里，在DTCWT变换中，子带矩阵大小将被减小到先前水平子带的一半。同时，该电平中的子带的数目变得比前一电平中的子带的数目多一倍。<br>总的来说，系数元素的数量在每一级都是相同的。 因此，以一般的方式，可以说明，增加层级的数目将导致变换域子空间系数的数目，进而将导致托管更多数目的秘密比特的优势，并且可以被认为是基于DTCWT的隐写术的主要亮点之一。<br>然而，由于较高层次的嵌入导致的失真比较低层次的嵌入导致的失真更高，因此，在较高层次的系数中嵌入秘密数据可能降低隐写图像的质量。<br>在每一级中，存在与水平、垂直和对角线方向上的频率变化相对应的系数。<br>在每一个方向上，都有一个实部和虚部系数，为秘密数据提供了更多的容错空间。<br>与标准CWT相比，DTCWT使用两组滤波器系数。<br>这导致子带图像的总数和元素的数量翻了一番。<br>这提高了载波容量。 同时，DTCWT子带具有接近平移不变性、良好的方向选择性和良好的重构性能，增强了对不同几何攻击的鲁棒性。<br>文献[A comparative analysis among dual tree complex wavelet and other wavelet<br>transforms based on image compression]，[The dual-tree complex wavelet<br>transform]给出了DT-CWT变换子带的基本构造。</p>
+<p>水印和隐写术的一些例子[DTCWT based high capacity steganography using coefficient<br>replacement and adaptive scaling]，[performing image steganography using dual<br>tree complex wavelet transform (DTCWT) and Haar wavelet]。<br>目前大多数的水印算法都是将DT-CWT作为二值图像嵌入到cover图像中。<br>这些算法可以分为两组的基础上，标志的嵌入方式；<br>基于小波的融合和基于奇异值分解(SVD)的算法。 </p>
+<p>CWT和DT-CWT算法大多属于基于小波的融合算法，其中CWT/DT-CWT算法同时应用于水印/秘密信息和cover图像。</p>
+<p>大多数工作未能利用DT-CWT的附加系数平面的优点。<br>因此，大多数高级方法都使用混合算法来提高性能。主要缺点可以概括为:DTCWT系数在正、反变换过程中变化较小，嵌入数据不能准确提取[Digital<br>watermarking using complex wavelets]，丢失比特的问题可以通过Hadamard[Digital<br>watermarking using complex wavelets]纠错码来解决。<br>此外，还需要选择鲁棒系数来解决这个问题。 </p>
+<h5 id="基于压缩感知-CS-的隐写术"><a href="#基于压缩感知-CS-的隐写术" class="headerlink" title="基于压缩感知(CS)的隐写术"></a>基于压缩感知(CS)的隐写术</h5><p>压缩感知是一种新的、创新的信号和图像处理技术，有助于利用欠定线性系统精确地获取和重建图像。<br>使用压缩感知技术的一个主要好处是它的“信号稀疏性的利用”。<br>以前，信号处理的主要技术是Shanon定理，即“采样速率必须至少是信号中最大频率的两倍”。<br>这里，采样速率也称为奈奎斯特速率。<br>因此，压缩感知的主要优点是采样率低，重构精度高。<br>通过传统的方法，首先对数据进行采样，然后对数据进行某种压缩，使得数据可以用很少的系数来表示，而不会有很大的损失，从而使得重建实际图像成为可能。 </p>
+<p>压缩感知也称为压缩采样或稀疏采样，它的基本原理是:与Shannon理论所要求的测量次数相比，获得的采样数更少，并利用这些采样来重建图像[An<br>introduction to compressive sampling]，[Compressed sensing]。<br>CS有两个主要工作方面。 第一个是稀疏性，第二个是不相干性[Sparsity and incoherence<br>in compressive sampling]。<br>稀疏性指的是感兴趣的信号，这里主要关注的是被观测信号或图像的“信息率”，它可能小于带宽建议值，而非相干性则是系统中利用两个元素之间关系的传感模态。 在该类中，在实际的隐写术处理之前，首先将秘密数据值转换为压缩系数。<br>这将有助于减少嵌入过程所需的净有效载荷，并将导致隐写图像中相对较小的变化。<br>最终，视觉质量的下降将会比直接嵌入的过程要小。Sreedhanya和Soman[Ensuring<br>security to the compressed sensing data using a steganographic<br>approach]将基于加密数据的CS和基于奇异值分解的隐写术相结合，提出了一种安全系统。<br>为了提高图像隐写术的不可感知性和容量，文献[High capacity image steganography<br>method based on framelet and compressive<br>sensing]提出了一种改进的基于奇异值分解的压缩感知算法。<br>在该方法中，SVD系数被嵌入到cover图像的Framelet变换的较低子带中。<br>为了提供高安全性，这里提出了基于HVS的压缩感测[A secure steganography algorithm<br>using compressive sensing based on HVS<br>feature]。 使用压缩传感的主要优点不仅限于有效载荷方面。<br>对秘密数据的APT压缩方案有助于提高安全性，并增强对通信信道中的噪声添加等攻击的鲁棒性[A<br>review of compressive sensing in information security field]、[On the security<br>and robustness of encryption via compressed sensing]、[Image steganography based<br>on subsampling and compressive sensing]、[Noise removal using a novel<br>non-negative sparse coding shrinkage technique]。<br>对于一个好的基于CS的系统，压缩方法将根据秘密数据的性质而定；<br>无论是文本、图像、音频等，CS的主要缺点是采样矩阵的大小总是很大，占用的空间也很大，在共享和通信时会产生很多烦恼。<br>CS问题可以通过CS和加密相结合的方法来解决，目前该领域的研究主要集中在测量矩阵[A<br>review of compressive sensing in information security field]，[On the security<br>and robustness of encryption via compressed sensing]，[Image steganography based<br>on subsampling and compressive sensing]等方面。 </p>
+<h2 id="自适应隐写术"><a href="#自适应隐写术" class="headerlink" title="自适应隐写术 "></a>自适应隐写术 </h2><p>在回顾图像隐写术的研究成果时，我们不能不考虑自适应方法的重要性。<br>它是空间变换方法的一个特例。自适应隐写术也被称为“基于模型”[Model-based<br>steganography]或“统计感知嵌入”或“掩蔽”[Hide and seek: An introduction to<br>steganography]。 隐写术中的许多核心工作都在这一节中。<br>在数据嵌入方案中可以通过多种方式引入自适应性质:在选择cover图像中的目标像素时，要进行的修改的性质，在像素中嵌入的位数等。 根据这些系统提供的适应性的性质和模式，可以将它们分为几个部分。<br>这包括基于区域的隐写术、基于人类视觉系统(HVS)的隐写术、基于机器学习和人工智能技术的隐写术。</p>
+<h3 id="基于区域的隐写术"><a href="#基于区域的隐写术" class="headerlink" title="基于区域的隐写术"></a>基于区域的隐写术</h3><p>隐写术背后的真正动机是以一种无法察觉的方式共享数据。该方法使用cover图像中最合适的区域或特征来进行嵌入过程[Characteristic<br>region based image steganography using Speeded-Up robust features technique]、[A<br>Comparison between using SIFT and SURF for characteristic region based image<br>steganography]、[High payload image steganography with reduced distortion using<br>octonary pixel pairing scheme]。<br>在基于区域的技术中，嵌入集中在纹理和边缘细节高的部分，而不是平滑区域。这有助于防止图像质量下降，因为纹理和边缘区域的变化不像平滑区域那样容易检测。这类系统的主要优点是鲁棒性和较高的不可感知性，而嵌入率较低是其主要缺点。研究人员试图用不同的方向来增强隐写系统的不可察觉性。 这些方向的一些示例是:基于图像分割的局部复杂度度量，其可用于发现“信息性”和“类噪声”区域，嵌入集中在类噪声区域[Steganography<br>based on region segmentation with a complexity<br>measure]，阈值可用于选择覆盖的高频像素，然后使用LSBM重访问算法来隐藏秘密数据[A<br>modified high frequency adaptive security approach using steganography for<br>region selection based on threshold<br>value]，以及基于图像特征控制隐藏容量[Controlling hiding capacity using image<br>characteristics with a 2D-DE data hiding scheme]。<br>利用蚁群优化算法发现cover图像中的复杂区域，然后利用LSB方法隐藏检测区域中的秘密数据[Ant<br>Colony Optimization (ACO) based data hiding in image complex region]。</p>
+<h3 id="基于人眼视觉系统-HVS-的隐写术"><a href="#基于人眼视觉系统-HVS-的隐写术" class="headerlink" title="基于人眼视觉系统(HVS)的隐写术"></a>基于人眼视觉系统(HVS)的隐写术</h3><p>一般说来，人眼视觉系统是一种能够观察、处理和理解光信号的光学信息处理结构。<br>基于HVS的隐写术利用人类感知图像的方式。<br>在特定的背景下，人类的视觉在识别图像细节方面存在许多黑点和困难。<br>HVS对平滑区域中强度的微小变化不敏感，如果对图像中的复杂纹理区域和边缘区域应用密集嵌入，则HVS甚至无法区分[Steganography<br>using multiple-base notational system and human vision sensitivity]、[An<br>adaptive blind watermarking algorithm based on DCT and modified watson’s visual<br>model]。<br>因此，这些技术通常选择从图像中检测这样的目标区域的过程。用于隐藏秘密数据的实际嵌入方案，可以是如前面部分中所解释的任何基于空间或变换的技术。  </p>
+<p>研究人员试图用不同的方向来增强隐写系统的不可察觉性。<br>这些方向的一些例子是:四叉树分割方法，可以用来寻找平滑的区域，适合隐藏数据的低图像退化[Human<br>visual system based data embedding method using quadtree<br>partitioning]，预测函数，用来寻找图像上最不敏感的区域。<br>这里将刚好可察觉的差异指数(JND)定义为对应于每个像素的一个，其指示在嵌入到该像素中时对注意变化的灵敏度[Sparse<br>recovery based reversible data hiding method using the human visual<br>system]，这是与基于HVS的区域选择一起的压缩感测技术，以改进嵌入过程的安全性。 </p>
+<p>这类图像隐写方案在不降低隐写图像质量的前提下，有助于调整嵌入密度。<br>因此，要想通过简单地观察人类入侵者的隐写图像来检测嵌入过程是非常困难的。<br>因此，与许多标准图像隐写术系统相比，高效恢复的机会高得多。<br>然而，利用统计的方法可以检测到隐藏信息，因此需要进一步提高数据隐藏系统的安全性和鲁棒性。 </p>
+<h3 id="基于机器学习和人工智能技术的隐写术"><a href="#基于机器学习和人工智能技术的隐写术" class="headerlink" title="基于机器学习和人工智能技术的隐写术"></a>基于机器学习和人工智能技术的隐写术</h3><p>基于机器学习(ML)的人工智能(AI)从2000年开始成为图像处理中最流行的工具之一。<br>近年来，随着对这一领域的广泛研究，产生了许多先进的机器学习技术，适用于图像、文本、语音等数据类型的各种应用。在图像处理中，基于机器学习的人工智能最初是为了识别、优化和目标检索而引入的 随后，它被用于图像处理应用中的其它需求，如增强、压缩、分割、分类等 。</p>
+<p>对于标准的图像隐写技术，如果嵌入对隐写图像造成的失真较小，嵌入容量较大，检索误差最小，并且秘密数据不被入侵者窃取，则嵌入效率较高。<br>在基于机器学习的隐写技术中，使用先进的机器学习方法来获得上述效率提高[Data hiding<br>in the Wild: where computational intelligence meets digital forensics]、[Extreme<br>learning machine based optimal embedding location finder for image<br>steganography]、[An improved image steganography method with SPIHT and<br>arithmetic coding]。 用于隐写术领域的流行机器学习系统包括支持向量机(SVM)[<br>Reliable information hiding based on support vector machine]、[Color image<br>watermark extraction based on support vector<br>machines]、基于决策树的分析、遗传算法(GA)[ Performance enhanced image<br>steganography systems using transforms and optimization techniques]、[A secure<br>spatial domain image steganography using genetic algorithm and linear<br>congruential generator]、[Optimization of stego image retaining secret<br>information using genetic algorithm with 8-connected PSNR]、[A framework of<br>secured and bio-inspired image steganography using chaotic encryption with<br>genetic algorithm optimization (CEGAO)]、[Adaptive image steganography based on<br>transform domain via genetic algorithm]、模糊逻辑(FL)优化技术 [Adaptive block<br>based steganographic model with dynamic block estimation with fuzzy rules]、[An<br>adaptive hybrid fuzzy-wavelet approach for image steganography using bit<br>reduction and pixel adjustment]、[Image steganography using fuzzy logic and<br>chaotic for large payload and high imperceptibility]、[Multiply information<br>coding and hiding using fuzzy vault]、[A high quality image steganography scheme<br>based on fuzzy inference system]和神经网络(NN)[ A novel edge based chaotic<br>steganography method using neural network]、[Artificial neural network for<br>steganography]、[Neural network based robust image watermarking technique in LWT<br>domain]、[Robust watermarking technique using back propagation neural network: a<br>security protection mechanism for social<br>applications]。 所有这些尝试都利用人工智能技术进行预处理和/或定义嵌入性质和/或限制或扩展嵌入阶段或提取过程。<br>在这种分类下的研究已经发展了使用不同方向的隐写系统的效率。</p>
+<h3 id="基于支持向量机的隐写方案"><a href="#基于支持向量机的隐写方案" class="headerlink" title="基于支持向量机的隐写方案"></a>基于支持向量机的隐写方案</h3><p>支持向量机是一种有监督的学习系统，可以在空域和变换域作为图像水印的多个方面的分类器<br>[Machine learning-based robust watermarking technique for medical image<br>transmitted over LTE network]。 在文献[Scope of support vector machine in<br>steganography]中，作者还指导了如何利用支持向量机优化隐写术的技术。<br>它适合于寻找具有高安全性、不可察觉性的嵌入位置，同时使用更快的计算阶段提供最小的检索错误[SVM<br>based robust watermarking for enhanced medical image security]。<br>该方法常用于图像通道中较不敏感区域（人眼）的定位。<br>通常这些方法用于RGB彩色图像中的蓝色通道和其它颜色格式的亮度通道[Color image<br>watermarking scheme based on efficient preprocessing and support vector<br>machines]。 该算法利用像素平均强度、色度值漂移、边缘细节定位等特征进行决策。</p>
+<h3 id="基于遗传算法的隐写方案"><a href="#基于遗传算法的隐写方案" class="headerlink" title="基于遗传算法的隐写方案"></a>基于遗传算法的隐写方案</h3><p>基本遗传过程选择、交叉和变异是遗传算法(GA)的基础。<br>这些基本操作是用来选择最好的后代通过后代。通过在图像隐写术中选择目标系数的思想，可以从几个方面对隐写过程进行优化。<br>APT系数的选取有利于提高有效载荷容量，是在cover中获取APT隐藏区域的最佳方案之一。在Chang等人描述的方法中[Hiding<br>secret data into an ambtc-compressed image using genetic<br>algorithm]，他们试图通过采用两级量化过程来优化有效载荷能力，其中三位额外地嵌入在具有高保真度的图像块上。<br>在随后的工作[A data embedding scheme for color images based on genetic algorithm<br>and absolute moment block truncation<br>coding]中，他们通过使用通用位图生成来改进方法，以提高有效载荷容量和嵌入时间。 遗传算法中的方法不仅是一种基于点像素的决策方法，而且适用于区域像素群体，不需要导数信息。<br>因此，遗传算法对图像处理具有很强的鲁棒性。<br>但是，要找到局部最优解，需要经过大量的计算步骤，导致搜索速度慢，难以找到精确的嵌入位置。 </p>
+<h3 id="基于模糊逻辑的隐写术方案"><a href="#基于模糊逻辑的隐写术方案" class="headerlink" title="基于模糊逻辑的隐写术方案"></a>基于模糊逻辑的隐写术方案</h3><p>基于模糊逻辑的系统更专注于保持视觉质量，以更高的建模复杂度来改善隐写媒体的不可察觉性。<br>模糊方法已经以多种方式实现。 例如，在文献[A high quality image steganography<br>scheme based on fuzzy inference<br>system]中，使用具有HVS的模糊推理系统(FIS)从基于局部统计、纹理和亮度信息的特征向量进行决策步骤。<br>该方法利用cover图像子区域的这些特征，定义嵌入过程所需的语义规则。<br>该概念有助于在更高的嵌入率下减少隐写图像的失真。 文献[Image steganography using<br>fuzzy domain transformation and pixel<br>classification]解释了另一种基于模糊的方法。 这里，cover像素的选择基于模糊像素分类，并且在实际的嵌入处理之前将秘密消息转换为模糊数据的模式。<br>Kiani等人解释了另一种基于模糊的水印技术， [Fractal based digital image<br>watermarking using fuzzy C-mean<br>clustering]采用基于变换域不同方向导数特征的Fuzzy-C均值聚类算法。<br>模糊逻辑能够在不同的方面增强隐写方案，特别是当它们是模糊和/或模糊不清的图像纹理时。<br>它通过快速识别合适的图像模式，减少不尊重的复杂性，有利于系统。<br>这将最终有助于使用适当的不可察觉性的实际应用。</p>
+<h3 id="基于神经网络的隐写方案"><a href="#基于神经网络的隐写方案" class="headerlink" title="基于神经网络的隐写方案"></a>基于神经网络的隐写方案</h3><p>基于神经网络的隐写系统通过对图像细节的深入分析，关注方案的鲁棒性和不可感知性。<br>大多数此类技术使用反向传播算法来获得适当的嵌入位置，或者将其并入秘密提取过程。  </p>
+<p>在某些技术中，cover中的系数的检测利用人类视觉系统(HVS)。 在 [Adaptive digital<br>watermarking using neural network clustering<br>technique]中，Lou等人使用来自HVS模型的特征来研究cover图像的特征。<br>这里使用频率内容、熵、亮度和纹理细节等多种特征来进行决策。 文献[Increased<br>capacity of image based steganography using artificial neural<br>network]对另一种基于两级神经网络的隐写系统进行了说明。<br>前一阶段用于秘密数据压缩，人工神经网络用于秘密数据压缩。<br>在第二阶段，使用LSB嵌入方案来隐藏压缩的秘密数据比特。 </p>
+<p>一般说来，神经网络的分类能力较强。<br>它们的决策是基于非线性和适应性阶段的，因此在不同的情况下是有用的。<br>然而，在采用神经网络方法时，“黑盒”性质是一个主要关切问题。<br>训练阶段与权值变化的关系是造成这种影响的主要原因，因此，在基于神经网络的系统中，主要障碍是分配层数、神经元数等参数。时间开销是这些技术的另一个缺点。 </p>
+<p>总之，与机器学习方案的其他领域类似，这里的效率也很高，因为该方法是自适应地选择用于在载体介质上嵌入秘密比特的最精确的解决方案。<br>利用这些机器学习系统的预测结果智能地选择系数将有助于在高有效载荷容量下将失真最小的数据嵌入到cover图像中，由于量化误差在接收器侧造成数据损失等，这有助于在与传统的顺序嵌入方案相比较的同时增强图像隐写术的从不可察觉性到载波容量的所有方面。<br>此外，嵌入性质可以通过调整参数来改变。<br>这将有助于为隐写术的任何特定方面提供额外的权重。<br>可能的缺点包括对训练数据的要求。<br>同时，学习的效率很大程度上依赖于训练参数和适当的监督学习，因此成为影响学习效率的关键因素。 </p>
+<h2 id="Cover图像的选择"><a href="#Cover图像的选择" class="headerlink" title="Cover图像的选择"></a>Cover图像的选择</h2><p>在隐写过程中，最主要的问题是在不在嵌入图像中留下任何可疑噪声的情况下，将秘密数据嵌入到cover图像中。<br>因此，嵌入效率主要取决于嵌入过程的性质，并在前面的章节中进行了解释。<br>然而，效率也取决于所选的cover图像。<br>在这一节中，我们将讨论cover图像在隐写过程中的意义。<br>正如我们之前所详细描述的，嵌入在图像的平滑区域中更容易被检测到，而在纹理或边缘区域中则很难被发现。<br>因此，可以说， cover图像将具有高保真区域，以使嵌入以不可察觉的方式进行。<br>这也将有助于隐藏更多的秘密数据位，而不会在隐写图像中产生任何可见的噪声。 为了选择合适的cover图像，人们提出了许多方法，其中大多数方法选择频率分量较多的cover图像，而不是选择平滑区域[Cover<br>selection steganography]，[Cover selection for image steganography based on<br>image characteristics]。<br>早期的一些工作使用了基于相关性的cover图像选择过程、图像块的相似性和过统计度量特征。<br>然后，从可用数据集中获取更多图像信息以选择合适的cover图像。 在文献[Cover<br>selection<br>steganography]中，采用了基于相关性的cover图像选择过程。将小波系数的LSB位与秘密数据相关，从数据集中选择最匹配的小波系数。<br>文献[Curvelet transform and cover selection for secure<br>steganography]提出了另一种cover图像选择方法。 利用模糊图像复杂度模型，通过对图像数据集的检查，找到一个最小可检测的隐写图像。<br>在文献[What makes the stego image<br>undetectable?]中说明了另一种cover图像选择方法。<br>该方案采用Fisher信息矩阵和高斯混合模型衡量嵌入能力，并进行比较。<br>以前工作的主要缺点是耗时。 Hajduk和Levickí[Accelerated cover selection<br>steganography]提出了一种改进的cover图像选择，以解决上述缺陷。<br>这里，使用基于秘密消息的缩短向量的加速可选cover选择。<br>在所有的cover图像选择方法中，最终的目的是使用适合预期应用的cover图像。<br>这将有助于改进隐写术处理的所有所需特性，特别是当可能使用通信信道中的隐写分析工具分析隐写图像时。 </p>
+<h2 id="基于生成对抗网络的隐写"><a href="#基于生成对抗网络的隐写" class="headerlink" title="基于生成对抗网络的隐写"></a>基于生成对抗网络的隐写</h2><p>最早将深度学习应用于加密的工作的论文是Google Brain的<strong>Learning to Protect<br>Communications with Adversarial Neural<br>Cryptography</strong>一个经典的安全场景涉及三个方面:Alice，Bob和Eve。通常情况下，Alice和Bob<br>希望安全地通信，而Eve希望窃听他们的通信。整个场景如图2-1所示：Alice将明文P和密钥K加密产生密文C，然后将C放到信道上进行传输。Bob使用密钥K从接受到的密文C恢复出明文<strong>PBob</strong>，而监听者Eve在没有密钥K的情况下尝试从密文C中恢复出明文<strong>PEve</strong>。</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/9c713df657d70bf210eb8388558ea5ca.png" alt=""></p>
+<p>图2-1</p>
+<p>在这里，Alice，Bob，Eve三者都是卷积神经网络，它们的参数分别为θA，θB和θE。加密模型和解密模型，即Alice和Bob有着相同的网络结构，但参数不同。对于大多数神经网络来说，模型的输入和输出通常都是浮点数，而不是比特序列，因此这里的P，K， PBob和PEve都可能是浮点数。即是P和K是0和1组成的比特序列，C、PBob和PEve也可以是任意的浮点数。在实际操作中，我们将它们限制在区间(-1,<br>1)内。</p>
+<p>Eve的目标很简单，即能够准确地从窃听到的密文C中恢复出明文P，也就是尽可能地缩小P和PEve之间的误差。Alice和Bob呢，则希望能够安全准确地进行通信，换句话说就是尽可能地缩小P和PBob之间的误差。根据现代密码学的定义，我们不必要求密文C对Eve来说一定要是随机的（look<br>random），因此从随机数中分辨出密文C不是Eve的目标。</p>
+<p>因此，整个生成对抗网络包含三个部分，下表说明了三个部分的输入输出。</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/888f28dfc39141cd9d1d8ff041f6e9aa.png" alt=""></p>
+<p>我们引入明文之间的距离函数d，这里使用L1距离：</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/44a5663293b38170c16e03e4bdc9f5bd.png" alt=""></p>
+<p>，其中N为明文长度。因此对于每一个样本，Eve的损失函数为：  </p>
+<p><img src="/2019/03/20/Steganograph-notes/media/2b472520e202dce86b85ac212d6ea03d.png" alt=""></p>
+<p>那么，Eve在明文P和密钥K的分布下的损失函数为：  </p>
+<p><img src="/2019/03/20/Steganograph-notes/media/6f5ba89b3ee27f6fb5eee8d55d135558.png" alt=""></p>
+<p>Eve的目标也就如下：  </p>
+<p><img src="/2019/03/20/Steganograph-notes/media/61ca8b6b2037096f0d9b74f849472cf3.png" alt=""></p>
+<p>类似的，Bob针对某个样本的损失函数和在明文P和密钥K的分布下的损失函数分别如下：  </p>
+<p><img src="/2019/03/20/Steganograph-notes/media/cc061f708e1e4361efb84af59c84b390.png" alt=""></p>
+<p>综上，对于Alice和Bob来说，损失函数如下：  </p>
+<p><img src="/2019/03/20/Steganograph-notes/media/a7fe24a194483ef0022062b922c3abed.png" alt=""></p>
+<p>限定明文和密钥长度相等，Alice和Bob的模型结构相同，将两个N位输入（明文和密钥）连接到一个2N条目标向量中，使用−1和1表示位值。该矢量通过2N×2N<br>FC层处理，然后通过四个一维卷积层连续发送。Eve则将前两层改成N-2N的全连接，其余一样。图2-2为N=16时的训练结果，使用4096的minibatch。<br>理想的结果是Bob的重构误差降至零，Eve的重构误差达到8（一半的位错误）。在本例中，两个重构错误开始时都很高。经过一段时间后Alice和Bob开始很有效地交流，但他们的交流同时也能够让Eve更好的理解，到大约15,000步，训练目标就有效地实现了。</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/789a195a7e6ae07c8a11db6995666644.png" alt=""></p>
+<p>图2-2</p>
+<p>在这篇论文中证明了神经网络可以学习保护通信。不需要指定一组特定的加密算法，也不需要指明方法<br>应用这些算法:它只是基于一个由训练表示的保密规范目标。在这种情况下，我们用神经网络来模拟攻击者；替代模型可通过强化学习来实现。</p>
+<p>最早提出的生成对抗网络模型<strong>SGAN（Steganographic Generative Adversarial<br>Networks</strong>是在<strong>DCGAN（Deep Convolutional Generative Adversarial<br>Networks）</strong>的基础上提出的，它主要是在经典GAN的基础上加了一个由CNN实现的判别器网络S对输入给S的图像进行隐写分析，模型示意图如图2-3所示。输入给S的图像一部分通过一个传统隐写算法做了隐写，另外一部分没有。</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/36dfb8910a4d2714e9dd9f546f28e28e.png" alt=""></p>
+<p>图2-3</p>
+<p>训练方法同经典GAN一样，采用mini-batch的随机梯度法，迭代式地分别训练三个网络，论文使用了名人集作为数据集，其中包含了200000张名人照片，全剪切成了64x64的大小。其中的10%的数据作为测试集，其他作为训练集。这里使用的隐写算法是正负1嵌入算法，也就是LSB，嵌入率为0.4，且只在图像的一个通道内嵌入秘密信息。最后的结果是使用DCGAN生成的图像比自然图像更适合做隐写载体。</p>
+<p>在此之后，中国科学院的一篇题为<strong>SSGAN: secure steganography based on generative<br>adversarial networks</strong>就是在上篇论文之后的后续工作。它的主要工作有以下三点:</p>
+<p>1.使用WGAN替代上篇中的DCGAN，生成图像的可视化质量高，训练速度快；<br>2.使用GNCNN替代隐写分析器；<br>3.使用GNCNN和GAN进行对抗，使GAN生成的图像更适合隐写。</p>
+<p>最后的结论是用WGAN生成的图像比用DCGAN生成的图像更适合做隐写，比DCGAN训练速度更快。</p>
+<p>SCAN和SSCAN利用生成对抗网络生成载体图像，而Hayes等人设计了一个自动学习密写过程的方案,<br>直接生成载密图像。这个方案同样利用了囚徒模型，定义了分别为Alice Bob<br>和Eve定义各自的任务。Alice Bob<br>和Eve的三方对抗，使得Alice能够自动学习到一种基于载体修改的隐写方案，在没有密钥的情况下，<br>Eve不可能得到秘密信息。HayesGAN模型见图2-3。</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/7a438cffc3213ba6e11eb16cb258be8d.png" alt=""></p>
+<p>图2-3</p>
+<h1 id="隐写分析"><a href="#隐写分析" class="headerlink" title="隐写分析"></a>隐写分析</h1><p>目前的隐写分析研究领域通常将隐写分析看成一个二分类问题，目标是区分正常载体和含密载体。虽然人类感知器官无法进行区分，研究者可以借助机器学习、模式识别等工具，并通过对图像统计特性进行分析来实现有效判别。根据应用范围的不同，隐写分析可以分为两种类型：专用隐写分析(Specific<br>Steganalysis)和通用隐写分析(Universal<br>Steganalysis)。专用隐写分析利用某种隐写术中存在的特定的缺陷或漏洞进行针对性的攻击，检测准确率较高。但其局限性在于只对特定的一种或一类隐写术有效。由于目前的隐写算法千变万化，且新的算法层出不穷，针对性的隐写分析方法很难满足实际应用需求。在这种情况下，不针对特定隐写算法的通用隐写分析技术受到了更多的重视，并成为了目前隐写分析领域主流的研究方向。通用隐写分析的基本思想是利用隐写算法对载体图像统计特性造成的改变中存在的共性来进行检测，可以对多种隐写术进行攻击，更接近实际应用需求。 隐写分析的分类见图4。</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/cf131b76829f094da7ae3d8b62fe7c0c.jpg" alt="Fig. 5."></p>
+<p>图4</p>
+<p>主要分类是基于隐写分析中使用的基本检测程序。<br>它可以有两种类型:签名隐写分析和统计隐写分析。<br>在前一种类型中，系统将搜索任何隐写工具的任何特定模式或签名。<br>这个概念背后的关键思想是，由于嵌入的秘密比特，隐写图像可能会有一些重复的模式。<br>后者使用统计参数来检查是否有任何秘密比特隐藏在那里。<br>显然，这将产生更好的结果，因为它使用数学模型来评估隐写图像特征，而不是在特征码隐写分析中使用的猜测分析。 </p>
+<h2 id="签名隐写分析"><a href="#签名隐写分析" class="headerlink" title="签名隐写分析 "></a><strong>签名隐写分析 </strong></h2><p>在签名隐写分析类下，主要的子类是“专用”和“通用”类型。<br>在专用隐写分析类型中，该方法搜索已知隐写系统的唯一模式或签名。<br>隐写方案产生一些特殊的模式，如直方图排列、最小和最大强度范围等，这些特定的签名在这里被识别，然后检测该特定隐写嵌入方案的计数器方法。<br>如果隐写图像是使用流行的隐写术工具创建的，那么这种方法就能很好地工作。<br>另一种是通用型，使用期望JPEG压缩量化性质的变化来检测图像是否是隐写图像。 </p>
+<h2 id="统计隐写分析"><a href="#统计隐写分析" class="headerlink" title="统计隐写分析 "></a><strong>统计隐写分析 </strong></h2><p>在这一类别中，数理统计模型用于检测隐藏数据，类似于签名类，这也可以分为“特定”和“通用”类型。<br>特定类型使用统计分解的专用阶段来检查任何特定隐写术系统。<br>该方法可根据目标嵌入方案进行进一步分类，目前流行的方法有LSB嵌入隐写分析、LSB匹配隐写分析、扩频隐写分析、BPCS-隐写分析、JPEG-压缩隐写分析、变换域隐写分析和加性噪声隐写分析。<br>另一方面，通用统计隐写分析是一种元检测过程，不是针对任何特殊类别的。<br>检测感测处于多个阶段，并且在每个阶段之后，检测参数被调整以击败可能的隐写术系统。 </p>
+<p>这里，一些隐写分析技术、视觉检查、内容和直方图分析、卡方检验和RS隐写分析被认为是理解一幅封面图像是否有嵌入位的最基本的技术。<br>目视检查的样本如图所示。 图5表示不同嵌入层次的隐写图像。<br>直方图分析的示例显示如图6，它表示cover与stego直方图差异。 </p>
+<p><img src="/2019/03/20/Steganograph-notes/media/52b0170d91d5e047bfa3e209a4024878.jpg" alt="Fig. 6."></p>
+<p>图5不同嵌入水平的Lena图像(a)原始图像，(b)2bpp，(c)3bpp，(e)4bpp，(f)5bpp，(g)6bpp。 </p>
+<p><img src="/2019/03/20/Steganograph-notes/media/debacd448109cf17840f18b10c11c372.jpg" alt="Fig. 7."></p>
+<p>图6</p>
+<p>在比较建模复杂度和检测精度等不同方面的同时，基于统计的隐写术似乎优于签名类型，因此在关键系统中更受青睐。<br>在统计分类学中，通用型隐写术由于其检测过程适应于给定的隐写图像，并且其操作不限于任何特定的隐写术系统，因此更有用。<br>然而，随着计算领域的日益先进，使用健壮的密钥和加密算法来检索秘密数据是不现实的。<br>即使这样，如果使用正确的隐写分析选择，隐写图像也可以被篡改，并且可以防止数据传输。 </p>
+<h2 id="传统的隐写分析"><a href="#传统的隐写分析" class="headerlink" title="传统的隐写分析"></a>传统的隐写分析</h2><p>传统的图像通用隐写分析方法一般包括特征提取和训练分类器两个步骤。其中，隐写分析中的特征是对正常图像和载密图像具有区分能力的统计量。而分类器则是机器学习中常用的<br>SVM、集成分类器(Ensemble Classifier)<br>等可训练优化的类别判别工具。两个步骤中，特征表达是研究中的关键问题，其对检测性能起到决定性的作用。在传统的方法中，特征表达主要依赖于人工设计，且特征设计的基本思想是找到隐写操作前后图像中具有明显差异的统计量。早期的隐写分析特征通常是统计矩、特征函数质心等相对简单的统计量，且特征维度较低，通常只有几十维。代表性的有<br>Harmsen 和 Pearlman [Steganalysis of Additive-Noise Modelable Information<br>Hiding]提出的基于直方图特征函数质心(histogram characteristic function center of<br>mass, HCFCOM)特征，Ker 等[Steganalysis of LSB Matching in Grayscale<br>Images]引入校准技术后提出的邻接直方图特征函数质心(adjacency histogram<br>characteristic function center of mass, AHCFCOM)特征，Lyu 和 Farid[Detecting<br>Hidden Messages Using Higher-Order Statistics and Support Vector<br>Machines]提出的基于小波分解的高阶统计量特征，Shi 等[Effective Steganalysis Based<br>on Statistical Moments of Wavelet Characteristic<br>Function]提出的基于图像小波系数直方图各阶统计矩的 CF 特征，Goljan 等[New Blind<br>Steganalysis and Its Implications.]提出的基于小波绝对矩(wavelet absolute moment,<br>WAM)特征，Xuan 等[Steganalysis Based on Multiple Features Formed by Statistical<br>Moments of Wavelet Characteristic Functions]提出的小波系数直方图统计矩特征，Chen<br>等[Blind Image Steganalysis Based on Statistical Analysis of Empirical<br>Matrix]提出的基于经验矩阵的特征，以及 Dong 和 Tan[Blind Image Steganalysis Based<br>on Run-Length Histogram<br>Analysis]提出的基于游程的特征等。但随着图像隐写术的不断发展，新提出的隐写算法可以保持更复杂的图像统计特性，例如近几年提出的<br>HUGO [Using High-Dimensional Image Models to Perform Highly Undetectable<br>Steganography], SUNIWARD [Designing Steganographic Distortion Using Directional<br>Filters], WOW [Digital Image Steganography Using Universal Distortion], HILL-CMD<br>[Content-Adaptive Steganography by Minimizing Statistical Detectability], MiPOD<br>[A Strategy of Clustering Modification Directions in Spatial Image<br>Steganography]等内容自适应隐写术可以自动的将隐秘信息嵌入到纹理、噪声丰富的图像区域，从而保持复杂的图像高阶统计特性。隐写术的快速进步使得早期提出的基于简单统计量的特征很难取得有效的检测效果。为了对抗更先进的自适应隐写术，隐写分析领域特征设计过程中需要考虑更复杂的图像统计特性，并且特征也逐渐朝着复杂化、高维化发展。目前，基于对图像邻域复杂相关性进行建模的高阶统计量特征称为隐写分析领域的主流特征。该类特征提取方法包括如下两步：第一步是预处理，即对相邻的像素或者<br>DCT<br>系数用不同种类高通滤波核进行滤波操作得到不同的残差图像；第二步分别从各个残差图像中计算描述邻近像素或系数间相关性的共生矩阵、投影直方图、LBP<br>(Local Binary<br>Pattern)等作为特征，进而通过组合不同残差图像上得到的特征得到最终的高维特征集。其中高通滤波预处理程度上抑制了低频图像内容的影响，增强了隐写分析更关注的隐写噪声成分，使得后续的特征表达更有效。而通过组合从不同残差中提取的特征，可以融合不同残差中的互补信息，从而捕捉到更丰富的隐写分析相关的邻域相关性等复杂统计特性，使得检测性能有较大提升。该类特征可统称为“富模型”特征，其中“富”字体现在其通过组合相异的子特征集使得特征可以表达丰富的统计特性。同时该类特征这些特征在维度上相比于早期的特征有了大幅度的提升，例如代表性的<br>SRM (Spatial Rich Model), PSRM (Projection Spection Rich<br>Model)等特征维度均超过了 10,000<br>维。在“富模型”特征研究基础上，近几年基于人工特征的隐写分析研究的新趋势是在“富模型”特征的提取过程中引入选择信道(Selection<br>Channel)先验信息来进一步提升对自适应隐写术的检测能力。其中选择信道指的是自适应隐写术中的用到的修改概率，其用于在秘密信息嵌入过程中选择适合嵌入的像素或频域系数位置，从而保证隐写的安全。Tang<br>等首先提出了利用选择信道信息的自适应隐写分析(Adaptive<br>Steganalysis)，且主要针对的是WOW<br>隐写算法。其思想是首先从图像中筛选出可疑区域，然后只从可疑区域中提特征。筛选可疑区域的方式是首先用<br>WOW 算法中的方法计算每个像素的嵌入代价(embedding cost) ρij，ρij<br>越小表示该像素被修改的概率越大。通过一定的比例 p 选出 ρij<br>较小的像素集作为可疑区域，其中 p<br>为可调参数。最终在筛选出的可疑区域上计算残差并提取共生矩阵作为特征。该方法对 WOW<br>的检测相对传统特征提取方式有了一定的提升。Denemark 等在 Tang<br>等工作的基础上提出了一种新的通用的自适应隐写分析特征。该方法所提的特征可看成是传统<br>Rich Model 的变体。提特征所用到的残差、量化截短等操作均与传统 Rich Model<br>中的相同。不同点在于共生矩阵的计算。传统 Rich Model<br>在从残差上计算四维共生矩阵时，同等的看待每个四元组(d1, d2, d3,<br>d4)的贡献，即每次四元组出现时对应的共生矩阵中的 bin 值加 1，其中 d1, d2, d3, d4<br>为残差图像中的元素。而该文的作者认为应当对图像中每个元素对最终特征的贡献有所区分，修改概率大的位置应赋予更大的权重。该方法中，每次四元组出现时，对应的共生矩阵中的<br>bin 值加四元组元素对应的修改概率 βij 的最大值，其中 βij<br>是根据相应隐写术中的计算方式得到。该方法相比 HUGO、WOW、SUNIWARD<br>等自适应隐写术的检测效果较传统方法都有所提升。</p>
+<h2 id="基于深度学习的隐写分析"><a href="#基于深度学习的隐写分析" class="headerlink" title="基于深度学习的隐写分析"></a>基于深度学习的隐写分析</h2><p><strong>使用卷积神经网络来做隐写分析</strong></p>
+<p>最早将深度学习引入信息隐藏的工作，是中科院在2015年提出的。（<strong>Deep learning for<br>steganalysis via convolutional neural<br>networks</strong>）该模型使用了传统算法中的KV核对图像进行预处理，然后将预处理后的图像输入到CNN中，KV核如下所示。</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/689fdd7db25a75b8f475c6ad4bbad2a8.png" alt=""></p>
+<p><img src="/2019/03/20/Steganograph-notes/media/01936f0a0d982a4a8dabd3d56ce32c70.png" alt=""></p>
+<p>图1-1</p>
+<p>论文中提出的GNCNN模型（右）和传统的基于手工特征的隐写分析体系结构（左）比较如图1-1所示，流程图中的向上和向下箭头显示正向和反向传播方向。 </p>
+<p>另外，模型还使用了高斯激活函数</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/1425a7591982207fb450c99a34b15e48.png" alt=""></p>
+<p>，其中σ是一个超参数。只有当输入在0附近时，该激活函数才会有一个明显的正值反馈。整个模型结构如图1-5所示。模型的输入是一个256x256的灰度图，然后经过上面的KV卷积核（第一层卷积）作预处理后，进入CNN中。后面是5个卷积层，每个卷积层包含16个3x3的卷积核，步长为1，激活函数为高斯函数。六个卷积层后边分别跟着一个池化大小为3x3、步长为2的池化层。模型的最后是全连接层。论文将该模型称为GNCNN（Gaussian<br>Neural CNN）整个模型结构见图1-2。</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/b30045ff30252d643f32aa73d29b2729.png" alt=""></p>
+<p>图1-2</p>
+<p>论文中使用的数据集为BOSSbase<br>1.01，这是在2012年举办的一场隐写分析比赛中使用的数据集，其中包含10000张512x512的灰度图。论文中使用HUGO、WOW、S-UNIWARD三种隐写算法以0.3bpp、0.4bpp、0.5bpp三个嵌入率分别进行隐写，最终结果显示GNCNN优于SPAM，次于SRM。</p>
+<p>接下来在<strong>Deep learning is a good steganalysis tool when embedding key is reused<br>for different images, even if there is a cover<br>source-mismatch</strong>这篇论文中验证了CNN在不同数据集上的泛化能力：由于内在的联合最小化和空间信息的保持，如果参数化良好，卷积神经网络(CNN)或全连接神经网络(FNN)的结果优于传统的RM和EC的结果。即在两个不同来源的数据集（拍摄两组图像的相机等不同）上，在一个数据集上训练好的CNN隐写分析模型，可以很好的检测另一个数据集上的图像，而传统模型则不能做到这一点。</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/48b51c0405f15eb97034b42982b2af31.png" alt=""></p>
+<p><img src="/2019/03/20/Steganograph-notes/media/1f3d7915d498f65afefae40b17d78d3b.png" alt=""></p>
+<p>图1-3</p>
+<p>图1-3为该论文中两个实验结果，传统的RM和EC，FNN，CNN的平均错误概率比较。在第一组实验中，我们可以看到与现有的基于SRM特征的集成分类器相比，CNN和FNN将分类误差降低了三倍。在第二组实验中，使用公共LIRMMBase数据库进行测试。<br>由于各基地的摄像机各不相同，因此完全实现了<strong>source-mismatch</strong>。传统的方法(RM+EC)对LIRMMBASE中的隐写术检测失败，分类错误率为48.29%，几乎是随机分类。<br>相反，CNN对覆盖源失配表现出自然不变性，分类误差为5.16%。</p>
+<p>接下来在<strong>Structual design of convolutional neural networks for<br>steganalysis</strong>中，它在第一篇的基础上使用了更深的网络，在网络中加入了ABS、Batch<br>Normalization、tanh等激活函数，最终效果优于SRM，CNN结构见图1-4所示。</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/89606b9be73e3410177b1d22eb11d0e4.png" alt=""></p>
+<p>图1-4</p>
+<p>该论文表明一个设计良好的CNN是一个很好的隐写分析工具与采用传统的基于特征的隐写分析方法相比，能够提供更好的检测性能。 </p>
+<p>2017年中山大学的一篇论文<strong>Deep learning hierarchical representations for iamge<br>steganalysis</strong>提出了一个截断线性单元(TLU) 函数 ，与传统的<br>CV任务相比，隐写术的过程可以被看作是增加极低信噪比的嵌入式信号。在第一层采用TLU<br>有助于适应嵌入式系统的分布。TLU函数定义如下：</p>
+<p><img src="/2019/03/20/Steganograph-notes/media/c1d792b88e84c9330d7b6a9765f18ced.png" alt=""></p>
+<p>其中的参数T通过实验来确定，取3或7。模型为10层的CNN，第一层卷积层为30个5x5的卷积核，使用SRM中的30个高通滤波器来初始化，在训练过程中也参与参数的更新。注意，在极端情况下T=∞，TLU 变成一个单位函数（线性激活函数）。 有趣的是，即使使用线性激活函数，loss还是会非线性的降低，TLU-CNN仍可具有与RELU-CNN相当的性能。 </p>
+<p>现代隐写术的研究主要包括三个步骤，即残差计算、特征提取和二进制分类。在该篇论文中，提出了一种基于CNN的隐写分析器，它能够很好地模拟和优化统一网络体系结构中的这些关键步骤。使用TLU非线性激活函数并结合选择通道的知识可以产生更多与众不同的滤波器和更少的“死”滤波器，检测能力更强，远远超过了SRM模型。</p>
+<p>论文中提出的10层卷积网络结构见图1-5， 对于每个卷积层，输入特征映射是其<br>上一层。 虚线框中的层仅存在于建议网络支持选择通道的版本中。 </p>
+<p><img src="/2019/03/20/Steganograph-notes/media/069ee4e010acd567362d175d68ef8077.png" alt=""></p>
+<p>图1-5</p>
+<h1 id="展望"><a href="#展望" class="headerlink" title="展望"></a>展望</h1><p>图像隐写技术面临的主要挑战是如何以最小的可检测性、高安全性、良好的抗入侵者攻击能力和高有效载荷容量将秘密数据隐藏在覆盖图像中。<br>尽管研究人员在这一领域已经工作了十多年，但上述要求尚未完全实现。由于隐写特性是相互关联的，提高某些特性可能会降低其他方面的效率。问题是还没有找到一个切实可行的办法来一次解决所有这些要求。<br>为了提高现有图像隐写技术的效率，提出了一些隐写概念。</p>
+<p>对变换域技术的重视 </p>
+<p>时域系统在嵌入安全性方面受到限制，因为直接嵌入常常会使原始视觉质量失效。<br>因此，更好的选择是为高级技术选择变换域技术。现在，计算成本并不是一个严重的问题，因为处理器功能太强大，在这种情况下无法使用。变换域技术提供了来自cover图像的多个主平面，它增加了选择更有效的嵌入位置的选择。它还有助于每个cover嵌入更多位数。<br>变换域平面上的研究仍处于不饱和阶段，有可能改进传统的隐写系统。 </p>
+<p>对自适应嵌入方法的重视 </p>
+<p>自适应是得到优化算法的首要思想。它不仅提高了嵌入效率，而且通过适当的对策为隐写分析的尝试提供了保障。机器学习技术是获得对系统适应性的最佳选择。最初，可以使用可能的已知参数对系统进行训练，并且可以进行新的尝试，而不会在系统中产生先前发生的缺陷。利用这些机器学习系统的预测结果智能地选择系数将有助于在高有效载荷容量下将失真最小的数据嵌入到cover图像中，由于量化误差在接收器侧造成数据损失等，这有助于在与传统的顺序嵌入方案相比较的同时增强图像隐写术的从不可察觉性到载荷容量等所有方面。</p>
+<p>改善安全问题</p>
+<p>隐写术系统可以设计为使用具有密钥的健壮加密算法，并且这种系统比标准方案具有更好的真实性和安全性。因此，研究和开发这些合适的加密系统是当务之急。基于现有流行图像格式（如JPEG）的加密是另一个非饱和领域，其中加密和隐写过程可以结合在图像格式本身中。这样的系统有助于在很大程度上保持隐藏秘密比特的不可检测性。</p>
+<p>提高对攻击的鲁棒性</p>
+<p>在研究图像隐写区域时，隐写图像的鲁棒性是大多数研究工作中考虑最少的参数之一。<br>但是这是非常关键的，因为隐写图像容易受到来自通信信道和入侵者的各种攻击。<br>大多数情况下，入侵者可以很容易地改变隐写图像的强度、平滑度等属性，这将在接收端检索秘密数据时产生严重的错误。因此，需要采取支助性的反措施，消除对秘密媒体的攻击所产生的影响。 </p>
+<p>集中式二维图像隐写 </p>
+<p>正如我们在前面的讨论中所讨论的，我们发现与3D版本相比，2D图像隐写术提供了更好的吞吐量。<br>三维顶点的嵌入是一个复杂数学模型的复杂过程。3D图像并不像2D图像那样受欢迎，并且当通过开放的通道发送这样的图像时，隐写过程可以容易地被检测到。因此，对于高级隐写术处理，最好集中在2D空间而不是使用3D载体图像。 </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JEPG-Steganography/" rel="tag"><i class="fa fa-tag"></i> JEPG Steganography</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/13/操作系统/" rel="next" title="操作系统">
+                <i class="fa fa-chevron-left"></i> 操作系统
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/21/Steganography-basic/" rel="prev" title="Steganography(basic)">
+                Steganography(basic) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100017135643802" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                    
+                      FB Page
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/6862942751/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://isujin.com/" title="素锦" target="_blank">素锦</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://imkira.com/" title="Kira" target="_blank">Kira</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#信息安全系统"><span class="nav-number">1.</span> <span class="nav-text">信息安全系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#隐写术"><span class="nav-number">2.</span> <span class="nav-text">隐写术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#图像隐写技术的分类"><span class="nav-number">2.1.</span> <span class="nav-text">图像隐写技术的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cover图像的类型"><span class="nav-number">2.1.1.</span> <span class="nav-text">cover图像的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于检索性质的分类"><span class="nav-number">2.1.2.</span> <span class="nav-text">基于检索性质的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于嵌入域的分类"><span class="nav-number">2.1.3.</span> <span class="nav-text">基于嵌入域的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#空域图像隐写术"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">空域图像隐写术</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#最低有效位（LSB）隐写术"><span class="nav-number">2.1.3.1.1.</span> <span class="nav-text">最低有效位（LSB）隐写术</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#像素值差分（PVD）隐写术"><span class="nav-number">2.1.3.1.2.</span> <span class="nav-text">像素值差分（PVD）隐写术</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于直方图移位的隐写术"><span class="nav-number">2.1.3.1.3.</span> <span class="nav-text">基于直方图移位的隐写术</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#差异扩展隐写术"><span class="nav-number">2.1.3.1.4.</span> <span class="nav-text">差异扩展隐写术</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于位平面的隐写术"><span class="nav-number">2.1.3.1.5.</span> <span class="nav-text">基于位平面的隐写术</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于调色板的隐写术"><span class="nav-number">2.1.3.1.6.</span> <span class="nav-text">基于调色板的隐写术</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于像素强度调制的隐写术"><span class="nav-number">2.1.3.1.7.</span> <span class="nav-text">基于像素强度调制的隐写术</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于量化的隐写术"><span class="nav-number">2.1.3.1.8.</span> <span class="nav-text">基于量化的隐写术</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变换域图像隐写术"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">变换域图像隐写术</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基于离散傅立叶变换-DFT-的隐写术"><span class="nav-number">2.1.3.2.1.</span> <span class="nav-text">基于离散傅立叶变换(DFT)的隐写术</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于离散余弦变换-DCT-的隐写术"><span class="nav-number">2.1.3.2.2.</span> <span class="nav-text">基于离散余弦变换(DCT)的隐写术</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于离散小波变换-DWT-的隐写术"><span class="nav-number">2.1.3.2.3.</span> <span class="nav-text">基于离散小波变换(DWT)的隐写术</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于整数小波变换-IWT-的隐写术"><span class="nav-number">2.1.3.2.4.</span> <span class="nav-text">基于整数小波变换(IWT)的隐写术</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于复小波变换-CWT-的隐写术"><span class="nav-number">2.1.3.2.5.</span> <span class="nav-text">基于复小波变换(CWT)的隐写术</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于双树复数小波变换（DT-CWT）的隐写术"><span class="nav-number">2.1.3.2.6.</span> <span class="nav-text">基于双树复数小波变换（DT-CWT）的隐写术</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于压缩感知-CS-的隐写术"><span class="nav-number">2.1.3.2.7.</span> <span class="nav-text">基于压缩感知(CS)的隐写术</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自适应隐写术"><span class="nav-number">2.2.</span> <span class="nav-text">自适应隐写术 </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于区域的隐写术"><span class="nav-number">2.2.1.</span> <span class="nav-text">基于区域的隐写术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于人眼视觉系统-HVS-的隐写术"><span class="nav-number">2.2.2.</span> <span class="nav-text">基于人眼视觉系统(HVS)的隐写术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于机器学习和人工智能技术的隐写术"><span class="nav-number">2.2.3.</span> <span class="nav-text">基于机器学习和人工智能技术的隐写术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于支持向量机的隐写方案"><span class="nav-number">2.2.4.</span> <span class="nav-text">基于支持向量机的隐写方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于遗传算法的隐写方案"><span class="nav-number">2.2.5.</span> <span class="nav-text">基于遗传算法的隐写方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于模糊逻辑的隐写术方案"><span class="nav-number">2.2.6.</span> <span class="nav-text">基于模糊逻辑的隐写术方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于神经网络的隐写方案"><span class="nav-number">2.2.7.</span> <span class="nav-text">基于神经网络的隐写方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cover图像的选择"><span class="nav-number">2.3.</span> <span class="nav-text">Cover图像的选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于生成对抗网络的隐写"><span class="nav-number">2.4.</span> <span class="nav-text">基于生成对抗网络的隐写</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#隐写分析"><span class="nav-number">3.</span> <span class="nav-text">隐写分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#签名隐写分析"><span class="nav-number">3.1.</span> <span class="nav-text">签名隐写分析 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统计隐写分析"><span class="nav-number">3.2.</span> <span class="nav-text">统计隐写分析 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传统的隐写分析"><span class="nav-number">3.3.</span> <span class="nav-text">传统的隐写分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于深度学习的隐写分析"><span class="nav-number">3.4.</span> <span class="nav-text">基于深度学习的隐写分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#展望"><span class="nav-number">4.</span> <span class="nav-text">展望</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"mobile":{"show":false},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>

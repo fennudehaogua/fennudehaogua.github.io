@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JEPG Steganography," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="EA-LSBMR论文：Edge adaptive image steganography based on LSB matchingrevisited(2010,TIFS,CR334) 简单 LSB替换算法虽然仅对载体图像进行微小的修改，但仍会因在最低位平面产生某些异常特性如值对现象而容易被卡方检测等统计方法识别出来。为了避免这种统计异常性的最简单方法就是LSB 匹配算法(LSB Matching">
+<meta name="keywords" content="JEPG Steganography">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Steganograph(notes)">
+<meta property="og:url" content="http://fennudehaogua.top/2019/03/22/3-22/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="EA-LSBMR论文：Edge adaptive image steganography based on LSB matchingrevisited(2010,TIFS,CR334) 简单 LSB替换算法虽然仅对载体图像进行微小的修改，但仍会因在最低位平面产生某些异常特性如值对现象而容易被卡方检测等统计方法识别出来。为了避免这种统计异常性的最简单方法就是LSB 匹配算法(LSB Matching">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/66ce7485eb25daac3e77913b26b31df1.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/6697e6d49d2baaf1c03b10aa38bee5e4.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/c375a4b434952864931718466e074020.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/5680e99285ffc908cb91e3edae4fbbf8.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/0653b13e2fc5ab5eb74542ace6b80729.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/46d1d383f402f838a26fdf7abf700443.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/ce2ad86d825e7b2bb425d0ede28a83c3.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/59867284a5ef96ef60669f41e87fe140.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/dd3d2ebaf87fc9f88b7527feca9430b3.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/5ffe0013cbaa4ca4f1bd402a7db28cd6.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/82a9a145e69efdc5b5edcf7fab06263b.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/f7a2673ff566180472436d60366d9360.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/ac32af155990dd16978210acc11f0e4c.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/69e4cb4e84f1ef623e3301d790a2363d.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/d5b3da2bf48c5ee5172876f224028b81.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/e21a7b84472c623a797d9729fd4f251e.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/ff4bc5b1a475961cc5d49bd650bc7ee6.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/29b8b3ed08407d045b59b991c934cf59.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/e978ef8e20eb0ce2bdb55df45b579532.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/f0212697f3e5ad3ff6446c95b731b2d1.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/c6ea3a710b040de19104212ef28d1355.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/ce5e191561f649b1d8a6d78dff9c46c8.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/e8f1c3da4f5049f3afac8e5b5799d407.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/61cdf89682c3e6343b4055f5a2ede708.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/5bafb02399cc06bb19a572d22a148ca6.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/e76cb9e0ba454aade2ad24a068ada4f2.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/3f4f4cd22b408c4dd2c62f8d38a17932.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/6507e1350d31b70aa9a8fe2bf5809b57.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/67cde8e909445a752655117c5b305ed6.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/1a31eb0bcfaa3b56aff80c4897920406.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/e004ed55c73ed8a8da982cfd33d579e2.png">
+<meta property="og:updated_time" content="2019-03-22T13:03:12.455Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Steganograph(notes)">
+<meta name="twitter:description" content="EA-LSBMR论文：Edge adaptive image steganography based on LSB matchingrevisited(2010,TIFS,CR334) 简单 LSB替换算法虽然仅对载体图像进行微小的修改，但仍会因在最低位平面产生某些异常特性如值对现象而容易被卡方检测等统计方法识别出来。为了避免这种统计异常性的最简单方法就是LSB 匹配算法(LSB Matching">
+<meta name="twitter:image" content="http://fennudehaogua.top/2019/03/22/3-22/media/66ce7485eb25daac3e77913b26b31df1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2019/03/22/3-22/"/>
+
+
+
+
+
+  <title>Steganograph(notes) | fennudehaogua.top</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?727b9992a1a14607aebb47500e5bcc08";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2019/03/22/3-22/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Steganograph(notes)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-22T20:58:26+08:00">
+                2019-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Steganography/" itemprop="url" rel="index">
+                    <span itemprop="name">Steganography</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="EA-LSBMR"><a href="#EA-LSBMR" class="headerlink" title="EA-LSBMR"></a>EA-LSBMR</h1><p>论文：Edge adaptive image steganography based on LSB matching<br>revisited(2010,TIFS,CR334)</p>
+<p>简单 LSB<br>替换算法虽然仅对载体图像进行微小的修改，但仍会因在最低位平面产生某些异常特性如值对现象而容易被卡方检测等统计方法识别出来。为了避免这种统计异常性的最简单方法就是<br>LSB 匹配算法(LSB Matching algorithm,<br>LSBM)：当嵌入的比特与像素值最低位相同时，像素值不变；不同时随机选择 +1<br>或–1。在达到最大嵌入率时，LSB 替换、LSBM 的像素改变率均为 0.5<br>比特/像素。文献[Mielikainen J. LSB Matching Revisited[J]. IEEE Signal Processing<br>Letters, 2006, 13(5): 285-287. ]提出 LSB 匹配改进算法(LSB Matching Revisited<br>algorithm,<br>LSBMR)，该算法将像素对作为一个嵌入单元进行秘密信息嵌入，像素对中的第一个像素的<br>LSB 携带一个比特秘密信息，2<br>个像素之间的函数关系(奇偶)携带另一比特秘密信息。在达到最大嵌入率时，LSBMR<br>的像素改变率为 0.375 比特/像素。LSBMR 既能克服 LSB<br>替换引起的不对称现象，在相同嵌入率条件下对载体的改动也较小，安全性也较高。</p>
+<p>多数隐写算法通常认为, 自然图像的LSB位平面是随机分布的。但这种假设并不是都成立的,<br>特别是对于有很多平坦区域的图像与平坦区域相比, 位于边缘区域的像素LSB随机性强,<br>且边缘区域与图像自身内容相关, 在这些区域进行信息的嵌入更加不容易被检测。</p>
+<p><img src="/2019/03/22/3-22/media/66ce7485eb25daac3e77913b26b31df1.png" alt=""></p>
+<p>一幅图像的不同区域拥有不同的承载秘密消息的能力，在同等安全性的前提下，纹理复杂区域较平坦区域能负载更多的秘密消息比特。为了在低嵌入率下充分利用图像中纹理复杂区域隐藏秘密消息，提出将LSBMR算法应用到图像边缘区域的像素对中，提出了一种新的边缘强度自适应隐写算法，称为EA-LSBMR隐写算法。</p>
+<p>EA-LSBMR算法将图像分成两两一组的像素对，在给定的嵌入率下首先选取差分值较大的像素对嵌入消息，因此，在嵌入率较低时，相邻像素差分值较小的平坦区域就会不嵌或嵌入较少的信息;这样相邻像素差分值较大的纹理复杂区域自身统计特性的变化就可以掩盖消息嵌入带来的像素对相关性的改变，从而抵抗盲检测算法的攻击。</p>
+<p>在介绍EA-LSBMR隐写算法之前，我们首先理解LSBMR，对于给定得以一个载体图像像素对（ai,a(i+1)），载密像素对数(Ai,A(i+1))，则秘密信息比特mi，m(i+1)依据以下四种方式嵌入：</p>
+<ol>
+<li><p>如果LSB（ai)= mi，且f（ai,a(i+1)）= m(i+1)，则(Ai,A(i+1))= (ai,a(i+1))</p>
+</li>
+<li><p>如果LSB（ai)= mi，且f（ai,a(i+1)）≠ m(i+1)，则(Ai,A(i+1))= (ai,a(i+1)<br><strong>+r</strong>)</p>
+</li>
+<li><p>如果LSB（ai)≠mi，且f（ai <strong>-1</strong>,a(i+1)）= m(i+1)，则(Ai,A(i+1))= (ai<br><strong>-1</strong>,a(i+1))</p>
+</li>
+<li><p>如果LSB（ai)≠mi，且f（ai <strong>-1</strong>,a(i+1)）≠ m(i+1)，则(Ai,A(i+1))= (ai<br><strong>+1</strong>,a(i+1))</p>
+</li>
+</ol>
+<p>其中，LSB (ai))指像素值ai的最低比特位，函数f定义为f (a,b) = LSB(La/2˩+ b)<br>,r为-1和1中的一个随机值。</p>
+<p><img src="/2019/03/22/3-22/media/6697e6d49d2baaf1c03b10aa38bee5e4.png" alt="C:\\Users\\ADMINI\~1\\AppData\\Local\\Temp\\1553240725(1).png"></p>
+<p>EA-LSBMR隐写算法如下：</p>
+<p><strong>步骤1</strong> 将 m× n的载体图像分成 Bz×Bz的非重叠的像素块，对于每个小块随机地旋转R∈{<br>0 ，90 ，180<br>，270}°，将R作为key1，形成新的图像。将处理后的图像排成一行得到行向量 V。然后将 V<br>分成非重叠的嵌入单元（xi,x(i+1)）。</p>
+<p><strong>步骤2</strong> EU (t)记为像素差值大于等于参数 t 的像素对的集合，如式(1)所示。对于<br>LSBMR 来说，每个嵌入单元嵌入 2 bit 信息。那么对于给定的秘密信息<br>M，阈值T作为key2可以通过式(2)计算得到。</p>
+<p><img src="/2019/03/22/3-22/media/c375a4b434952864931718466e074020.png" alt="C:\\Users\\ADMINI\~1\\AppData\\Local\\Temp\\1553239938(1).png"></p>
+<p>其中，| M |为秘密信息 M 的长度；|EU(t)|为集合 EU (t)中元素的总数。当T =<br>0时，EA-LSBMR 与常规的LSBMR 一样。<strong>步骤3</strong> 在满足上述阈值条件的像素对中采用<br>LSBMR隐写算法进行信息隐藏。信息嵌入后，对于超出[0,<br>255]的像素以及嵌入后像素差值小于等于T<br>的像素对，在保证改变量最小的条件下，对像素进行重新调整。</p>
+<p><strong>步骤4</strong> 嵌入完成后，按照步骤 1 反向调整图像。将参数 (T,<br>Bz)嵌入到预先设置的区域。</p>
+<p>数据提取过程：提取秘密消息时，首先提取边信息:块的大小Bz和阈值T。根据块的大小Bz对载密图像分块，并根据密钥key1对小块进行旋转，之后将载密图像扫描为行向量并划分为不重叠的像素对，再根据密钥key2(阈值T)，选取差分绝对值大于等于T的像素对进行消息提取。对于载密像素对(pi,p(i+1))，消息的提取方式如下:</p>
+<p><img src="/2019/03/22/3-22/media/5680e99285ffc908cb91e3edae4fbbf8.png" alt="C:\\Users\\ADMINI\~1\\AppData\\Local\\Temp\\1553240528(1).png"></p>
+<p>源码（matlab）：<a href="https://github.com/houlairen-1/EA_LSBMR" target="_blank" rel="noopener">https://github.com/houlairen-1/EALSBMR</a></p>
+<h1 id="基于多特征值的JEPG图像隐写分析"><a href="#基于多特征值的JEPG图像隐写分析" class="headerlink" title="基于多特征值的JEPG图像隐写分析"></a>基于多特征值的JEPG图像隐写分析</h1><h2 id="基于DCT统计特性的特征值提取"><a href="#基于DCT统计特性的特征值提取" class="headerlink" title="基于DCT统计特性的特征值提取"></a>基于DCT统计特性的特征值提取</h2><p>论文：Feature-Based Steganalysis for JPEG Images and Its Implications for Future<br>Design of Steganographic Schemes(2005,IH,CR552)</p>
+<p><strong>校验特征值：</strong></p>
+<p>在提取特征值时，为了能更好的突出载体图像和隐密图像的区别，引入校验图像。把待检测图像空域裁剪掉4行和4列得到的图像叫校验图像，校验图像的DCT系数统计特性与原载体图像相似，这是因为经过裁剪后，很好的消除了嵌入时造成的块效应。设J2是J1的校验图像，F(J1)为待测图像特征值，F(J2)为校验图像特征值，在提取特征值时，应取</p>
+<p>F =II F(J1)-F(J2)II为这幅图像的特征值。</p>
+<p><img src="/2019/03/22/3-22/media/0653b13e2fc5ab5eb74542ace6b80729.png" alt="C:\\Users\\ADMINI\~1\\AppData\\Local\\Temp\\1553246681(1).png"></p>
+<p><strong>DCT统计特征值描述：</strong></p>
+<p>假设待测图像大小为MxN个像素点，那么，经过DCT变换后，得到一共有n<br>=L(M-1)/8Jxl(N-1)/8˩<br>个8x8小块，用dij(k)表示图像的第k个DCT系数，其中k=1,2,…,n，表示第k个8x8块，i, j<br>=1, 2, …, 8，表示该DCT系数在k块中的具体位置。下面介绍DCT统计特性的特征值提取。</p>
+<p>（1）总体直方图</p>
+<p>第一个特征函数为总体值方图，将统计所有DCT系数(除直流系数外)的分布情况。L =<br>mindij(k) , R = maxdij(k)。为了减少不必要的计算，这里取L=-5, R=5。</p>
+<p>（2）特定直方图</p>
+<p>特定位置直方图指的是8x8块内特定位置DCT系数直方图，(1, 2), (1, 3)(2,1), (2, 2),<br>(3,1)。</p>
+<p>（3）特定DCT系数值的直方图 双柱状图特征</p>
+<p>统计DCT系数块中特定值的直方图可用公式如下：</p>
+<p><img src="/2019/03/22/3-22/media/46d1d383f402f838a26fdf7abf700443.png" alt=""></p>
+<p>其中：</p>
+<p><img src="/2019/03/22/3-22/media/ce2ad86d825e7b2bb425d0ede28a83c3.png" alt=""></p>
+<p>（4）DCT块间系数方差值</p>
+<p>很多隐写分析算法能够做到在嵌入信息后保持相邻系数间的统计特性不变，但不一定能够保持DCT块间的相互依赖性。这样我们可以利用“DCT块间系数方差值”这个二阶统计量来捕获对载体图像的统计特性的破坏程度。</p>
+<p><img src="/2019/03/22/3-22/media/59867284a5ef96ef60669f41e87fe140.png" alt=""></p>
+<p>其中Ir和Ic分别表示水平和竖直扫描图像DCT系数时8x8块的标号。</p>
+<p>（5）边界度</p>
+<p>边界度是描述像素块间的相关性标量，因为在DCT域嵌入信息后，会造成空域的块效应，具体表现为嵌入后得到的隐密图像灰度值8x8块间分界处呈现不自然现象，边界度的计算公式:</p>
+<p><img src="/2019/03/22/3-22/media/dd3d2ebaf87fc9f88b7527feca9430b3.png" alt=""></p>
+<p>其中，cij为JPEG图像的灰度值，α=1，2</p>
+<p>（6）共生矩阵</p>
+<p>载体图像的相邻系数间存在着很自然的连续性，隐写时，信息的嵌入会破坏这种连续性，从而改变了系数对在图像中的分布特性。两个相邻DCT块中相同位置的系数对(同频率系数对)的共生矩阵能够有效地表示这种分布差异。计算公式如下:</p>
+<p><img src="/2019/03/22/3-22/media/5ffe0013cbaa4ca4f1bd402a7db28cd6.png" alt=""></p>
+<p>其中：</p>
+<p><img src="/2019/03/22/3-22/media/82a9a145e69efdc5b5edcf7fab06263b.png" alt=""></p>
+<p>汇总如下：</p>
+<p><img src="/2019/03/22/3-22/media/f7a2673ff566180472436d60366d9360.png" alt=""></p>
+<p><img src="/2019/03/22/3-22/media/ac32af155990dd16978210acc11f0e4c.png" alt=""></p>
+<p>效果：</p>
+<p><img src="/2019/03/22/3-22/media/69e4cb4e84f1ef623e3301d790a2363d.png" alt=""></p>
+<p>源码：<a href="https://blog.csdn.net/iamsongyu/article/details/82657164" target="_blank" rel="noopener">https://blog.csdn.net/iamsongyu/article/details/82657164</a></p>
+<h2 id="基于Markov模型的特征值提取"><a href="#基于Markov模型的特征值提取" class="headerlink" title="基于Markov模型的特征值提取"></a>基于Markov模型的特征值提取</h2><p>论文：A Markov Process Based Approach to Effective Attacking JPEG<br>Steganography(2007,IH,CR317)</p>
+<p>Merging Markov and DCT features for multi-class JPEG<br>steganalysis(2007,SPIE,CR400)</p>
+<p><strong>Markov模型（马尔可夫模型）：</strong></p>
+<p>如果将相邻像素点看作是连续的状态，那么就可以用某种条件概率描述像素值与像素值之间的相关性，这样一幅图像连续的像素点就可以看作是许多个满足一定条件概率的连续状态集合，这样的连续状态可以用Markov-chain模型进行描述。定义:通常不失一般性地假定状态空间为非负整数((0,1,<br>2,…)。对于离散随机序列{Xn}，处于状态j的概率，当且仅当与前一随机变量的状态有关的，我们称之为马尔科夫链。并记这一步转移概率为:</p>
+<p><img src="/2019/03/22/3-22/media/d5b3da2bf48c5ee5172876f224028b81.png" alt="C:\\Users\\ADMINI\~1\\AppData\\Local\\Temp\\1553252526(1).png"></p>
+<p>实际上，数据的隐藏破坏了图像相邻DCT系数间的相关性。利用块内系数频率相关性和块之间的空间相关性提取特征，不仅特征值数量大，而且对图像的隐写分析非常有效。下面，对于块内和块间分别建立不同的模型。</p>
+<p>该特征集是一种新的特征，其思想是DCT系数之间有一定的变化关系。该特征使用马尔可夫转移概率来描述DCT之间的关系，先计算DCT系数水平、垂直、对角方向的差值，使用块内和块间的转移概率作为图像的特征。 </p>
+<p>假设使用F(u,v)来表示一个完整的DCT系数矩阵，DCT系数的排列方式直接使用8×8的DCT系数替换原始图像同位置的像素。接下来沿着四个不同的方向计算出水平方向、垂直方向、对角线和次对角线矩阵，分别用来表示这四个矩阵的方式如下： </p>
+<p><img src="/2019/03/22/3-22/media/e21a7b84472c623a797d9729fd4f251e.png" alt=""></p>
+<p>现需要计算这四个矩阵的Markov概率转移矩阵，方法如下：</p>
+<p><img src="/2019/03/22/3-22/media/ff4bc5b1a475961cc5d49bd650bc7ee6.png" alt=""></p>
+<p><img src="/2019/03/22/3-22/media/29b8b3ed08407d045b59b991c934cf59.png" alt=""></p>
+<p>经过上述计算一共得到了四个矩阵，每个矩阵的尺寸是(2T+1)×(2T+1)个元素，很明显在实际的隐密分析中要寻找适合的数值T。在实验过程中，如果直接使用原始矩阵作为特征，则特征集的维度会很大。为此，并根据实验的观察，对DCT系数采用了阈值进行处理：在所有的DCT系数中，假如它的绝对值大于4，那么就将它的数值变为4，正负号保持不变。在处理过后矩阵的维度变为<br>81，一共得到的特征总数为4×81=324维。</p>
+<p><img src="/2019/03/22/3-22/media/e978ef8e20eb0ce2bdb55df45b579532.png" alt=""></p>
+<p>原始的Markov特征未经校准，校准可以提高特征对嵌入信息的敏感度，同时减少图像到图像之间的转换带来的变化，所以对该特征进行校准并简化。</p>
+<p><strong>Markov概率转移矩阵描述步骤如下：</strong></p>
+<p>块间特征值提取</p>
+<p>假设大小为MxN图像经过DCT变换之后，得到大小为Sv x Sh的DCT系数矩阵，令St= LSv/8」,<br>Ss=<br>LSh/8」。每个8x8块相同位置的系数值代表着相同频率分量，块与块间相同频率的AC系数值具有一定的相关性，而大多数JPEG嵌入时，由于采用了混洗或者是随机位置的嵌入，所以，这个嵌入过程必然将会破坏块间相同频率的AC系数值的相关性，利用这一特点，便可以对图像进行隐写分析。具体块间特征值提取步骤如下:</p>
+<p>1.建立块间二维同频率系数矩阵。因为隐写时不对直流系数进行修改，故除了直流系数外，将每个8x8中相同频率系数组合成一个二维系数矩阵。如图所示，每个8x8块中相同位置系数组成一个矩阵，其大小应该为:S,<br>x SS，总共应该有63个这个的矩阵，记作:Mk (s, t)，其中，k =1, 2, …63 , s ∈[1，Ss<br>] ，t∈ [1， St ]。</p>
+<p><img src="/2019/03/22/3-22/media/f0212697f3e5ad3ff6446c95b731b2d1.png" alt="C:\\Users\\ADMINI\~1\\AppData\\Local\\Temp\\1553254480(1).png"></p>
+<p>2.计算块间同频率矩阵的差分矩阵。将上一步得到的63个St x<br>Ss矩阵分别从水平、垂直、主对角线和副对角线四个方向进行扫描，得到相应的差分矩阵。差分矩阵计算如下：</p>
+<p><img src="/2019/03/22/3-22/media/c6ea3a710b040de19104212ef28d1355.png" alt=""></p>
+<p><img src="/2019/03/22/3-22/media/ce5e191561f649b1d8a6d78dff9c46c8.png" alt=""></p>
+<p>其中左边四个值分别为水平、垂直、主对角线和副对角线四个方向扫描得到的差分矩阵。同样的，采用阈值技术将这四个差分矩阵阈值至(-T,T)之间，T仍然取4。</p>
+<p>3.计算块间Markov概率转移矩阵。利用上一步得到的四个差分矩阵，再根据下面四个公式，便可计算出Markov块间的概率转移矩阵，每个矩阵大小为((2T+1)x(2T+1)<br>。</p>
+<p><img src="/2019/03/22/3-22/media/e8f1c3da4f5049f3afac8e5b5799d407.png" alt=""></p>
+<p>计算块间各个St x Ss矩阵的概率转移矩阵后，然后对应求和再取平均，便得到了块</p>
+<p>内概率转移矩阵特征值。即:</p>
+<p><img src="/2019/03/22/3-22/media/61cdf89682c3e6343b4055f5a2ede708.png" alt=""></p>
+<p>为了减少分类器的负担，取块间Markov概率转移矩阵的平均值，即:</p>
+<p><img src="/2019/03/22/3-22/media/5bafb02399cc06bb19a572d22a148ca6.png" alt=""></p>
+<p>这样一来一共就有DCT统计特性的特征193+Markov模型特征81=274维。</p>
+<p>源码：<a href="https://blog.csdn.net/iamsongyu/article/details/82657397" target="_blank" rel="noopener">https://blog.csdn.net/iamsongyu/article/details/82657397</a></p>
+<h1 id="SPAM"><a href="#SPAM" class="headerlink" title="SPAM"></a>SPAM</h1><p>SPAM 是一种检测性能良好的隐密性分析技术，通过利用 1 阶和 2<br>阶马尔可夫链对相邻像素差值建模，把样本转移概率矩阵的子集作为检测的特征，用以实现支持向量机的检测．<br>SPAM 由两个部分组成，一部分是获取特征，另一部分对获取的特征做SVM<br>分类以实现检测。</p>
+<p>1.首先计算图像上每个像素与八个相邻像素的差值，其中相邻八个方向分别为上、下、左、右、左上、右上、左下、右下，为了描述各方向特征向量的计算，用上标{<br>↑，↓，←，→，，，，}<br>来表示。然后用马尔可夫转移概率矩阵来描述图像特征，也就是通过计算每个像素与相邻八个方向像素差值的条件概率获得，例如水平方向定义为：</p>
+<p><img src="/2019/03/22/3-22/media/e76cb9e0ba454aade2ad24a068ada4f2.png" alt=""></p>
+<p>类似的我们可以定义其他七个方向的相邻像素值差分矩阵。</p>
+<ol start="2">
+<li>其次，根据差分矩阵计算同方向的一阶和二阶Markov概率转移矩阵:</li>
+</ol>
+<p>一阶Markov概率转移矩阵:</p>
+<p><img src="/2019/03/22/3-22/media/3f4f4cd22b408c4dd2c62f8d38a17932.png" alt=""></p>
+<p>二阶Markov概率转移矩阵:</p>
+<p><img src="/2019/03/22/3-22/media/6507e1350d31b70aa9a8fe2bf5809b57.png" alt=""></p>
+<p>其中，u，v，w∈-255,…,255}</p>
+<p>3.分别按水平正逆和垂直正逆，对角正逆和反对角正逆，计算一阶和二阶Markov转移概率矩阵的均值矩阵，即:</p>
+<p><img src="/2019/03/22/3-22/media/67cde8e909445a752655117c5b305ed6.png" alt=""></p>
+<p>其中，i∈ {1, 2}，表示Markov转移概率矩阵的阶数;</p>
+<p>4.取上述两个矩阵中的满足特定条件的元素作为特征，构造最终的特征向量:</p>
+<p><img src="/2019/03/22/3-22/media/1a31eb0bcfaa3b56aff80c4897920406.png" alt=""></p>
+<p>SPAM算法通过计算图像像素的一阶和二阶差分矩阵的Markov特征，实现了对最低位匹配算法在CAMERA,<br>BOWS2,<br>NCRS和JPEG85四种隐写图像库上的检测，相比于另外两种检测算法ALE和WAM具有良好的检测精度，如下表所示:</p>
+<p><img src="/2019/03/22/3-22/media/e004ed55c73ed8a8da982cfd33d579e2.png" alt=""></p>
+<p>源码：<a href="http://dde.binghamton.edu/download/feature_extractors/download/spam686.m" target="_blank" rel="noopener">http://dde.binghamton.edu/download/feature_extractors/download/spam686.m</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JEPG-Steganography/" rel="tag"><i class="fa fa-tag"></i> JEPG Steganography</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/21/Steganography-basic/" rel="next" title="Steganography(basic)">
+                <i class="fa fa-chevron-left"></i> Steganography(basic)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100017135643802" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                    
+                      FB Page
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/6862942751/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://isujin.com/" title="素锦" target="_blank">素锦</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://imkira.com/" title="Kira" target="_blank">Kira</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#EA-LSBMR"><span class="nav-number">1.</span> <span class="nav-text">EA-LSBMR</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于多特征值的JEPG图像隐写分析"><span class="nav-number">2.</span> <span class="nav-text">基于多特征值的JEPG图像隐写分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于DCT统计特性的特征值提取"><span class="nav-number">2.1.</span> <span class="nav-text">基于DCT统计特性的特征值提取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Markov模型的特征值提取"><span class="nav-number">2.2.</span> <span class="nav-text">基于Markov模型的特征值提取</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SPAM"><span class="nav-number">3.</span> <span class="nav-text">SPAM</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"mobile":{"show":false},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>
