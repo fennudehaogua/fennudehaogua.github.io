@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Steganography," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="一、DLE 二、STC 维特比算法 Gibbs分布 失真函数 STC编码 湿纸码提高STC嵌入效率 多进制应用    DLE=== 论文：A double layered ‘plus-minus one’ data embedding scheme(2007,SPL,CR86) 对于一般的二元编码，一般以灰度图像的LSB位为二元载体序列进行嵌入。事实上，在LSB位进行嵌入时，有两种修改方式，一">
+<meta name="keywords" content="Steganography">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DLE&amp;STC">
+<meta property="og:url" content="http://fennudehaogua.top/2019/04/12/DLE-STC/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="一、DLE 二、STC 维特比算法 Gibbs分布 失真函数 STC编码 湿纸码提高STC嵌入效率 多进制应用    DLE=== 论文：A double layered ‘plus-minus one’ data embedding scheme(2007,SPL,CR86) 对于一般的二元编码，一般以灰度图像的LSB位为二元载体序列进行嵌入。事实上，在LSB位进行嵌入时，有两种修改方式，一">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/0009aa8bccd238c8fddbb1d3972d5505.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/41348270e90c8a55cbac13300804d928.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/acb538981278cdd94908de55da15b0a6.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/05eb06f908b42400983d4570e36170e8.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/123dcb4bb6a540251b5869492d428567.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/334c4808846c5b2d17cfc673536f4a58.jpg">
+<meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/64b6d0edb695d53883a6599ffb3da496.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/445def4ae248d584b28e0db78aa25267.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/637fb8c9277324539ee78f7fcb24edf2.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/ac1e069ba5efceeb46c075cb486f43e6.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/6b9ac98db7dab9ba8f8a9d60d1c26562.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/59a32be8b90d0ba59f9030c3eff78b58.jpg">
+<meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/3fe417d5616a89276cb6193a9dc3eeb6.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/9c6a831d862ae40b35a9ab07a67f540a.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/3cea48c11ee8892d18d4fb228eac8150.png">
+<meta property="og:updated_time" content="2019-04-12T11:26:26.667Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DLE&amp;STC">
+<meta name="twitter:description" content="一、DLE 二、STC 维特比算法 Gibbs分布 失真函数 STC编码 湿纸码提高STC嵌入效率 多进制应用    DLE=== 论文：A double layered ‘plus-minus one’ data embedding scheme(2007,SPL,CR86) 对于一般的二元编码，一般以灰度图像的LSB位为二元载体序列进行嵌入。事实上，在LSB位进行嵌入时，有两种修改方式，一">
+<meta name="twitter:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/0009aa8bccd238c8fddbb1d3972d5505.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2019/04/12/DLE-STC/"/>
+
+
+
+
+
+  <title>DLE&STC | fennudehaogua.top</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?727b9992a1a14607aebb47500e5bcc08";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2019/04/12/DLE-STC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DLE&STC</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-12T19:09:41+08:00">
+                2019-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <!-- GFM-TOC -->
+<ul>
+<li><a href="#DLE">一、DLE</a></li>
+<li><a href="#STC">二、STC</a><ul>
+<li><a href="##维特比算法">维特比算法</a></li>
+<li><a href="##Gibbs分布">Gibbs分布</a></li>
+<li><a href="##失真函数">失真函数</a></li>
+<li><a href="##STC编码">STC编码</a></li>
+<li><a href="##湿纸码提高STC嵌入效率">湿纸码提高STC嵌入效率</a></li>
+<li><a href="##多进制应用">多进制应用</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="DLE"><a href="#DLE" class="headerlink" title="DLE"></a>DLE</h1><p>===</p>
+<p>论文：A double layered ‘plus-minus one’ data embedding scheme(2007,SPL,CR86)</p>
+<p>对于一般的二元编码，一般以灰度图像的LSB位为二元载体序列进行嵌入。事实上，在LSB位进行嵌入时，有两种修改方式，一种是直接LSB替换，另外一种是根据LSB位对像素灰度值随机±1。因为加1或减1操作都可以修改LSB位，但通过选择加1或减1可以控制次LSB位的取值，所以能够同时在次LSB位嵌入消息，而不需引入额外修改。但是由于接收者无法知道哪些像素需要±1修改，所以第二层嵌入需要使用湿纸编码，这一方法称为双层嵌入。</p>
+<p>双层隐写编码的具体实现过程如下:用L(g)表示像素g=（g1,g2,g3,…,gn）的LSB层，用S(g)表示像素的次LSB层。首先，在LSB层L(g)使用二元编码(如矩阵编码)G嵌入消息，设编码G的嵌入率为a，修改率为c。则第一层可嵌入na，平均有nc个像素的LSB位需要修改，但在这一步并不作修改，只是标记需要修改的像素;然后，在次LSB层S(g)嵌入消息，将第一步中被标记像素的次LSB位定义位“干点”，其他像素的次LSB位定义为“湿点”。这里设湿纸码的嵌入率为b.，则使用湿纸码平均可以嵌入ncb比特消息，这一步可以确定次LSB位的取值。根据被标记像素的次LSB的取值，可以确定对这些像素应该采用加1还是减1的方式进行修改。</p>
+<p>上述方法，在n长载体中共嵌入na+nc比特消息，平均需要修改nc个像素，所以其嵌入率为a+c，而修改率仍为c。若在LSB层以最大嵌入率1进行嵌入，则平均有1/2的像素需要修改，此时，双层嵌入的最大嵌入率为1+0.5b。</p>
+<p>传统的LSB隐写在嵌入率为α的情况下对应的嵌入效率为e有如下的一个上界：</p>
+<p><img src="/2019/04/12/DLE-STC/0009aa8bccd238c8fddbb1d3972d5505.png" alt=""></p>
+<p>其中H(x)=-xlog2y-(1-x)log2(1-x)代表二进制熵嵌入函数，论文中证明在双层嵌入中，如果第一层采用的二元码达到二元嵌入的嵌入率上界H(c)，则双层嵌入可以达到加减1嵌入的嵌入率上界:</p>
+<p><img src="/2019/04/12/DLE-STC/41348270e90c8a55cbac13300804d928.png" alt=""></p>
+<h1 id="STC"><a href="#STC" class="headerlink" title="STC"></a>STC</h1><p>===</p>
+<p>论文：Minimizing additive distortion functions with non-binary embedding<br>operation in steganography(2010,WIFS,CR14)</p>
+<p>Minimizing additive distortion in steganography using syndrome-trellis<br>codes(2011,TIFS,CR180)</p>
+<p>Minimizing embedding impact in steganography using trellis-coded<br>quantization(2010,SPIE,CR108)</p>
+<p>STC编码方法可以在湿度级模型下逼近嵌入效率上界。STC码也是一种特殊的矩阵编码，所用的矩阵H由一个hxw子矩阵以一种级联的方式拼接而成。这种构造使得Hy =m的每个解都可以表示成通过栅格的一条路径，路径每一步的长度由湿度级定义，从而最小化嵌入所引起的失真就变成了寻找最短路径问题，而最短路径可以由维特比译码的方式快速得到。编码的嵌入率为1/w，w的值取决与期望负载，若负载α=1/k（k∈N）则w=k，若1/（k+1）≤α≤1/k，则w=k+1。由子矩阵的宽决定。而子矩阵的高h决定了每个载体比特对应的路径条数为2h，因而h越大最小化失真的能力越强，但编码的计算复杂度越高，一般来说h∈[6,15]。</p>
+<p><img src="/2019/04/12/DLE-STC/acb538981278cdd94908de55da15b0a6.png" alt=""></p>
+<p>需要了解的一些基础知识：</p>
+<h2 id="维特比算法"><a href="#维特比算法" class="headerlink" title="维特比算法"></a>维特比算法</h2><hr>
+<p>维特比算法是一种动态规划算法用于寻找最有可能产生观测事件序列的-维特比路径-隐含状态序列，特别是在马尔可夫信息源上下文和隐马尔可夫模型中。详细举例：<a href="https://blog.csdn.net/athemeroy/article/details/79339546" target="_blank" rel="noopener">https://blog.csdn.net/athemeroy/article/details/79339546</a></p>
+<p>目前写了两篇文章，十分形象讲解了维特比算法的过程。</p>
+<p>维特比算法是多步骤每步多选择模型的最优选择问题，每步会保存前续所有步骤到当前步骤当前选择的最小总代价。在论文中的作用就是找到最短路径从而达到最小化嵌入所引起的失真的目的。</p>
+<p>维特比算法分为两个部分，forward和backward。</p>
+<p>Forward部分包含有n+b步，在完成第i步后，我们知道了从最左边的全零stats到网格中第i列的每个state之间的最短路径。因此，到最后n+b步后，我们就可以得到整个网格的最短路径。伪代码如下：</p>
+<p><img src="/2019/04/12/DLE-STC/05eb06f908b42400983d4570e36170e8.png" alt=""></p>
+<p>Backward部分，根据边的标签复原与stego最接近的所求最短路径。</p>
+<p><img src="/2019/04/12/DLE-STC/123dcb4bb6a540251b5869492d428567.png" alt=""></p>
+<p>其中需要注意的一点是在寄存器中排列：</p>
+<p>| 32bit              | 32bit                |</p>
+<p>| path[0]            | path[1]              |</p>
+<hr>
+<p>| 3   | 2  | 1  | 0  | 3   | 2  | 1  |   0  |</p>
+<hr>
+<p>p[3]   p[2] p[1] p[0] p[7]  p[6]  p[5]  p[4]</p>
+<h2 id="Gibbs分布"><a href="#Gibbs分布" class="headerlink" title="Gibbs分布"></a>Gibbs分布</h2><hr>
+<p>满足给定约束条件且熵最大的分布。</p>
+<p>介绍：<a href="https://blog.csdn.net/hdt1720/article/details/21240415" target="_blank" rel="noopener">https://blog.csdn.net/hdt1720/article/details/21240415</a></p>
+<p>Jessica Fridrich关于Gibbs分布的论文：<a href="http://dde.binghamton.edu/filler/pdf/Fill10tifs-gibs-journal.pdf" target="_blank" rel="noopener">http://dde.binghamton.edu/filler/pdf/Fill10tifs-gibs-journal.pdf</a><br>对于一个给定的嵌入失真函数，当我们嵌入最大负载时，嵌入引起的变化遵循Gibbs分布。这篇论文的独特之处是它允许失真函数是任意的， 这使得我们可以考虑空域独立嵌入引起的变化。它提供了一个完整的理论框架来描述实用工具，其中就有说到使用Gibbs Sampler来模拟最优嵌入方案的影响，从而构造实用的算法。该框架将在有经验的cover下的安全隐写术的设计简化成为了失真函数求解问题，十分有用。</p>
+<p><img src="/2019/04/12/DLE-STC/334c4808846c5b2d17cfc673536f4a58.jpg" alt=""></p>
+<h2 id="失真函数"><a href="#失真函数" class="headerlink" title="失真函数"></a>失真函数</h2><hr>
+<p>用X表示图像，用xi表示图像的第i个像素。令X=（x1，x2，…，xn）∈{I}n为n像素动态范围为I的载体图像。发送端为了向接收端传输信息，需要修改载体图像，将得到的含密图像用于传输。含密图像可表示为:Y=（y1，y2，…，yn）。</p>
+<p>如果对于每个i都有|I|=2,则该嵌入称为二元嵌入，当|I|=3时，称为三元嵌入。对于±1嵌入(LSB匹配)，有I={xi-1,xi,xi+1}（在边界处需稍作修改）</p>
+<p>嵌入的影响可以通过失真函数D来描述，当嵌入容量固定时，发送端总是试图使D减少到最小值。STC编码只针对加性失真，形式如下:</p>
+<p><img src="/2019/04/12/DLE-STC/64b6d0edb695d53883a6599ffb3da496.png" alt=""></p>
+<p>其中，</p>
+<p><img src="/2019/04/12/DLE-STC/445def4ae248d584b28e0db78aa25267.png" alt=""></p>
+<p>表示用yi代替xi的代价，ρi取决于整幅图像X，发送端可以选择合适的值表达像素间的依赖关系。对于加性失真，在各像素处ρ(x.y)的值是相互独立的，因此嵌入引起的失真之间</p>
+<p>不存在相互作用。</p>
+<h2 id="STC编码"><a href="#STC编码" class="headerlink" title="STC编码"></a>STC编码</h2><hr>
+<p>STC 是基于伴随式编码( syndrome coding) 的隐写编码方法。设秘密消息 m 长为<br>Lm，载体 c 长为 Lc，STC 将秘密信息看作一个长度为 Lc 的线性码 ζ 的伴随式，ζ<br>由校验矩阵 D1 唯一确定。m 的陪集 C( m) 定义如下:</p>
+<p>C(m)={z∈{0，1}Lc| D1z=m}</p>
+<p>STC就是在C(m)中寻找相对c累积失真最小的 Lc长序列，将其作为隐秘载体输出。它的编码是在网格上实现的，网格内顶点表示可能出现的伴随式样式;边对应 Lc 长序列中的元素(在二元域内，元素的值非 0 即 1) 。网格内的一条路径表示C(m)中的一个序列。当根据失真度量方式为边设置权重后，编码过程就可以找到累积权重最小的路径，即失真最小的隐秘载体。其中失真度量方式由研究者根据载体特性确定。</p>
+<p>STC隐写编码的具体过程：</p>
+<p><img src="/2019/04/12/DLE-STC/637fb8c9277324539ee78f7fcb24edf2.png" alt=""></p>
+<p>其中D（x，y）为x与y的汉明距离，H为收发双方的共享参数，我们称之为校验矩阵。编码嵌入过程就是在秘密信息m的陪集中寻找与载体y具有最小汉明距离的码字x的过程。接收方在收到s后，左乘H就可以得到秘密信息m。</p>
+<p>STC编码属于二元隐写编码，其编码是在网格图上实现的，满足Hs=m的所有s都可以由网格图中的一条路径表示。STC编码在所有路径中选择具有最小权重的路径，该路径对应了对载体c改动最小的s，将s作为隐秘载体输出。</p>
+<p>STC具体编码过程：</p>
+<p>1.总体思想：</p>
+<p><img src="/2019/04/12/DLE-STC/ac1e069ba5efceeb46c075cb486f43e6.png" alt=""></p>
+<p>2.具体过程</p>
+<p><img src="/2019/04/12/DLE-STC/6b9ac98db7dab9ba8f8a9d60d1c26562.png" alt=""></p>
+<p>3.详细分析：</p>
+<p><img src="/2019/04/12/DLE-STC/59a32be8b90d0ba59f9030c3eff78b58.jpg" alt=""></p>
+<p>如上图所示，假定有cover： x = (1, 0, 1, 1, 0, 0, 0, 1)</p>
+<p>m = (0, 1, 1, 1)</p>
+<p>通过沿着网格末端的路径，从维特比算法的后向部分得到改变元素最少的stego对象：</p>
+<p>y = (0, 0, 1, 1, 1, 0, 0, 1)</p>
+<p>网格中的每个值就代表到当前位置的前面所有过程的最小嵌入总损失。</p>
+<ol>
+<li>从P1S00到C3S00过程中</li>
+</ol>
+<blockquote>
+<p>  这条边我们标记为0，代表横线不把校验矩阵的第一列11加（这部分的加法都是没有进位的二进制加法，即异或）到当前的state（00）上，所以这个时候连接的还是00。weight=1，因为我们的x1=1，y1=0，图中假定所有的嵌入损失都为1，所以我们将x1改为y1的weight标记为1。</p>
+</blockquote>
+<ol start="2">
+<li>从P1S00到C3S11过程中</li>
+</ol>
+<blockquote>
+<p>  同理，这条边我们标记为1，代表斜线把校验矩阵的第一列11加到当前的state（00）上，所以这个时候连接的是state为11处。weight=1，因为我们的x1=1，y1=1，所以不需要更改，weight标记为0。</p>
+</blockquote>
+<ol start="3">
+<li>从block1到block2的过程中</li>
+</ol>
+<blockquote>
+<p>  处理完block1部分之后我们需要嵌入m1=0，这个时候state为01和11的路径需要被舍弃（因为这两个状态的最低位bit为1不会变了，不等于m1）。这个时候我们剩下的就是state为00与10两个状态，从c2到p1的过程中，state的状态会从2的h次方缩小一半，接下来2的（h-1）次方新状态将被增加到之前无法达到的新block中。（此处我感觉是重新依次排列的意思，师兄说这个地方是除以2然后向下取整，可能代码排列的时候就是这么实现的，后续会仔细看看代码实现部分）</p>
+</blockquote>
+<p><a href="http://dde.binghamton.edu/download/syndrome/demo/syndrome.htm" target="_blank" rel="noopener">http://dde.binghamton.edu/download/syndrome/demo/syndrome.htm</a></p>
+<p>在以上网址我们可以看到更复杂的STC的demo检验自己的理解。</p>
+<h2 id="湿纸码提高STC嵌入效率"><a href="#湿纸码提高STC嵌入效率" class="headerlink" title="湿纸码提高STC嵌入效率"></a>湿纸码提高STC嵌入效率</h2><hr>
+<p>如果把 STC 方法应用到湿纸编码信道上，即某些点为 wet点，其代价应该为无穷大，是不能被修改的。如果嵌入率为h，湿纸率为w，则隐秘信息长度m由之前的αn变成了(1-w)αn，H大小变成了(1-w)αn*n。但是在实际应用STC 方法的时候，wet 点的修改还是很难避免的，总会有几个 wet点不得不被修改，从而导致嵌入失败。</p>
+<p>针对这种问题，这有两种处理思路。</p>
+<p>1、不修改任意一个 wet点。由于嵌入失败的概率P与α，w，h有关，但这只是个概率而已，并不一定就会修改wet点，而具体的 wet 点被不被修改，与 cover 的比特顺序有关，即在某一种 cover比特顺序情况下，wet 点可能会被修改，而在另一种 cover 比特顺序情况下，wet点有可能就不会被修改了。所以在P一定的前提下，用密钥随机置乱 cover比特，多试几次，使 wet 点碰巧不被修改。这个密钥有 k位，在图像中专门找一个区域用于存放。那么最后 wet 点仍面临修改的概率为P2k，几乎为0。在 TIFS 版本中，这 k位密钥用隐秘信息长度m来表示，不断减小m进行试验。在实际的实验中，cover图像有10的6次方个像素，湿纸率w=0.8，h=10，1000次独立运行后，若α取1/10，P即可等于0。</p>
+<p>2、假设修改几个wet 点对 stego 的安全性影响不大，给 wet点分配一个足够大但非无穷大的代价（该代价大于所有 dry点的代价之和），使得最后只修改少数几个 wet点而不影响整体的安全性。下图展示的就是在10的6次方像素图像中对于相关给定的负载我们平均需要修改的wet元素个数。</p>
+<p><img src="/2019/04/12/DLE-STC/3fe417d5616a89276cb6193a9dc3eeb6.png" alt=""></p>
+<h2 id="多进制应用"><a href="#多进制应用" class="headerlink" title="多进制应用"></a>多进制应用</h2><hr>
+<p>尽管将STC扩展到非二进制并将其应用于多进制嵌入操作非常简单，但是它们的复杂性会迅速增加(对于约束高度，格子中的状态数从到增加)，从而在实践中限制了它们的性能。，论文提出了一个简单的分层结构，它主要是由根据我们前面学到的双层嵌入（DLE）思想提出的，可以看作是这项工作的概括。其主要思想是将使用非二进制嵌入操作的问题PLS和DLS分解为使用二进制嵌入操作的类似问题序列。任何解决二进制PLS嵌入问题的方案，如STC，都可以使用。如果每个二进制嵌入问题都得到最优解，那么这种分解就是最优的。</p>
+<p>主要思想如下：</p>
+<p><img src="/2019/04/12/DLE-STC/9c6a831d862ae40b35a9ab07a67f540a.png" alt=""></p>
+<p><img src="/2019/04/12/DLE-STC/3cea48c11ee8892d18d4fb228eac8150.png" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Steganography/" rel="tag"><i class="fa fa-tag"></i> Steganography</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/30/PQ-WPC/" rel="next" title="PQ&WPC">
+                <i class="fa fa-chevron-left"></i> PQ&WPC
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100017135643802" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                    
+                      FB Page
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/6862942751/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://isujin.com/" title="素锦" target="_blank">素锦</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://imkira.com/" title="Kira" target="_blank">Kira</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DLE"><span class="nav-number">1.</span> <span class="nav-text">DLE</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#STC"><span class="nav-number">2.</span> <span class="nav-text">STC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#维特比算法"><span class="nav-number">2.1.</span> <span class="nav-text">维特比算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gibbs分布"><span class="nav-number">2.2.</span> <span class="nav-text">Gibbs分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#失真函数"><span class="nav-number">2.3.</span> <span class="nav-text">失真函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STC编码"><span class="nav-number">2.4.</span> <span class="nav-text">STC编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#湿纸码提高STC嵌入效率"><span class="nav-number">2.5.</span> <span class="nav-text">湿纸码提高STC嵌入效率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多进制应用"><span class="nav-number">2.6.</span> <span class="nav-text">多进制应用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"mobile":{"show":false},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>
