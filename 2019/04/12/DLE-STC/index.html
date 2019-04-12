@@ -94,13 +94,13 @@
 
 
 
-<meta name="description" content="一、DLE 二、STC 维特比算法 Gibbs分布 失真函数 STC编码 湿纸码提高STC嵌入效率 多进制应用    DLE=== 论文：A double layered ‘plus-minus one’ data embedding scheme(2007,SPL,CR86) &amp;emsp;&amp;emsp;对于一般的二元编码，一般以灰度图像的LSB位为二元载体序列进行嵌入。事实上，在LSB位进行嵌">
+<meta name="description" content="一、DLE 二、STC 维特比算法 Gibbs分布 失真函数 STC编码 湿纸码提高STC嵌入效率 多进制应用    DLE 论文：A double layered ‘plus-minus one’ data embedding scheme(2007,SPL,CR86) &amp;emsp;&amp;emsp;对于一般的二元编码，一般以灰度图像的LSB位为二元载体序列进行嵌入。事实上，在LSB位进行嵌入时，">
 <meta name="keywords" content="Steganography">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DLE&amp;STC">
 <meta property="og:url" content="http://fennudehaogua.top/2019/04/12/DLE-STC/index.html">
 <meta property="og:site_name" content="fennudehaogua.top">
-<meta property="og:description" content="一、DLE 二、STC 维特比算法 Gibbs分布 失真函数 STC编码 湿纸码提高STC嵌入效率 多进制应用    DLE=== 论文：A double layered ‘plus-minus one’ data embedding scheme(2007,SPL,CR86) &amp;emsp;&amp;emsp;对于一般的二元编码，一般以灰度图像的LSB位为二元载体序列进行嵌入。事实上，在LSB位进行嵌">
+<meta property="og:description" content="一、DLE 二、STC 维特比算法 Gibbs分布 失真函数 STC编码 湿纸码提高STC嵌入效率 多进制应用    DLE 论文：A double layered ‘plus-minus one’ data embedding scheme(2007,SPL,CR86) &amp;emsp;&amp;emsp;对于一般的二元编码，一般以灰度图像的LSB位为二元载体序列进行嵌入。事实上，在LSB位进行嵌入时，">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/0009aa8bccd238c8fddbb1d3972d5505.png">
 <meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/41348270e90c8a55cbac13300804d928.png">
@@ -117,10 +117,10 @@
 <meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/3fe417d5616a89276cb6193a9dc3eeb6.png">
 <meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/9c6a831d862ae40b35a9ab07a67f540a.png">
 <meta property="og:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/3cea48c11ee8892d18d4fb228eac8150.png">
-<meta property="og:updated_time" content="2019-04-12T11:56:02.725Z">
+<meta property="og:updated_time" content="2019-04-12T12:27:00.266Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DLE&amp;STC">
-<meta name="twitter:description" content="一、DLE 二、STC 维特比算法 Gibbs分布 失真函数 STC编码 湿纸码提高STC嵌入效率 多进制应用    DLE=== 论文：A double layered ‘plus-minus one’ data embedding scheme(2007,SPL,CR86) &amp;emsp;&amp;emsp;对于一般的二元编码，一般以灰度图像的LSB位为二元载体序列进行嵌入。事实上，在LSB位进行嵌">
+<meta name="twitter:description" content="一、DLE 二、STC 维特比算法 Gibbs分布 失真函数 STC编码 湿纸码提高STC嵌入效率 多进制应用    DLE 论文：A double layered ‘plus-minus one’ data embedding scheme(2007,SPL,CR86) &amp;emsp;&amp;emsp;对于一般的二元编码，一般以灰度图像的LSB位为二元载体序列进行嵌入。事实上，在LSB位进行嵌入时，">
 <meta name="twitter:image" content="http://fennudehaogua.top/2019/04/12/DLE-STC/0009aa8bccd238c8fddbb1d3972d5505.png">
 
 
@@ -391,7 +391,7 @@
 </ul>
 </li>
 </ul>
-<h1 id="DLE"><a href="#DLE" class="headerlink" title="DLE"></a>DLE</h1><p>===</p>
+<h1 id="DLE"><a href="#DLE" class="headerlink" title="DLE"></a>DLE</h1><hr>
 <p>论文：A double layered ‘plus-minus one’ data embedding scheme(2007,SPL,CR86)</p>
 <p>&emsp;&emsp;对于一般的二元编码，一般以灰度图像的LSB位为二元载体序列进行嵌入。事实上，在LSB位进行嵌入时，有两种修改方式，一种是直接LSB替换，另外一种是根据LSB位对像素灰度值随机±1。因为加1或减1操作都可以修改LSB位，但通过选择加1或减1可以控制次LSB位的取值，所以能够同时在次LSB位嵌入消息，而不需引入额外修改。但是由于接收者无法知道哪些像素需要±1修改，所以第二层嵌入需要使用湿纸编码，这一方法称为双层嵌入。</p>
 <p>&emsp;&emsp;双层隐写编码的具体实现过程如下:用L(g)表示像素g=（g1,g2,g3,…,gn）的LSB层，用S(g)表示像素的次LSB层。首先，在LSB层L(g)使用二元编码(如矩阵编码)G嵌入消息，设编码G的嵌入率为a，修改率为c。则第一层可嵌入na，平均有nc个像素的LSB位需要修改，但在这一步并不作修改，只是标记需要修改的像素;然后，在次LSB层S(g)嵌入消息，将第一步中被标记像素的次LSB位定义位“干点”，其他像素的次LSB位定义为“湿点”。这里设湿纸码的嵌入率为b.，则使用湿纸码平均可以嵌入ncb比特消息，这一步可以确定次LSB位的取值。根据被标记像素的次LSB的取值，可以确定对这些像素应该采用加1还是减1的方式进行修改。</p>
@@ -400,7 +400,7 @@
 <p><img src="/2019/04/12/DLE-STC/0009aa8bccd238c8fddbb1d3972d5505.png" alt=""></p>
 <p>&emsp;&emsp;其中H(x)=-xlog2y-(1-x)log2(1-x)代表二进制熵嵌入函数，论文中证明在双层嵌入中，如果第一层采用的二元码达到二元嵌入的嵌入率上界H(c)，则双层嵌入可以达到加减1嵌入的嵌入率上界:</p>
 <p><img src="/2019/04/12/DLE-STC/41348270e90c8a55cbac13300804d928.png" alt=""></p>
-<h1 id="STC"><a href="#STC" class="headerlink" title="STC"></a>STC</h1><p>===</p>
+<h1 id="STC"><a href="#STC" class="headerlink" title="STC"></a>STC</h1><hr>
 <p>论文：Minimizing additive distortion functions with non-binary embedding operation in steganography(2010,WIFS,CR14)</p>
 <p>Minimizing additive distortion in steganography using syndrome-trellis codes(2011,TIFS,CR180)</p>
 <p>Minimizing embedding impact in steganography using trellis-coded quantization(2010,SPIE,CR108)</p>
@@ -412,7 +412,7 @@
 <p>目前已经写了两篇文章，十分形象讲解了维特比算法的过程。</p>
 <p>&emsp;&emsp;维特比算法是多步骤每步多选择模型的最优选择问题，每步会保存前续所有步骤到当前步骤当前选择的最小总代价。在论文中的作用就是找到最短路径从而达到最小化嵌入所引起的失真的目的。</p>
 <p>&emsp;&emsp;维特比算法分为两个部分，forward和backward。</p>
-<p>&emsp;&emsp;Forward部分包含有n+b步，在完成第i步后，我们知道了从最左边的全零stats到网格中第i列的每个state之间的最短路径。因此，到最后n+b步后，我们就可以得到整个网格的最短路径。伪代码如下：</p>
+<p>&emsp;&emsp;Forward部分包含有n+b步，在完成第i步后，我们知道了从最左边的全零state到网格中第i列的每个state之间的最短路径。因此，到最后n+b步后，我们就可以得到整个网格的最短路径。伪代码如下：</p>
 <p><img src="/2019/04/12/DLE-STC/05eb06f908b42400983d4570e36170e8.png" alt=""></p>
 <p>&emsp;&emsp;Backward部分，根据边的标签复原与stego最接近的所求最短路径。</p>
 <p><img src="/2019/04/12/DLE-STC/123dcb4bb6a540251b5869492d428567.png" alt=""></p>
