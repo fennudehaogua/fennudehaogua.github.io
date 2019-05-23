@@ -116,7 +116,7 @@
 <meta property="og:image" content="http://fennudehaogua.top/2019/05/23/UED-WOW/4dedbf1bce9a371af0b3ff5c38488f1b.png">
 <meta property="og:image" content="http://fennudehaogua.top/2019/05/23/UED-WOW/4aac3e7412d342d46a36dfa43f5b870f.png">
 <meta property="og:image" content="http://fennudehaogua.top/2019/05/23/UED-WOW/e6e9469732b1c560fb10326a62f21e55.png">
-<meta property="og:updated_time" content="2019-05-23T13:21:51.051Z">
+<meta property="og:updated_time" content="2019-05-23T13:26:32.525Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UED&amp;WOW">
 <meta name="twitter:description" content="UED 论文：Uniform Embedding for Efficient JPEG Steganography(2014,TIFS,CR18) 设计思想： 本篇论文指出DCT系数在嵌入修改时，若任意选择嵌入位置，由于小值JPEG系数的数量较多，则被选择到小值的可能性更大，这样，小值系数上的分布会变化更剧烈，更可能造成系数分布的形变，从而会引起较大的抗检测隐患，提出针对这一点的均衡失真隐写算法U">
@@ -380,22 +380,22 @@
         <p>UED</p>
 <p>论文：Uniform Embedding for Efficient JPEG Steganography(2014,TIFS,CR18)</p>
 <p><strong>设计思想：</strong></p>
-<p>本篇论文指出DCT系数在嵌入修改时，若任意选择嵌入位置，由于小值JPEG系数的数量较多，则被选择到小值的可能性更大，这样，小值系数上的分布会变化更剧烈，更可能造成系数分布的形变，从而会引起较大的抗检测隐患，提出针对这一点的均衡失真隐写算法UED<br>(Uniform Embedding Distortion)。</p>
+<p>本篇论文指出DCT系数在嵌入修改时，若任意选择嵌入位置，由于小值JPEG系数的数量较多，则被选择到小值的可能性更大，这样，小值系数上的分布会变化更剧烈，更可能造成系数分布的形变，从而会引起较大的抗检测隐患，提出针对这一点的均衡失真隐写算法UED(Uniform Embedding Distortion)。</p>
 <p>而如果每个值上的变化接近，则更可能保持JPEG系数的分布。因此，UED的设计目标是，压制在更多出现的小值系数上修改，优先选择更少出现的大值系数修改。</p>
 <p><img src="/2019/05/23/UED-WOW/9d65b7ca0a453090c14cfa1b9db90de3.png" alt=""></p>
 <p>UED的修改系数选择原则：优先选择大值系数修改。图中，a是JPEG量化系数分布，b是希望的选择概率，c是所选择系数的分布（更均匀）</p>
-<p>基于DCT系数本身及其块内、块间相邻系数的取值构造嵌入失真函数，并使用STC编码嵌入，减少了失真并提高了嵌入的效率的UED-SC<br>( Uniform Embedding Distortion based on Single Coefficient)、UED-JC(UED based on<br>Joint Coefficients)和SI-UED(Side Informed UED)。</p>
+<p>基于DCT系数本身及其块内、块间相邻系数的取值构造嵌入失真函数，并使用STC编码嵌入，减少了失真并提高了嵌入的效率的UED-SC( Uniform Embedding Distortion based on Single Coefficient)、UED-JC(UED based on Joint Coefficients)和SI-UED(Side Informed UED)。</p>
 <p><strong>失真函数：</strong></p>
 <p>1.对于UED-SC：</p>
 <p><img src="/2019/05/23/UED-WOW/c9b8e6dcc8d1fc870d162f000a6102a8.png" alt=""></p>
 <p>其中cij代表位置(𝑖,𝑗)上的JPEG量化系数。</p>
-<p>2.对于UED-JC：定义𝑁ia ={𝑐𝑖+1,𝑗, 𝑐𝑖−1,𝑗, 𝑐𝑖,𝑗+1, 𝑐𝑖,𝑗−1}是它的块内邻域，𝑁ir<br>={𝑐𝑖+8,𝑗, 𝑐𝑖−8,𝑗, 𝑐𝑖,𝑗+8, 𝑐𝑖,𝑗−8}是它的块间邻域，则单点失真函数为：</p>
+<p>2.对于UED-JC：定义𝑁ia ={𝑐𝑖+1,𝑗, 𝑐𝑖−1,𝑗, 𝑐𝑖,𝑗+1, 𝑐𝑖,𝑗−1}是它的块内邻域，𝑁ir={𝑐𝑖+8,𝑗, 𝑐𝑖−8,𝑗, 𝑐𝑖,𝑗+8, 𝑐𝑖,𝑗−8}是它的块间邻域，则单点失真函数为：</p>
 <p><img src="/2019/05/23/UED-WOW/87e74a794052f6f6dc207126d75d9210.png" alt=""></p>
-<p>其中，以上𝛼ia与𝛼ir为待定常数，有实验结果分别确定为1.3与1；<br>𝑐𝑖𝑗为系数值；以上失真函数压制了在小值区的取值。</p>
+<p>其中，以上𝛼ia与𝛼ir为待定常数，有实验结果分别确定为1.3与1；𝑐𝑖𝑗为系数值；以上失真函数压制了在小值区的取值。</p>
 <p>3.对于UED-SI：</p>
 <p><img src="/2019/05/23/UED-WOW/37f4aa7128d950c7a68dabb66f3a988e.png" alt=""></p>
-<p>其中eij代表cij的增性取证误差，<br>𝛼ia与𝛼ir为待定常数，有实验结果分别确定为0.2。其他与UED-JC一样。</p>
-<p>基于以上失真函数，UED采用STC优化嵌入，不使用系数为0的样点，当需要修改且𝑐𝑖𝑗绝对值大于1时，采用随机±1的方式；当需要修改且𝑐𝑖𝑗绝对值为1时，将其改为𝑐𝑖𝑗<br>+<br>sgn(𝑐𝑖𝑗)，即+1改为2，−1改为−2。（sgn(0)=0,sgn(负数)=-1,sgn(正数)=1）。这样我们就不会增加额外的0值DCT系数。从而提高嵌入的效率。</p>
+<p>其中eij代表cij的增性取证误差，𝛼ia与𝛼ir为待定常数，有实验结果分别确定为0.2。其他与UED-JC一样。</p>
+<p>基于以上失真函数，UED采用STC优化嵌入，不使用系数为0的样点，当需要修改且𝑐𝑖𝑗绝对值大于1时，采用随机±1的方式；当需要修改且𝑐𝑖𝑗绝对值为1时，将其改为𝑐𝑖𝑗+sgn(𝑐𝑖𝑗)，即+1改为2，−1改为−2。（sgn(0)=0,sgn(负数)=-1,sgn(正数)=1）。这样我们就不会增加额外的0值DCT系数。从而提高嵌入的效率。</p>
 <p><strong>提出的隐写机制：</strong></p>
 <p><img src="/2019/05/23/UED-WOW/cbde0d35b20e4d4b92e0610b4c3be110.png" alt=""></p>
 <p>用CC-JRM与CC-PEV特征进行相应的隐写分析，结果显示，UED显著优于非自适应的方法，但是，在主要攻击下它的安全性低于J-UNIWARD（不过UED速度显著更快）</p>
@@ -407,18 +407,18 @@
 <p><img src="/2019/05/23/UED-WOW/e2266b542ddb44fd2525436bb30c12fc.png" alt=""></p>
 <p><img src="/2019/05/23/UED-WOW/58714e9289b0acc1a7146483369138da.png" alt=""></p>
 <p>WOW</p>
-<p>论文：Designing steganographic distortion using directional<br>filters(2012,WIFS,CR106)</p>
+<p>论文：Designing steganographic distortion using directional filters(2012,WIFS,CR106)</p>
 <p><strong>设计思想：</strong></p>
 <p>WOW隐写算法的核心思想主要是利用空间域图像每个点在多个方向上的方向残差来衡量每个点的嵌入代价，利用这种方法可以使图像中在每个方向都难以建模的那些像素区域具有小的嵌入成本，而图像平滑区域和边缘区域会具有较大的嵌入成本。具体的过程可以分成三个步骤:首先，利用三个不同的方向滤波器获得载体图像每个像素点的方向残差，并利用这些方向残差计算得到每个像素的嵌入适应性;然后，利用这些嵌入适应性进行聚合得到每个像素点的嵌入代价;最后，在建立完以上的失真函数得到每个像素点的嵌入代价以后，利用STC编码结合这些嵌入代价实现最小化失真隐写并得到最终嵌入信息的图像。</p>
 <p>小波系数反映了信号局部区域的时频特性，失真函数的设计可以以隐写后这种特性得到更多保持为原则。WOW是空间域图像自适应隐写，它在小波变换的一级分解LH、HL与HH子带上对系数改动量与原系数做相关运算，总体相关性越大则失真越低。</p>
-<p>WOW核心思想是选择了方向性Daubechies<br>8小波，直接用小波从多个方向分解获得载体图像残差，进而构造失真函数。低通、高通滤波器𝒉，𝒈进行小波滤波获得一级分解LH、HL与HH三个子带系数的二维滤波器系数矩阵是：𝑲(1)<br>= 𝒉 ∙ 𝒈T, 𝑲 2 = 𝒈 ∙ 𝒉T, 𝑲(3) = 𝒈<br>∙𝒈T。它们滤波后得到的三个子带系数也称为三组残差（Residual），分别为𝑹(𝑘) = 𝑲 𝑘∗<br>𝑿, 𝑘 =<br>1,2,3，“∗”表示二维卷积。然后对残差值进行加权、聚合，根据Holder范数形式进行构造了失真函数。多方向的优点是减少了隐写分析算法从所用的方向进行建模检测到隐秘信息的可能性。在WOW中，先对载体进行镜像填充（Mirror-padded），之后在计算卷积，因此，𝑹(𝑘)<br>的尺寸与原图 𝑿 相同。</p>
+<p>WOW核心思想是选择了方向性Daubechies 8小波，直接用小波从多个方向分解获得载体图像残差，进而构造失真函数。低通、高通滤波器𝒉，𝒈进行小波滤波获得一级分解LH、HL与HH三个子带系数的二维滤波器系数矩阵是：𝑲(1)= 𝒉 ∙ 𝒈T, 𝑲 2 = 𝒈 ∙ 𝒉T, 𝑲(3) = 𝒈∙𝒈T。它们滤波后得到的三个子带系数也称为三组残差（Residual），分别为𝑹(𝑘) = 𝑲 𝑘∗𝑿, 𝑘 =1,2,3，“∗”表示二维卷积。然后对残差值进行加权、聚合，根据Holder范数形式进行构造了失真函数。多方向的优点是减少了隐写分析算法从所用的方向进行建模检测到隐秘信息的可能性。在WOW中，先对载体进行镜像填充（Mirror-padded），之后在计算卷积，因此，𝑹(𝑘)的尺寸与原图 𝑿 相同。</p>
 <p><img src="/2019/05/23/UED-WOW/7925687142cd7f5f1ed69150efd186d6.png" alt=""></p>
 <p><strong>失真函数：</strong></p>
 <p><img src="/2019/05/23/UED-WOW/884e221067a7ae8362fb7342ee414373.png" alt=""></p>
 <p>其中n为二维滤波器的数量，p\&lt;0是待定常数，并且嵌入适用性我们用如下公式表示：</p>
 <p><img src="/2019/05/23/UED-WOW/26a7c590cafcf136f6aabf1559f4f46a.png" alt=""></p>
 <p>R代表残差，K代表滤波器组。嵌入适用性的值越大，嵌入的损失越小。嵌入适用性值为0则嵌入代价为无穷，从而更希望更改纹理复杂区域。因此，当修改位置(𝑖,𝑗)上像素后，如果残差上的噪声与原残差更相关，则WOW的单点失真函数较小，(𝑖,𝑗)位置更可能被修改。</p>
-<p>编码效果：WOW采用随机±1的方式进行修改，采用STC。由于 +1<br>与−1的失真是一样的，因此，支持采用多层STC进行嵌入，实验证明模拟最优嵌入的三层STC效果更佳。</p>
+<p>编码效果：WOW采用随机±1的方式进行修改，采用STC。由于 +1与−1的失真是一样的，因此，支持采用多层STC进行嵌入，实验证明模拟最优嵌入的三层STC效果更佳。</p>
 <p><img src="/2019/05/23/UED-WOW/4dedbf1bce9a371af0b3ff5c38488f1b.png" alt=""></p>
 <p>论文实验：</p>
 <p><img src="/2019/05/23/UED-WOW/4aac3e7412d342d46a36dfa43f5b870f.png" alt=""></p>
