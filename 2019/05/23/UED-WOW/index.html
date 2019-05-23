@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Steganography," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="UED 论文：Uniform Embedding for Efficient JPEG Steganography(2014,TIFS,CR18) 设计思想： 本篇论文指出DCT系数在嵌入修改时，若任意选择嵌入位置，由于小值JPEG系数的数量较多，则被选择到小值的可能性更大，这样，小值系数上的分布会变化更剧烈，更可能造成系数分布的形变，从而会引起较大的抗检测隐患，提出针对这一点的均衡失真隐写算法U">
+<meta name="keywords" content="Steganography">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UED&amp;WOW">
+<meta property="og:url" content="http://fennudehaogua.top/2019/05/23/UED-WOW/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="UED 论文：Uniform Embedding for Efficient JPEG Steganography(2014,TIFS,CR18) 设计思想： 本篇论文指出DCT系数在嵌入修改时，若任意选择嵌入位置，由于小值JPEG系数的数量较多，则被选择到小值的可能性更大，这样，小值系数上的分布会变化更剧烈，更可能造成系数分布的形变，从而会引起较大的抗检测隐患，提出针对这一点的均衡失真隐写算法U">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/23/UED-WOW/9d65b7ca0a453090c14cfa1b9db90de3.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/23/UED-WOW/c9b8e6dcc8d1fc870d162f000a6102a8.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/23/UED-WOW/87e74a794052f6f6dc207126d75d9210.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/23/UED-WOW/37f4aa7128d950c7a68dabb66f3a988e.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/23/UED-WOW/cbde0d35b20e4d4b92e0610b4c3be110.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/23/UED-WOW/54254ffe4515ee2e8704a9f2d86f9e92.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/23/UED-WOW/e2266b542ddb44fd2525436bb30c12fc.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/23/UED-WOW/58714e9289b0acc1a7146483369138da.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/23/UED-WOW/7925687142cd7f5f1ed69150efd186d6.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/23/UED-WOW/884e221067a7ae8362fb7342ee414373.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/23/UED-WOW/26a7c590cafcf136f6aabf1559f4f46a.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/23/UED-WOW/4dedbf1bce9a371af0b3ff5c38488f1b.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/23/UED-WOW/4aac3e7412d342d46a36dfa43f5b870f.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/23/UED-WOW/e6e9469732b1c560fb10326a62f21e55.png">
+<meta property="og:updated_time" content="2019-05-23T13:21:51.051Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UED&amp;WOW">
+<meta name="twitter:description" content="UED 论文：Uniform Embedding for Efficient JPEG Steganography(2014,TIFS,CR18) 设计思想： 本篇论文指出DCT系数在嵌入修改时，若任意选择嵌入位置，由于小值JPEG系数的数量较多，则被选择到小值的可能性更大，这样，小值系数上的分布会变化更剧烈，更可能造成系数分布的形变，从而会引起较大的抗检测隐患，提出针对这一点的均衡失真隐写算法U">
+<meta name="twitter:image" content="http://fennudehaogua.top/2019/05/23/UED-WOW/9d65b7ca0a453090c14cfa1b9db90de3.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2019/05/23/UED-WOW/"/>
+
+
+
+
+
+  <title>UED&WOW | fennudehaogua.top</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?727b9992a1a14607aebb47500e5bcc08";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2019/05/23/UED-WOW/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">UED&WOW</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-23T21:19:26+08:00">
+                2019-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>UED</p>
+<p>论文：Uniform Embedding for Efficient JPEG Steganography(2014,TIFS,CR18)</p>
+<p><strong>设计思想：</strong></p>
+<p>本篇论文指出DCT系数在嵌入修改时，若任意选择嵌入位置，由于小值JPEG系数的数量较多，则被选择到小值的可能性更大，这样，小值系数上的分布会变化更剧烈，更可能造成系数分布的形变，从而会引起较大的抗检测隐患，提出针对这一点的均衡失真隐写算法UED<br>(Uniform Embedding Distortion)。</p>
+<p>而如果每个值上的变化接近，则更可能保持JPEG系数的分布。因此，UED的设计目标是，压制在更多出现的小值系数上修改，优先选择更少出现的大值系数修改。</p>
+<p><img src="/2019/05/23/UED-WOW/9d65b7ca0a453090c14cfa1b9db90de3.png" alt=""></p>
+<p>UED的修改系数选择原则：优先选择大值系数修改。图中，a是JPEG量化系数分布，b是希望的选择概率，c是所选择系数的分布（更均匀）</p>
+<p>基于DCT系数本身及其块内、块间相邻系数的取值构造嵌入失真函数，并使用STC编码嵌入，减少了失真并提高了嵌入的效率的UED-SC<br>( Uniform Embedding Distortion based on Single Coefficient)、UED-JC(UED based on<br>Joint Coefficients)和SI-UED(Side Informed UED)。</p>
+<p><strong>失真函数：</strong></p>
+<p>1.对于UED-SC：</p>
+<p><img src="/2019/05/23/UED-WOW/c9b8e6dcc8d1fc870d162f000a6102a8.png" alt=""></p>
+<p>其中cij代表位置(𝑖,𝑗)上的JPEG量化系数。</p>
+<p>2.对于UED-JC：定义𝑁ia ={𝑐𝑖+1,𝑗, 𝑐𝑖−1,𝑗, 𝑐𝑖,𝑗+1, 𝑐𝑖,𝑗−1}是它的块内邻域，𝑁ir<br>={𝑐𝑖+8,𝑗, 𝑐𝑖−8,𝑗, 𝑐𝑖,𝑗+8, 𝑐𝑖,𝑗−8}是它的块间邻域，则单点失真函数为：</p>
+<p><img src="/2019/05/23/UED-WOW/87e74a794052f6f6dc207126d75d9210.png" alt=""></p>
+<p>其中，以上𝛼ia与𝛼ir为待定常数，有实验结果分别确定为1.3与1；<br>𝑐𝑖𝑗为系数值；以上失真函数压制了在小值区的取值。</p>
+<p>3.对于UED-SI：</p>
+<p><img src="/2019/05/23/UED-WOW/37f4aa7128d950c7a68dabb66f3a988e.png" alt=""></p>
+<p>其中eij代表cij的增性取证误差，<br>𝛼ia与𝛼ir为待定常数，有实验结果分别确定为0.2。其他与UED-JC一样。</p>
+<p>基于以上失真函数，UED采用STC优化嵌入，不使用系数为0的样点，当需要修改且𝑐𝑖𝑗绝对值大于1时，采用随机±1的方式；当需要修改且𝑐𝑖𝑗绝对值为1时，将其改为𝑐𝑖𝑗<br>+<br>sgn(𝑐𝑖𝑗)，即+1改为2，−1改为−2。（sgn(0)=0,sgn(负数)=-1,sgn(正数)=1）。这样我们就不会增加额外的0值DCT系数。从而提高嵌入的效率。</p>
+<p><strong>提出的隐写机制：</strong></p>
+<p><img src="/2019/05/23/UED-WOW/cbde0d35b20e4d4b92e0610b4c3be110.png" alt=""></p>
+<p>用CC-JRM与CC-PEV特征进行相应的隐写分析，结果显示，UED显著优于非自适应的方法，但是，在主要攻击下它的安全性低于J-UNIWARD（不过UED速度显著更快）</p>
+<p><img src="/2019/05/23/UED-WOW/54254ffe4515ee2e8704a9f2d86f9e92.png" alt=""></p>
+<p>UED算法引入了均匀嵌入思想，以相同的概率修改不同大小的非零量化DCT系数（原本选取小的DCT系数值概率大，大的DCT系数值概率小），在度量失真代价时综合考虑块内和块间邻域DCT系数的取值情况，使图像一阶和二阶统计特性的改变达到最小。</p>
+<p>UERD是UED的改进算法，它将所有DCT系数(包括直流和零值DCT系数)均视为可嵌入的载体元素，并考虑了图像模型统计特性的变化，使嵌入修改与系数差异成正比，能够抵抗高维的隐写检测特征。用与DCT块对应的像素块的灰度共生矩阵来计算分块的纹理复杂程度，并结合均匀嵌入思想，将秘密信息嵌入分散到取值不同的DCT系数上，增加了隐写的自适应性。</p>
+<p>代码：师兄从原作者处寻来的。</p>
+<p>运行结果：</p>
+<p><img src="/2019/05/23/UED-WOW/e2266b542ddb44fd2525436bb30c12fc.png" alt=""></p>
+<p><img src="/2019/05/23/UED-WOW/58714e9289b0acc1a7146483369138da.png" alt=""></p>
+<p>WOW</p>
+<p>论文：Designing steganographic distortion using directional<br>filters(2012,WIFS,CR106)</p>
+<p><strong>设计思想：</strong></p>
+<p>WOW隐写算法的核心思想主要是利用空间域图像每个点在多个方向上的方向残差来衡量每个点的嵌入代价，利用这种方法可以使图像中在每个方向都难以建模的那些像素区域具有小的嵌入成本，而图像平滑区域和边缘区域会具有较大的嵌入成本。具体的过程可以分成三个步骤:首先，利用三个不同的方向滤波器获得载体图像每个像素点的方向残差，并利用这些方向残差计算得到每个像素的嵌入适应性;然后，利用这些嵌入适应性进行聚合得到每个像素点的嵌入代价;最后，在建立完以上的失真函数得到每个像素点的嵌入代价以后，利用STC编码结合这些嵌入代价实现最小化失真隐写并得到最终嵌入信息的图像。</p>
+<p>小波系数反映了信号局部区域的时频特性，失真函数的设计可以以隐写后这种特性得到更多保持为原则。WOW是空间域图像自适应隐写，它在小波变换的一级分解LH、HL与HH子带上对系数改动量与原系数做相关运算，总体相关性越大则失真越低。</p>
+<p>WOW核心思想是选择了方向性Daubechies<br>8小波，直接用小波从多个方向分解获得载体图像残差，进而构造失真函数。低通、高通滤波器𝒉，𝒈进行小波滤波获得一级分解LH、HL与HH三个子带系数的二维滤波器系数矩阵是：𝑲(1)<br>= 𝒉 ∙ 𝒈T, 𝑲 2 = 𝒈 ∙ 𝒉T, 𝑲(3) = 𝒈<br>∙𝒈T。它们滤波后得到的三个子带系数也称为三组残差（Residual），分别为𝑹(𝑘) = 𝑲 𝑘∗<br>𝑿, 𝑘 =<br>1,2,3，“∗”表示二维卷积。然后对残差值进行加权、聚合，根据Holder范数形式进行构造了失真函数。多方向的优点是减少了隐写分析算法从所用的方向进行建模检测到隐秘信息的可能性。在WOW中，先对载体进行镜像填充（Mirror-padded），之后在计算卷积，因此，𝑹(𝑘)<br>的尺寸与原图 𝑿 相同。</p>
+<p><img src="/2019/05/23/UED-WOW/7925687142cd7f5f1ed69150efd186d6.png" alt=""></p>
+<p><strong>失真函数：</strong></p>
+<p><img src="/2019/05/23/UED-WOW/884e221067a7ae8362fb7342ee414373.png" alt=""></p>
+<p>其中n为二维滤波器的数量，p\&lt;0是待定常数，并且嵌入适用性我们用如下公式表示：</p>
+<p><img src="/2019/05/23/UED-WOW/26a7c590cafcf136f6aabf1559f4f46a.png" alt=""></p>
+<p>R代表残差，K代表滤波器组。嵌入适用性的值越大，嵌入的损失越小。嵌入适用性值为0则嵌入代价为无穷，从而更希望更改纹理复杂区域。因此，当修改位置(𝑖,𝑗)上像素后，如果残差上的噪声与原残差更相关，则WOW的单点失真函数较小，(𝑖,𝑗)位置更可能被修改。</p>
+<p>编码效果：WOW采用随机±1的方式进行修改，采用STC。由于 +1<br>与−1的失真是一样的，因此，支持采用多层STC进行嵌入，实验证明模拟最优嵌入的三层STC效果更佳。</p>
+<p><img src="/2019/05/23/UED-WOW/4dedbf1bce9a371af0b3ff5c38488f1b.png" alt=""></p>
+<p>论文实验：</p>
+<p><img src="/2019/05/23/UED-WOW/4aac3e7412d342d46a36dfa43f5b870f.png" alt=""></p>
+<p>实验证明WOW比HUGO有很大提升，尤其是在较大的嵌入负载下。</p>
+<p>代码：<a href="http://dde.binghamton.edu/download/stego_algorithms/" target="_blank" rel="noopener">http://dde.binghamton.edu/download/stego_algorithms/</a></p>
+<p>实验结果：</p>
+<p><img src="/2019/05/23/UED-WOW/e6e9469732b1c560fb10326a62f21e55.png" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Steganography/" rel="tag"><i class="fa fa-tag"></i> Steganography</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/24/EBS-NPQ/" rel="next" title="EBS&NPQ">
+                <i class="fa fa-chevron-left"></i> EBS&NPQ
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100017135643802" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                    
+                      FB Page
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/6862942751/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://isujin.com/" title="素锦" target="_blank">素锦</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://imkira.com/" title="Kira" target="_blank">Kira</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"mobile":{"show":false},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>
