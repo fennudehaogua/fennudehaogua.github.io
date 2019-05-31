@@ -137,7 +137,7 @@
 <meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/56fe5c6b72984ebc5c919bee433afcac.png">
 <meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/21787e5ce2415caa291f4fd40c4b5bb1.png">
 <meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/56d3d9a92e39be7dae0b45317719a880.png">
-<meta property="og:updated_time" content="2019-05-31T11:15:16.200Z">
+<meta property="og:updated_time" content="2019-05-31T11:23:22.866Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UNIWARD&amp;MG">
 <meta name="twitter:description" content="UNIWARD 论文：Digital image steganography using universal distortion(2013,IH&amp;amp;MMSec,CR66) 基础概念：  小波变换：  1987年，Mallat将计算机视觉领域内多尺度分析的思想引入信号处理领域，并利用多分辨分析的概念，统一了这之前的各种具体小波的构造，并提出了现今广泛应用的Mallat快速小波分解和重构算法，">
@@ -436,7 +436,7 @@
 <p>隐写分析实验结果表明，相比HUGO与WOW，S-UNIWARD进一步提高了安全性。在嵌入位置的选择上，HUGO比较趋向于选择轮廓附近，而WOW、S-UNIWARD更趋向于选择纹理复杂区，后者的选择在纹理区范围更均匀S-UNIWARD STC在SRM隐写分析下的性能（其中S-UNIWARD指理想模拟）；</p>
 <p><img src="/2019/05/31/UNIWARD-MG/9068ff7267ca67dc4ba8df5e01f7ba0a.png" alt=""></p>
 <p>J-UNIWARD：</p>
-<p>JPEG域自适应隐写需要估计修改每个可嵌入JPEG系数的单点失真。一般可以变换到空间域或者小波域进行设计，原则也是将扰动尽量限制在纹理区，典型的是J-UNIWARD（JPEG-UnIversal<br>Wavelet Relative Distortion）隐写也可以直接在JPEG域进行失真函数的设计，设计的原则是，尽量选择对JPEG系数分布特性扰动小的位置进行嵌入，典型的是UED（Uniform Embedding Distortion）隐写。</p>
+<p>JPEG域自适应隐写需要估计修改每个可嵌入JPEG系数的单点失真。一般可以变换到空间域或者小波域进行设计，原则也是将扰动尽量限制在纹理区，典型的是J-UNIWARD（JPEG-UnIversal Wavelet Relative Distortion）隐写也可以直接在JPEG域进行失真函数的设计，设计的原则是，尽量选择对JPEG系数分布特性扰动小的位置进行嵌入，典型的是UED（Uniform Embedding Distortion）隐写。</p>
 <p>J-UNIWARD是一种JPEG域自适应隐写。由于隐写的输入与输出都是JPEG文件，因此，以上的载体图像𝑿与含密图像𝒀均在JPEG域。设 𝐽−1(𝑿)与𝐽−1(𝒀)表示JPEG解码到空间域的操作，则J-UNIWARD的总失真函数定义为：</p>
 <p><img src="/2019/05/31/UNIWARD-MG/9b20a4dcecb62d308bcda8ea4269bdac.png" alt=""></p>
 <p>其中，𝐷 是S-UNIWARD的总失真函数，待定系数𝜎&gt;0在实验中取为2的-6次方。这样，单点失真函数为</p>
@@ -456,7 +456,7 @@
 <p>将两者相减得到失真代价的公式：</p>
 <p><img src="/2019/05/31/UNIWARD-MG/230673a2fbc97376bec4ca60513d2b87.png" alt=""></p>
 <p>在此模型下，出现的病态饱和现象如下：当eij等于0.5时，将失真代价Dij向下舍去，根据上述式子，计算结果为０，实际上这是产生了嵌入更改的区域。当DCT系数的数量较小时，UNIWARD的安全性未受影响。但随着值为0.5的DCT系数的数量增加时，上述式子不再是好的统计检测性的度量指标。而且，当负载接近于０时才达到50%的随机猜测概率。此现象表明，零嵌入代价的影响取决于图像中0.5系数的数量。产生此现象有两个原因：（１）用于计算失真代价的DCT的实现；（２）JEPG质量因子的选取。</p>
-<p>使用Matlab中的“dct2”（是Matlab图像处理工具箱实现离散余弦变的一种方法，用一个基于FFT的算法来提高当输入的方阵较大时的计算速度）命令实现“慢”DCT变换时，实验发现此时还是有少量1/2系数存在（容易产生值为０的DCT系数）。设置质量因子为95，负载从小到中变化，当使用JRM+SRMQ1富模型隐写分析方法对所有嵌入方法进行检测时，结果如图３所示，此时检测误差为25％～30％，而一个正常的误差范围应达到50%，而NPQ和BCHopt算法由于并未选择DC模式，因此没有上述病态饱和现象。在JEPG质量因子较低时，1/2系数的数量较少，此时不会影响安全性。但当使用快速整数DCT实现时（即imwrite，将图像数据写入到图像文件），量化步长为1/8的倍数，此时减少量化步长，eij=0.5的系数的数量会增加，安全性大幅降低。当JEPG<br>质量因子很大时，1/2系数还是会引起失真代价消失的问题。</p>
+<p>使用Matlab中的“dct2”（是Matlab图像处理工具箱实现离散余弦变的一种方法，用一个基于FFT的算法来提高当输入的方阵较大时的计算速度）命令实现“慢”DCT变换时，实验发现此时还是有少量1/2系数存在（容易产生值为０的DCT系数）。设置质量因子为95，负载从小到中变化，当使用JRM+SRMQ1富模型隐写分析方法对所有嵌入方法进行检测时，结果如图３所示，此时检测误差为25％～30％，而一个正常的误差范围应达到50%，而NPQ和BCHopt算法由于并未选择DC模式，因此没有上述病态饱和现象。在JEPG质量因子较低时，1/2系数的数量较少，此时不会影响安全性。但当使用快速整数DCT实现时（即imwrite，将图像数据写入到图像文件），量化步长为1/8的倍数，此时减少量化步长，eij=0.5的系数的数量会增加，安全性大幅降低。当JEPG质量因子很大时，1/2系数还是会引起失真代价消失的问题。</p>
 <p><img src="/2019/05/31/UNIWARD-MG/48979e009af0ff872d323e4238b3233f.png" alt=""></p>
 <p>对比SI-UNIWARD与其他三种边信息已知的JEPG隐写机制：（1）EBS（2）NPQ（3）BCHopt</p>
 <p><img src="/2019/05/31/UNIWARD-MG/b1284b774f641d692582d40f6af4b724.png" alt=""></p>
@@ -495,7 +495,7 @@
 <p><img src="/2019/05/31/UNIWARD-MG/65a6fad9f510668fbee284d345fac2de.png" alt=""></p>
 <p>则KL散度可以简化为：</p>
 <p><img src="/2019/05/31/UNIWARD-MG/a090681027eeef5795093aa42eeb2c0b.png" alt=""></p>
-<ol>
+<ol start="2">
 <li>最小化KL散度</li>
 </ol>
 <blockquote>
