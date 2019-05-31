@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Steganography," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="UNIWARD 论文：Digital image steganography using universal distortion(2013,IH&amp;amp;MMSec,CR66) 基础概念：  小波变换：  1987年，Mallat将计算机视觉领域内多尺度分析的思想引入信号处理领域，并利用多分辨分析的概念，统一了这之前的各种具体小波的构造，并提出了现今广泛应用的Mallat快速小波分解和重构算法，">
+<meta name="keywords" content="Steganography">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UNIWARD&amp;MG">
+<meta property="og:url" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="UNIWARD 论文：Digital image steganography using universal distortion(2013,IH&amp;amp;MMSec,CR66) 基础概念：  小波变换：  1987年，Mallat将计算机视觉领域内多尺度分析的思想引入信号处理领域，并利用多分辨分析的概念，统一了这之前的各种具体小波的构造，并提出了现今广泛应用的Mallat快速小波分解和重构算法，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/b39bf657fdcbed7042c855fdc3b6befa.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/56fece1a993e63b30e0cdd865b4d3e08.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/eae03538998114eaaecc63c7d3fbe1f2.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/3939799a7f24e3d198295165a1472283.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/76cdcb9d3a3c70ebf1de2056bc073643.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/598d46bc3391915df737bda0caff1255.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/9068ff7267ca67dc4ba8df5e01f7ba0a.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/9b20a4dcecb62d308bcda8ea4269bdac.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/3faa02b1ff3366bda3cf62ee764e8f0f.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/377328d3036a7378b5b5801f42bf155a.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/2417009a631d4f55feff62da4324e2f3.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/76f997e1f50fc162937fe6efb3eea4f6.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/c66c91c7f32beefb9760943d9267c32e.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/230673a2fbc97376bec4ca60513d2b87.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/48979e009af0ff872d323e4238b3233f.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/b1284b774f641d692582d40f6af4b724.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/abd92c5b68d71d1b34493e97ec37f343.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/49a1db9b99381279117782ba991db8e6.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/aa858c7195ae728f540c11fd0d4ff740.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/acdd778f0d4226e261ecf4b8ae895e33.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/470fbb6a883ed1accc90a8930ca724fb.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/69209f0e27e4cbd323ea3ea12e716ca2.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/24ea6e7ee110f9e9807fa9746b70f9a2.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/65a6fad9f510668fbee284d345fac2de.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/a090681027eeef5795093aa42eeb2c0b.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/164669e3629d1ef80e8200df992f5721.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/8941be584c9f1e5b1ec6b2f73a6f7aad.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/afd3d360cb906fa702378b2dba5e81d5.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/638dfb5d35917709edc2251232704a40.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/1b82f507a5dc341cdc28248b9c17c270.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/4da006bbf67890bfb659725223bfd6eb.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/56fe5c6b72984ebc5c919bee433afcac.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/21787e5ce2415caa291f4fd40c4b5bb1.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/56d3d9a92e39be7dae0b45317719a880.png">
+<meta property="og:updated_time" content="2019-05-31T06:13:32.151Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UNIWARD&amp;MG">
+<meta name="twitter:description" content="UNIWARD 论文：Digital image steganography using universal distortion(2013,IH&amp;amp;MMSec,CR66) 基础概念：  小波变换：  1987年，Mallat将计算机视觉领域内多尺度分析的思想引入信号处理领域，并利用多分辨分析的概念，统一了这之前的各种具体小波的构造，并提出了现今广泛应用的Mallat快速小波分解和重构算法，">
+<meta name="twitter:image" content="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/media/b39bf657fdcbed7042c855fdc3b6befa.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/"/>
+
+
+
+
+
+  <title>UNIWARD&MG | fennudehaogua.top</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?727b9992a1a14607aebb47500e5bcc08";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2019/05/31/UNIWARD-MG/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">UNIWARD&MG</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-31T14:07:47+08:00">
+                2019-05-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>UNIWARD</p>
+<p>论文：Digital image steganography using universal distortion(2013,IH&amp;MMSec,CR66)</p>
+<p>基础概念：</p>
+<ol>
+<li>小波变换：</li>
+</ol>
+<p>1987年，Mallat将计算机视觉领域内多尺度分析的思想引入信号处理领域，并利用多分辨分析的概念，统一了这之前的各种具体小波的构造，并提出了现今广泛应用的Mallat快速小波分解和重构算法，并将它用于图像分解和压缩重构。所谓Mallat塔式快速小波变换算法，就是将一幅图像经过二维小波变换分解为一系列不同尺度(频率)、方向、空间局部变化的子带图像。一幅图像经过一次小波变换后产生4个子带图像：LL表示原图像的最佳逼近，反映了原图的基本特性；HL、LH和HH分别表示水平高频分量、垂直高频分量和对角线高频分量，反映图像信号水平方向、垂直方向与对角线方向边缘、轮廓和纹理。其中，LL子带集中了图像的大部分能量，以后的小波变换都是针对上一级变换产生的低频子带(LL)再进行小波变换,下标表示不同分辨率。图1-1是三级小波变换示意图,图1-2是分别对二幅图像进行两级和三级小波变换后的图像。由图1-2可以看出每一级的LL部分集中了大部分能量，能粗略显示出原图像的概貌。</p>
+<p>图1-1　三级小波变换示意图</p>
+<p>Fig 1-1 The three scale wavelet transform diagram</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/b39bf657fdcbed7042c855fdc3b6befa.png" alt=""></p>
+<p>图1-2　进行小波变换后的图像</p>
+<p>Fig 1-2 The images with wavelet transform</p>
+<p>图像经小波分解后，可以得到不同分辩率的子图像，不同分辨率的子图像对应的频率是不相同的，高频子图像上大部分点的数值都接近于零，越是高频这种对应现象越明显。Lena图像4级分解后的小波系数的统计见表1-1所示，图1-3是第1级小波分解后的小波系数分布图。</p>
+<p>表1-1 Lena小波系数统计分析</p>
+<p>Table 1-1 Lena wavelet-coefficient statistical analysis</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/56fece1a993e63b30e0cdd865b4d3e08.png" alt=""></p>
+<p>从表1-1可以看出，小波系数能量的97%以上集中在最高分解级的最低频带，而且小波系数的范围比其它子图像小波系数更宽，均值和方差比其它子图像更大，这说明最高分解最低频子带的小波系数具有更重要的要位。图1-3是Lena图像经过小波一次分解后各个子带系数的灰度直方图，从图可以看出，各个高频子带的数据统计分布非常相似，基本符合拉普拉斯分步。</p>
+<p>图像经过小波变换后能获得很好的空间—频率多分辨率表示,有以下一些主要特性：1)不仅保持了原图像空间特性，而且能很好地提取出图像的高频信息，在低频处有很好的频率特性，在高频处有很好的空间选择性；2)小波分量具有方向选择性，分为水平、垂直和斜方向，这些特性都和人的视觉特性相吻合；3)能量主要集中在低频子图像，各层的低通直流分量相等，各带通分量均为零；4)低频子图像具有很强的相关性,水平子图像在水平方向相关系数大,而垂直方向小;垂直子图像在水平方向相关系数小,而垂直方向大;斜方向子图像在水平和垂直方向相关系数都小。</p>
+<p>图1-3 LL1,LH1,HL1,HH1的小波系数分布图</p>
+<p>Fig 1-3 Distributive diagram of wavelet coefficients in LL1,LH1,HL1,HH1 subbands</p>
+<p>正是由于小波分析具有以上这些优点，基于小波变换的图像应用研究取得许多成果，在图像压缩方面，小波编码取得了很大的成功，这些算法都是使用了不同的小波系数组织方法与利用了小波系数所具有的统计特性。各种类型的小波图像编码器相继提出，下面是6种性能卓著的小波图像编码器：EZW编码器，SPIHT编码器,集合分裂嵌入块编码（SPECK）, 可逆嵌入小波压缩算法（CREW）,小波数据形态表示图像编码(MRWD)和EBCOT编码器。这些成果正逐步标准化，汇集成拟订中的工业标准——JPEG2000。在活动图像MPEG4标准制定中，基于小波变换的压缩编码也是一个优选方案。</p>
+<p>此外，在边缘检测，图像分割，图像恢复，图像去噪，图像分类与识别，图像检索方面，图像增强，图像融合等数字图像处理中[9-18]，小波技术也同样受到广泛关注，并取得相当的成果。它是以局部化函数所形成的小波基作为基底而展开的，具有许多特殊的性能和优点。总之，正是由于它在图像处理领域中所获得的大量成功的应用表明小波技术图像处理是非常有前途的研究领域。基于这个原因，我们用它作为一种强有力的数学工具来解决本课题中研究的实际问题。</p>
+<p>UNIWARD:</p>
+<p>适用于任意域的失真函数即UNIWARD的设计目的源于WOW(Weight Obtained Wavelet)函数,因WOW计算失真代价的方式较为复杂,故其无法有效应用于JPEG域中。</p>
+<p>UNIWARD失真代价设计如下：首先，使用一组多贝西小波方向滤波器组D-WDFB=｛Κ（１），Κ（２），Κ（３）｝来评估图像在水平、垂直、对角线方向的平滑度。这组滤波器包含HH、HL、LH这３个高通方向滤波器，且都由一维低通(g)和高通(h)滤波器构成。给定一幅载体图像Ｘ和对应的隐写图像Ｙ，用Ｗ分别表示Ｘ和Ｙ第ｋ层分解得到的第ｕｖ个小波系数，将JEPG图像Ｘ和Ｙ分解到空域，然后使用小波变换，得到Ｘ和Ｙ对应的小波系数，两者相减得到的方向残差与Ｘ的小波系数相比即为其失真代价。</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/eae03538998114eaaecc63c7d3fbe1f2.png" alt=""></p>
+<p>UNIWARD根据使用域不同分为三个部分，在空域图像上的S-UNIWARD，在JEPG图像上的J-UNIWARD以及基于边信息的SI-UNIWARD。</p>
+<p>S-UNIWARD：S-UNIWARD也是一种图像空间域自适应隐写，它的失真函数基于小波系数定义。设:</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/3939799a7f24e3d198295165a1472283.png" alt=""></p>
+<p>分别是原图与含密图的第 𝑘 组残差，</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/76cdcb9d3a3c70ebf1de2056bc073643.png" alt=""></p>
+<p>分别表示𝑹(𝑘)(𝑿) 、𝑹(𝑘)(𝒀) 中位置 𝑢, 𝑣上的小波系数，则S-UNIWARD算法定义的总体失真函数为：</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/598d46bc3391915df737bda0caff1255.png" alt=""></p>
+<p>其中，Ｄ代表失真代价，ｋ＝1,2,3代表小波分解后的子带，ｕ∈｛1,….n1｝，ｖ∈｛1，…，n2｝，Ｗ为DCT域中的小波系数的方向残差。𝜎&gt;0为调节参数，在S-UNIWARD的实验中取为1。这样，单点失真函数为 𝜌𝑖,𝑗=𝐷(𝑿,𝑿~(𝑖,𝑗)𝑌𝑖,𝑗)，𝑿~(𝑖,𝑗)代表cover图像X只改变第ij号元素。由于以上小波系数系数主要分布在中高频，在纹理区数值较大，使得上式的分母较大，整个失真下降。S-UNIWARD对像素的修改方法类似于WOW。由于𝑌𝑖,𝑗加1还是减1得到的𝜌𝑖,𝑗相同，因此，S-UNIWARD的修改方式可以是在STC编码中随机的±1，也支持双层的嵌入。</p>
+<p>隐写分析实验结果表明，相比HUGO与WOW，S-UNIWARD进一步提高了安全性。在嵌入位置的选择上，HUGO比较趋向于选择轮廓附近，而WOW、S-UNIWARD更趋向于选择纹理复杂区，后者的选择在纹理区范围更均匀S-UNIWARD STC在SRM隐写分析下的性能（其中S-UNIWARD指理想模拟）；</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/9068ff7267ca67dc4ba8df5e01f7ba0a.png" alt=""></p>
+<p>J-UNIWARD：</p>
+<p>JPEG域自适应隐写需要估计修改每个可嵌入JPEG系数的单点失真。一般可以变换到空间域或者小波域进行设计，原则也是将扰动尽量限制在纹理区，典型的是J-UNIWARD（JPEG-UnIversal<br>Wavelet Relative Distortion）隐写也可以直接在JPEG域进行失真函数的设计，设计的原则是，尽量选择对JPEG系数分布特性扰动小的位置进行嵌入，典型的是UED（Uniform Embedding Distortion）隐写。</p>
+<p>J-UNIWARD是一种JPEG域自适应隐写。由于隐写的输入与输出都是JPEG文件，因此，以上的载体图像𝑿与含密图像𝒀均在JPEG域。设 𝐽−1(𝑿)与𝐽−1(𝒀)表示JPEG解码到空间域的操作，则J-UNIWARD的总失真函数定义为：</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/9b20a4dcecb62d308bcda8ea4269bdac.png" alt=""></p>
+<p>其中，𝐷 是S-UNIWARD的总失真函数，待定系数𝜎&gt;0在实验中取为2的-6次方。这样，单点失真函数为</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/3faa02b1ff3366bda3cf62ee764e8f0f.png" alt=""></p>
+<p>其中𝑖,𝑗为JPEG量化DCT系数的坐标</p>
+<p>在JSRM通用隐写分析下（图），J-UNIWARD比UED的抗检能力更强，安全性显著超出非自适应的JPEG隐写nsF5.分别在质量因子QF为75、85与95三组样本下测试</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/377328d3036a7378b5b5801f42bf155a.png" alt=""></p>
+<p>SI-UNIWARD：</p>
+<p>边信息即存在于未压缩的原始JPEG图像中量化表中的特有信息,在SI-JPEG域中隐写前首先得到的是前载体(Precover),它的特点是带有边信息且未被压缩,具有更好的图像质量。在嵌入操作之前,首先需要对其进行量化处理,例如LSB(Least Significant Bit)嵌入、调整奇偶校验位等。</p>
+<p>在SI-JEPG域中，由于UNIWARD的嵌入更改集中于００、０４、４０、４４这４个模式，产生了原本造成失真的区域其嵌入更改为零的病态饱和现象。通过禁用这４种模式抑制了此现象。</p>
+<p>给定前载体Ｐ的原始DCT系数Dij，将Dij四舍五入以调整奇偶校验位。然后将前载体压缩成X的同时得到两者间的误差：</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/2417009a631d4f55feff62da4324e2f3.png" alt=""></p>
+<p>将Dij反向四舍五入就得到了Yij：</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/76f997e1f50fc162937fe6efb3eea4f6.png" alt=""></p>
+<p>同时得到其误差：</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/c66c91c7f32beefb9760943d9267c32e.png" alt=""></p>
+<p>将两者相减得到失真代价的公式：</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/230673a2fbc97376bec4ca60513d2b87.png" alt=""></p>
+<p>在此模型下，出现的病态饱和现象如下：当eij等于0.5时，将失真代价Dij向下舍去，根据上述式子，计算结果为０，实际上这是产生了嵌入更改的区域。当DCT系数的数量较小时，UNIWARD的安全性未受影响。但随着值为0.5的DCT系数的数量增加时，上述式子不再是好的统计检测性的度量指标。而且，当负载接近于０时才达到50%的随机猜测概率。此现象表明，零嵌入代价的影响取决于图像中0.5系数的数量。产生此现象有两个原因：（１）用于计算失真代价的DCT的实现；（２）JEPG质量因子的选取。</p>
+<p>使用Matlab中的“dct2”（是Matlab图像处理工具箱实现离散余弦变的一种方法，用一个基于FFT的算法来提高当输入的方阵较大时的计算速度）命令实现“慢”DCT变换时，实验发现此时还是有少量1/2系数存在（容易产生值为０的DCT系数）。设置质量因子为95，负载从小到中变化，当使用JRM+SRMQ1富模型隐写分析方法对所有嵌入方法进行检测时，结果如图３所示，此时检测误差为25％～30％，而一个正常的误差范围应达到50%，而NPQ和BCHopt算法由于并未选择DC模式，因此没有上述病态饱和现象。在JEPG质量因子较低时，1/2系数的数量较少，此时不会影响安全性。但当使用快速整数DCT实现时（即imwrite，将图像数据写入到图像文件），量化步长为1/8的倍数，此时减少量化步长，eij=0.5的系数的数量会增加，安全性大幅降低。当JEPG<br>质量因子很大时，1/2系数还是会引起失真代价消失的问题。</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/48979e009af0ff872d323e4238b3233f.png" alt=""></p>
+<p>对比SI-UNIWARD与其他三种边信息已知的JEPG隐写机制：（1）EBS（2）NPQ（3）BCHopt</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/b1284b774f641d692582d40f6af4b724.png" alt=""></p>
+<p>代码：<a href="http://dde.binghamton.edu/download/stego_algorithms/" target="_blank" rel="noopener">http://dde.binghamton.edu/download/stego_algorithms/</a></p>
+<p>实验结果：</p>
+<p>略</p>
+<p>MG：</p>
+<p>论文：Content-adaptive pentary steganography using the multivariate generalized Gaussian cover model(2015,SPIE,CR14)</p>
+<p>Multivariate Gaussian model for designing additive distortion for steganography(2013,ICASSP,CR21)</p>
+<p>基本概念：</p>
+<p>拉格朗日乘子法最优化求解：Lagrange乘子法是在等式玉树的情况下求函数极大值的一种方法。</p>
+<p>nat：信息量单位，1nat=1.443bit（以2为底e的对数）</p>
+<p>Fisher信息：Fisher信息与隐写安全指标KL散度有内在联系，它是对数似然函数一阶导数的方差，从参数估计的角度可以看到Fisher信息值越大，分布函数曲线的波峰越往上凸，说明似然函数曲线参在明显的极值情况，因此更能可靠的估计参数。</p>
+<p>MG (multivariate Gaussian)是基于载体多变量高斯分布模型的图像空域自适应隐写。它的主要特点是，认为载体样点的变化成分服从高斯分布，用极小化其与隐写后分布之间KL散度的方法得到样点嵌入概率，利用加性模型最优嵌入概率与失真之间的映射关系得到样点失真，最后用STC完成嵌入。</p>
+<ol>
+<li>载体统计模型：</li>
+</ol>
+<blockquote>
+<p>  cover与stego分布的总KL散度为：</p>
+</blockquote>
+<p><img src="/2019/05/31/UNIWARD-MG/media/abd92c5b68d71d1b34493e97ec37f343.png" alt=""></p>
+<p>其中Ii（0）为参量为0时的Fisher信息：</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/49a1db9b99381279117782ba991db8e6.png" alt=""></p>
+<ol>
+<li>嵌入：自适应LSBM</li>
+</ol>
+<p>根据Fisher信息的定义我们知道Fisher信息Ii（0）越大，说明按最大似然法估计0附近的参数β越准确，因为它对KL散度有直接影响。</p>
+<p>本篇论文中采用的时LSBM的方法作为嵌入操作，由于认为+1和-1的失真相同为ρ，则保持不变的概率为1-2ρ。由此我们得到stego的像素分布和它的偏导数如下（省略位置标号i）：</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/aa858c7195ae728f540c11fd0d4ff740.png" alt=""></p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/acdd778f0d4226e261ecf4b8ae895e33.png" alt=""></p>
+<p>在连续变量下，高斯分布N（0，v）分布的概率密度函数为：</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/470fbb6a883ed1accc90a8930ca724fb.png" alt=""></p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/69209f0e27e4cbd323ea3ea12e716ca2.png" alt=""></p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/24ea6e7ee110f9e9807fa9746b70f9a2.png" alt=""></p>
+<p>用一个积分来计算近似高斯密度fv的近似黎曼和：</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/65a6fad9f510668fbee284d345fac2de.png" alt=""></p>
+<p>则KL散度可以简化为：</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/a090681027eeef5795093aa42eeb2c0b.png" alt=""></p>
+<ol>
+<li>最小化KL散度</li>
+</ol>
+<blockquote>
+<p>  MG隐写的优化原则是在负载率α确定的情况下最小化以上KL散度。首先有：</p>
+</blockquote>
+<p><img src="/2019/05/31/UNIWARD-MG/media/164669e3629d1ef80e8200df992f5721.png" alt=""></p>
+<p>其中，</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/8941be584c9f1e5b1ec6b2f73a6f7aad.png" alt=""></p>
+<p>，单位是nat。然后为了最小化KL散度并满足以上约束，使用拉格朗日乘子法构造拉格朗日函数如下：</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/afd3d360cb906fa702378b2dba5e81d5.png" alt=""></p>
+<p>对βi求导并令其等于0得到：</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/638dfb5d35917709edc2251232704a40.png" alt=""></p>
+<p>在设定λ的前提下可以通过搜索法求解βi</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/1b82f507a5dc341cdc28248b9c17c270.png" alt=""></p>
+<p>与HUGO的比较：</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/4da006bbf67890bfb659725223bfd6eb.png" alt=""></p>
+<p>代码：<a href="http://dde.binghamton.edu/download/stego_algorithms/" target="_blank" rel="noopener">http://dde.binghamton.edu/download/stego_algorithms/</a></p>
+<p>实验结果：</p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/56fe5c6b72984ebc5c919bee433afcac.png" alt=""></p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/21787e5ce2415caa291f4fd40c4b5bb1.png" alt=""></p>
+<p><img src="/2019/05/31/UNIWARD-MG/media/56d3d9a92e39be7dae0b45317719a880.png" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Steganography/" rel="tag"><i class="fa fa-tag"></i> Steganography</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/23/UED-WOW/" rel="next" title="UED&WOW">
+                <i class="fa fa-chevron-left"></i> UED&WOW
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100017135643802" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                    
+                      FB Page
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/6862942751/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://isujin.com/" title="素锦" target="_blank">素锦</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://imkira.com/" title="Kira" target="_blank">Kira</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"mobile":{"show":false},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>
