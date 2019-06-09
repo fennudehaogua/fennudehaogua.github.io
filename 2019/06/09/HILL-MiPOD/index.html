@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Steganography," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Hill 论文：A new cost function for spatial image steganography(2014,ICIP,CR20) Investigation on cost assignment in spatial image steganography(2014,TIFS,CR12) 总结：HILL隐写的优点在于其代价函数的设计，从而使得嵌入的位置尽可能的在纹理复杂区域，">
+<meta name="keywords" content="Steganography">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HILL&amp;MiPOD">
+<meta property="og:url" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="Hill 论文：A new cost function for spatial image steganography(2014,ICIP,CR20) Investigation on cost assignment in spatial image steganography(2014,TIFS,CR12) 总结：HILL隐写的优点在于其代价函数的设计，从而使得嵌入的位置尽可能的在纹理复杂区域，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/e321defa856671408636cdcdef3afa41.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/ac89c2e6ed2b7fb3c5595130c887f999.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/9582ae5876924e42a75bf747392a16f9.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/dd4de72ebfe43b8e3ffdbf57a36b9600.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/f8343bf323718b7d8c2971efff83b349.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/4d061eb5e7d912996a3ecdf17a1e8ad5.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/8ec6fb22de21197103d00fb3971f30d0.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/072ed6c3472a8f3caf3dcd3dac1f1c8d.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/e5166f999da015d47b8f892a08e9a02d.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/35ecfde3c7b767191c6b7c19ec818cf5.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/103bd465eba6b5fd7d914d59a74741c0.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/2cfddc7e711872756b2b2d4d69c59be3.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/961adca23601d619319b8318fdb24f04.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/38c399df8ca237e4a32603282f8e2710.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/5339448872988d1e29bfeb7e103e0215.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/a69b29ea8dc0d89119fb24fe74d32a30.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/f1bc1e01dfed60cbd5787b14d6dda6ad.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/62257e0abaf7c8d37525294cadb05753.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/4fae4b654ac9c655962f79caadcd223d.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/e8119e0de00804ce9c095e7960d306a9.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/c95533c7100a278056bf841b2595c409.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/4a45ac930b2d1af7b92465a578c14a7a.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/3766077dfe840072e953a68bf4ff4d8f.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/c06b5af4fdab54353576e88604737714.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/1b4d19012e9e5ce6ce7940e18c918582.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/38662f3dfb56bd3c7ade013e5407dbef.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/6cac363313958e0332c8bf871ef99320.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/affd73d30ba1df22249a1e9ed775263e.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/135d039efcb9d9bed6323e8302ba64bf.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/662dbdfeb2f94de019215ff2fb1ee263.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/8edd61c19fee3b3ae3f29499daf57484.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/78977970bf21035bd78c172dc6923358.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/9c91229f29c1c1d3d8e98a6f653cbf59.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/905a21f9b23b8e25b2bfed243beeb59a.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/231bca3ef3807527a2e76d9d67155059.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/12afe17b6675f87f10bb2a99a612808f.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/a7f89c362a8e95378ab503f486c151fd.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/d80f42d9165a0240c18926f54e4a6561.png">
+<meta property="og:updated_time" content="2019-06-09T11:20:50.513Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HILL&amp;MiPOD">
+<meta name="twitter:description" content="Hill 论文：A new cost function for spatial image steganography(2014,ICIP,CR20) Investigation on cost assignment in spatial image steganography(2014,TIFS,CR12) 总结：HILL隐写的优点在于其代价函数的设计，从而使得嵌入的位置尽可能的在纹理复杂区域，">
+<meta name="twitter:image" content="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/e321defa856671408636cdcdef3afa41.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/"/>
+
+
+
+
+
+  <title>HILL&MiPOD | fennudehaogua.top</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?727b9992a1a14607aebb47500e5bcc08";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2019/06/09/HILL-MiPOD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HILL&MiPOD</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-09T19:17:40+08:00">
+                2019-06-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Hill</p>
+<p>论文：A new cost function for spatial image steganography(2014,ICIP,CR20)</p>
+<p>Investigation on cost assignment in spatial image steganography(2014,TIFS,CR12)</p>
+<p>总结：HILL隐写的优点在于其代价函数的设计，从而使得嵌入的位置尽可能的在纹理复杂区域，因为之前介绍的隐写方法如WOW，S-UNIWARD等，它们的失真函数设计使得有的纹理复杂区域像素适合携带隐秘信息却赋有较高的嵌入损失，显然在这些纹理复杂的区域像素聚集嵌入信息比在光滑区域嵌入信息更为安全。</p>
+<p>在加性失真模型下通过取倒数的方式及两个低通滤波器的配合使用，不仅实现了残差绝对值相对较大的区域(纹理复杂度较高)具有较低的代价值，从而具有较高的信息嵌入概率，而残差绝对值相对较小的区域(纹理复杂度较低)具有较高的代价值，从而具有了较低的信息嵌入概率，而且还实现了具有较低代价值的像素点相对比较聚集。这些具有高嵌入概率的像素，集中地分布在那些难以被检测的成块的、纹理复杂度较高的区域(例如噪声区、纹理区等)中。</p>
+<p>在非加性失真模型下提出聚集隐写改变方向策略，结合该策略采取分批动态更新的方式设计出新的非加性代价函数。该价函数并不像加性代价函数一样，一次性获得所有像素的代价值，而是分批获得。同时，该非加性代价函数的设计分两阶段完成。第一阶段，借用己有的加性代价函数，但需要基于像素之间的相关性将部分信息的嵌入影响考虑入内。简而言之，这一阶段的代价值(初始代价值)，需要根据己携带有部分秘密信息的携密图像而不是载体图像获得。第二阶段，为结合聚集改变方向策略，根据像素己有的嵌入结果调整当前代价值。此时，对于加“1”和减“1”的代价值不再采取同一个代价函数获得，而是采取结合了聚集改变方向策略的不同代价函数获得。代价值的调整原理大致为，如果相邻像素发生的改变是加“1”(减“1”)则将当前像素加“1”(减“1”)的代价值适当降低，减“1”(加“1”)的代价值适当提高，使得当前像素如果需要发生改变，则尽可能地加“1”(减“1”)。</p>
+<p><strong>加性失真：</strong></p>
+<p>HILL验证了聚集修改策略在一定程度上可以提高隐写安全性能，设计了一种让载体中低失真值更加聚集的失真函数HILL（HIgh-pass,Low-pass, Low-pass)。即利用两个低通滤波器和一个高通滤波器设计失真函数，同时在嵌入秘密信息时引入了聚焦改变位置策略，取得了比之前几种自适应隐写算法更好的抗检测性能。</p>
+<p>在WOW，S-UNIWARD等自适应隐写术中，它们都致力于将秘密信息嵌入到纹理复杂区域，然而，有一些在纹理复杂区域的适合携带秘密信息的像素仍被设定了较大的嵌入损失。相比起在光滑区域，在这些像素中嵌入秘密信息更加安全。</p>
+<p>HILL算法的失真函数设计借助了一个高通滤波器和两个均值滤波器。HILL算法的构造方式与WOW类似，其利用KB预测算子对载体图像进行了分解获取图像残差，并提出一种聚焦改变位置策略，目的是在确保秘密信息可以全部被嵌入到载体中的前提下，尽量让秘密信息分布在纹理丰富区域，减小其被建模检测到的可能性。假设载体图像为X，则HILL算法的失真函数有式的表达形式：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/e321defa856671408636cdcdef3afa41.png" alt=""></p>
+<p>通常单个的高通滤波器也能达到设计的要求，所以可以简化成为：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/ac89c2e6ed2b7fb3c5595130c887f999.png" alt=""></p>
+<p>式中，H为KB预测算子，L1为3阶均值滤波器，L2为15阶均值滤波器。其中高通滤波器H的作用是加强对图像纹理的刻画，类似于WOW隐写中的第k个小波滤波。高通滤波器的输出被取绝对值之后送入到第一个低通滤波器L1，L1滤波的目的是为实现聚集改变位置策略而进行预调整。本次滤波后，图像中残差绝对值较大区域的周围那些残差绝对值相对较低的被提高了，而那些处于平滑区中的残差绝对值相对较大的被降低了。最后，对L1滤波后的残差绝对值取倒数，使用另一低通滤波L2对这些倒数做最后处理。L2滤波后得到的数据将作为最终的图像像素代价值。</p>
+<p>滤波器的选择：</p>
+<p>在HILL算法的代价函数中，总共使用了三个滤波器。每一个滤波器的选择都会对算法的性能产生一定的影响。由于KB(Ker-Bohme)滤波器在隐写分析中具有较好的效果，因此本文将其选为HILL算法代价函数中用到的高通滤波器H。KB滤波器具有如下形式:</p>
+<p><img src="/2019/06/09/HILL-MiPOD/9582ae5876924e42a75bf747392a16f9.png" alt=""></p>
+<p><strong>非加性失真（HILL-CMD）：</strong></p>
+<p>由于直接基于非加性失真函数不易设计隐写算法，因此需采用可行的方式进行算法的设计。Filler尝试了采用加性失真函数形式或失真上界来实施非加性失真函数模型下隐写算法的设计。在HILL中，设计了一种结合了聚集改变方向策略的新代价函数，该代价函数在获取像素代价值时采用分批动态更新的方式。利用该代价函数构建出一类具有高安全性的图像空域隐写算法。由于该类算法捕获了信息嵌入改变之间的相互作用，得到的失真不是由所有像素的改变代价值相加而得，因此该类算法属于非加性隐写算法。</p>
+<p>非加性失真代价函数的设计主要分为两个阶段：</p>
+<ol>
+<li>第一阶段：设计获得初始代价值的代价函数表达式如下：</li>
+</ol>
+<p><img src="/2019/06/09/HILL-MiPOD/dd4de72ebfe43b8e3ffdbf57a36b9600.png" alt=""></p>
+<p>其中，ρ（k）代表由部分图像即子图像的初始代价值构成的矩阵;m代表子图像的个数;n1代表每一个子图拥有的像素数目。假定图像的像素点的总个数为n，则有n1=n/m;符号f(*)代表可选用己有的加性代价函数形式，如上述HILL隐写中加性模型的代价函数。Y（k-1）代表载体图像X中的前k-1个子图己经完成了秘密信息嵌入后的携密图像，且有当k-1=0时，Y（k-1）=X。像素代价值的获得是通过分批动态更新的方式且从像素之间的相关性出发考虑了像素嵌入改变之间的相互影响。由该代价函数得到的隐写算法在秘密信息嵌入完成后，得到的图像失真是一个无限接近非加性失真的失真上界。因此，新的算法实现了非加性失真函数模型下算法的设计，而如上所示的代价函数也就被称为非加性代价函数。</p>
+<ol>
+<li>第二阶段：聚集改变方向策略（HILL-CMD）：</li>
+</ol>
+<p>在之前的一些隐写算法中(例如WOW算法、S-UNIWARD算法及HILL算法等)，像素加“1”和减“1”的代价值都被设为相同，即获得加“1”和减“1”代价值的代价函数相同。这导致秘密信息嵌入完成后，像素值如果需要改变则是随机等概率地加减1。为了结合聚集改变方向策略，HILL分别设计获取加“1”和减“1”失真值的代价函数。因此，对代价函数式做了进一步的设计，完成了代价函数的第二阶段最后的设计，其数学表达式如下:</p>
+<p><img src="/2019/06/09/HILL-MiPOD/f8343bf323718b7d8c2971efff83b349.png" alt=""></p>
+<p><img src="/2019/06/09/HILL-MiPOD/4d061eb5e7d912996a3ecdf17a1e8ad5.png" alt=""></p>
+<p>式中N4+>N4-代表邻域内+1修改更多，cij是按照普通方法计算的失真值，α≥1是一个常数。这个修改原则使得STC趋向于选择与邻域相同的修改方向，达到聚集修改方向的效果。</p>
+<blockquote>
+<p>  代码：师兄给的</p>
+</blockquote>
+<p>实验结果：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/8ec6fb22de21197103d00fb3971f30d0.png" alt=""></p>
+<p><img src="/2019/06/09/HILL-MiPOD/072ed6c3472a8f3caf3dcd3dac1f1c8d.png" alt=""></p>
+<p><img src="/2019/06/09/HILL-MiPOD/e5166f999da015d47b8f892a08e9a02d.png" alt=""></p>
+<p><img src="/2019/06/09/HILL-MiPOD/35ecfde3c7b767191c6b7c19ec818cf5.png" alt=""></p>
+<p>MiPOD</p>
+<p>论文：Content-Adaptive Steganography by Minimizing Statistical<br>Detectability(2016,TIFS,CR9)</p>
+<p>总结：</p>
+<p>之前介绍的大部分隐写方法都是通过最小化启发式定义的失真来实现秘密负载。而MiPOD则是基于MG隐写设计的（基于载体多变量高斯分布模型），选择合适的载体模型估计器从而获得最优的性能。MiPOD可以通过限定隐写前后载体分布似然比检验统计量(LRT)的平均变化，得到相应的负载率。以上统计量反映了载体分布的变化程度。除此之外MiPOD也对DLS问题（期望失真一定时确定最大的可嵌入消息长度或负载，直观的限定条件是使隐写失真总和一定）进行了求解，估计单个图像的安全有效载荷。</p>
+<p><img src="/2019/06/09/HILL-MiPOD/103bd465eba6b5fd7d914d59a74741c0.png" alt=""></p>
+<p>设z=（z1，z2,…,zn）表示载体样点，ui代表zi处整数化的均值，它可以基于一个小的邻域估计，因此可认为xi=zi-ui代表载体的变化分量。而变化分量主要是由自然噪声组成，可以假设xi~N(0，σ2)。记xi的概率质量函数（PMF，在概率论中，概率质量函数是离散随机变量在各特定取值上的概率。）为：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/2cfddc7e711872756b2b2d4d69c59be3.png" alt=""></p>
+<p>其中：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/961adca23601d619319b8318fdb24f04.png" alt=""></p>
+<p>设在嵌入后<strong>x</strong>=（x1,x2,…,xn）变化为<strong>y</strong>=（y1,y2,…,yn）,采用±1作为基本嵌入（LSBM），±1的概率均为βn，则有：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/38c399df8ca237e4a32603282f8e2710.png" alt=""></p>
+<p>式中改变概率0≤βn≤1/3，则隐写后stego的概率质量函数可以表示为：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/5339448872988d1e29bfeb7e103e0215.png" alt=""></p>
+<p>其中：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/a69b29ea8dc0d89119fb24fe74d32a30.png" alt=""></p>
+<p>为了在检测风险与负载率之间建立联系，MiPOD将分布似然比检验（LRT）统计量均值作为极小化目标。使用聂曼-皮尔逊最优性准则（Neyman–Pearson criterion of optimality），类似于前面得到载体的变化部分x，分析者也可通过去除检验样本邻域均值得到t=（t1,t2,…,tn）,用（γ1,γ2,…,γn）猜测（β1,β2,…, βn），并用似然比检验统计量：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/f1bc1e01dfed60cbd5787b14d6dda6ad.png" alt=""></p>
+<p>进行以下检验：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/62257e0abaf7c8d37525294cadb05753.png" alt=""></p>
+<p>一般可认为标准方差σ隐写前后变化可以忽略，对自然图像以上统计量数值较大，对隐写图像则较小，因此该统计量能够支撑以上假设检验。基于中心极限定理可得，当N趋于无穷大或足够大的时候有：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/4fae4b654ac9c655962f79caadcd223d.png" alt=""></p>
+<p>其中波浪箭头符号代表分布的收敛性，EH0（）与VarH0（）分别代表H0下的均值和方程，偏移系数ρ表达式如下：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/e8119e0de00804ce9c095e7960d306a9.png" alt=""></p>
+<p>它反应了似然比的平均变化，在安全算法设计中，可以让对手估计得有利一些，因此可以认为分析者知道βn，即βn=γn，得到：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/c95533c7100a278056bf841b2595c409.png" alt=""></p>
+<p>以上系数就是MiPOD隐写最小化的对象。</p>
+<p>DLS：</p>
+<p>在以上建模基础上，基本的MiPOD通过最小化ρ求解PLS问题。设α为负载率，则消息传输量的约束可以表示为：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/4a45ac930b2d1af7b92465a578c14a7a.png" alt=""></p>
+<p>其中，</p>
+<p><img src="/2019/06/09/HILL-MiPOD/3766077dfe840072e953a68bf4ff4d8f.png" alt=""></p>
+<p>为了最小化偏移系数ρ，可以构造以下拉格朗日函数：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/c06b5af4fdab54353576e88604737714.png" alt=""></p>
+<p>将以上函数分为对βi求导并令其等于0，可得到方程组：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/1b4d19012e9e5ce6ce7940e18c918582.png" alt=""></p>
+<p>类似于MG隐写，在设定λ的前提下可以搜索法求解βi，再通过</p>
+<p><img src="/2019/06/09/HILL-MiPOD/38662f3dfb56bd3c7ade013e5407dbef.png" alt=""></p>
+<p>获得嵌入失真，最后通过三元STC或等价的双层STC嵌入消息。</p>
+<p>MiPOD隐写还提供一种控制被检测风险的方法，能够根据限定的被检测概率或偏移系数动态确定负载率。MiPOD隐写的安全风险表示为：在以上假设检验下，虚警率大于a0并且检测率小于Π1。</p>
+<p><img src="/2019/06/09/HILL-MiPOD/6cac363313958e0332c8bf871ef99320.png" alt=""></p>
+<p>Φ0表示H0情况下似然比检验统计量的分布N（0，1），Φ1表示H1情况下似然比检验统计量的分布N（η，1），则有：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/affd73d30ba1df22249a1e9ed775263e.png" alt=""></p>
+<p>其中Φ表示分布N（0，1）的累计分布函数，进一步有：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/135d039efcb9d9bed6323e8302ba64bf.png" alt=""></p>
+<p>由于1-a0=Π1，得到：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/662dbdfeb2f94de019215ff2fb1ee263.png" alt=""></p>
+<p>如果隐写限定虚警率大于a0并检测率小于Π1，实际上是限定了：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/8edd61c19fee3b3ae3f29499daf57484.png" alt=""></p>
+<p>因此，这种MiPOD限定了分布似然比检验统计量的平均变化，类似于求解DLS问题。其中，隐写需进行迭代运算以获得满足要求的负载率α。</p>
+<p>流程如下：</p>
+<ol>
+<li><p>根据安全需求选定a0和Π1.</p>
+</li>
+<li><p>进行图像样点方差估计。</p>
+</li>
+<li><p>在一个α的变化范围内，迭代进行以下尝试：</p>
+</li>
+<li><p>进行以上拉格朗日优化求解得到βi</p>
+</li>
+<li><p>计算偏移系数，通过调节τ得到在当前α下的ROC曲线</p>
+</li>
+<li><p>如果以上ROC曲线近似经过（a0，Π1），或存在满足虚警率大于a0并且检测率小于Π1的情况，则迭代完成。</p>
+</li>
+<li><p>将βi按最优嵌入修改概率与失真的关系映射到ρi。</p>
+</li>
+<li><p>用三元STC或等价的双层STC按负载率α与失真序列ρi完成嵌入。</p>
+</li>
+</ol>
+<blockquote>
+<p>  对估计以上图像样点方差σi2，MiPOD因此额采用了线性模型回归的方法。</p>
+</blockquote>
+<ol>
+<li><p>计算残差。通过二维Wiener滤波得到反映信号变化的残差r=z-F（z）。</p>
+</li>
+<li><p>线性建模。由于以上处理没有完全消除内容的影响，将位置i为中心p×p子块残差转化为p²×1的ri，并按照以下方法建立线性预测模型：</p>
+</li>
+</ol>
+<p><img src="/2019/06/09/HILL-MiPOD/78977970bf21035bd78c172dc6923358.png" alt=""></p>
+<ol>
+<li>线性回归。通过多元线性回归得到：</li>
+</ol>
+<p><img src="/2019/06/09/HILL-MiPOD/9c91229f29c1c1d3d8e98a6f653cbf59.png" alt=""></p>
+<p><img src="/2019/06/09/HILL-MiPOD/905a21f9b23b8e25b2bfed243beeb59a.png" alt=""></p>
+<ol>
+<li>方差估计。近似认为ri中的元素有相同的方差，根据多元线性回归结果得到：</li>
+</ol>
+<p><img src="/2019/06/09/HILL-MiPOD/231bca3ef3807527a2e76d9d67155059.png" alt=""></p>
+<p>实验结果：在采用SRM分析的情况下，MiPOD的抗检测性能略高于S-UNIWARD，但是略低于HILL，在采用自适应性分析方法maxSRMd2进行分析的情况下，MiPOD隐写的抗检测性非常逼近于HILL，但是MiPOD需要进行多次迭代求解，耗时更长。</p>
+<p><img src="/2019/06/09/HILL-MiPOD/12afe17b6675f87f10bb2a99a612808f.png" alt=""></p>
+<p><img src="/2019/06/09/HILL-MiPOD/a7f89c362a8e95378ab503f486c151fd.png" alt=""></p>
+<p>代码：<a href="http://dde.binghamton.edu/download/stego_algorithms/" target="_blank" rel="noopener">http://dde.binghamton.edu/download/stego_algorithms/</a></p>
+<p>实验结果：</p>
+<p><img src="/2019/06/09/HILL-MiPOD/d80f42d9165a0240c18926f54e4a6561.png" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Steganography/" rel="tag"><i class="fa fa-tag"></i> Steganography</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/31/UNIWARD-MG/" rel="next" title="UNIWARD&MG">
+                <i class="fa fa-chevron-left"></i> UNIWARD&MG
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100017135643802" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                    
+                      FB Page
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/6862942751/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://isujin.com/" title="素锦" target="_blank">素锦</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://imkira.com/" title="Kira" target="_blank">Kira</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"mobile":{"show":false},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>
