@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="steganalysis," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="JRM 论文：Steganalysis of JPEG images using rich models(2012,SPIE,CR119) 总结：借鉴富模型的思想，针对检测JPEG隐写提出了JRM隐写分析特征与相应的分析方法。JRM特征也包含多个子模型，每个子模型是根据一类分块JPEG系数的统计相关性构造的。因此，JRM特征考虑了多种JPEG系数块内和块间的相关性，尽可能从多个方面检测隐写对系数相">
+<meta name="keywords" content="steganalysis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JRM">
+<meta property="og:url" content="http://fennudehaogua.top/2019/07/06/JRM/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="JRM 论文：Steganalysis of JPEG images using rich models(2012,SPIE,CR119) 总结：借鉴富模型的思想，针对检测JPEG隐写提出了JRM隐写分析特征与相应的分析方法。JRM特征也包含多个子模型，每个子模型是根据一类分块JPEG系数的统计相关性构造的。因此，JRM特征考虑了多种JPEG系数块内和块间的相关性，尽可能从多个方面检测隐写对系数相">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/JRM/media/5a303ac5a34a7866cc9a01fe7d66dec1.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/JRM/media/49f816aa4ae6b0df5268a0e68550d3b2.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/JRM/media/3ddc0753ab5d4e7515a8197a4e33f7e0.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/JRM/media/a3378358c626da6e279612033f940d86.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/JRM/media/f81b8a2958b8f024afcbf18cdfe92b02.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/JRM/media/b7e3842bcc911c544fe2a861bcf32baa.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/JRM/media/5541202ae2b5fed52e034a1e1d1a1d83.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/JRM/media/d54d3e77b1f1ec8ca64711787ab4ce17.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/JRM/media/90342895e88a676ea0cebe718f882199.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/JRM/media/a5059e709d1c6be30b2372250e77c7a8.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/JRM/media/9b5bd5b0a292f2cf6944f7c3d8fb12b3.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/JRM/media/feacf9a8289fbba7a848f3b0964a9d43.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/JRM/media/bd5678d6fe62ebb14d3fec9c978ea9d3.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/JRM/media/16edfb97f22cd3bf75a81e044e5b16ce.png">
+<meta property="og:updated_time" content="2019-07-06T07:53:29.244Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JRM">
+<meta name="twitter:description" content="JRM 论文：Steganalysis of JPEG images using rich models(2012,SPIE,CR119) 总结：借鉴富模型的思想，针对检测JPEG隐写提出了JRM隐写分析特征与相应的分析方法。JRM特征也包含多个子模型，每个子模型是根据一类分块JPEG系数的统计相关性构造的。因此，JRM特征考虑了多种JPEG系数块内和块间的相关性，尽可能从多个方面检测隐写对系数相">
+<meta name="twitter:image" content="http://fennudehaogua.top/2019/07/06/JRM/media/5a303ac5a34a7866cc9a01fe7d66dec1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2019/07/06/JRM/"/>
+
+
+
+
+
+  <title>JRM | fennudehaogua.top</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?727b9992a1a14607aebb47500e5bcc08";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2019/07/06/JRM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JRM</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-06T15:51:31+08:00">
+                2019-07-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>JRM</p>
+<p>论文：Steganalysis of JPEG images using rich models(2012,SPIE,CR119)</p>
+<p>总结：借鉴富模型的思想，针对检测JPEG隐写提出了JRM隐写分析特征与相应的分析方法。JRM特征也包含多个子模型，每个子模型是根据<strong>一类分块JPEG系数的统计相关性构造的</strong>。因此，JRM特征考虑了<strong>多种JPEG系数块内和块间的相关性</strong>，尽可能从多个方面检测隐写对系数相关性的扰动，从而提高了JPEG图像隐写的检测正确率。在JPEG图像中，每个8x8块内的64个JPEG系数之间有一定相关性，称作块内相关性；不同块对应位置上的JPEG系数也有一定相关性，称作块间相关性。</p>
+<p>JRM特征提取方法：</p>
+<ol>
+<li>用于提取特征的系数和差值：</li>
+</ol>
+<blockquote>
+<p>  前面介绍的SRM特征由不同类滤波残差的4阶共生矩阵组成，而JRM特征主要由分块JPEG系数及其之间差值的2阶共生矩阵组成，这里首先介绍这些系数和差值的构成。令D∈ZMxN表示MxN的JPEG图像，用Dx,y（i，j）表示第（i，j）个分块中(x，y)模式上的JPEG系数，其中，(x,y)∈{0,…,7}2,i=1,…,⌈M/8⌉，j=1,…,⌈N/8⌉;用Dxy表示整个图像分块组成的大矩阵中第（x，y）个系数，i=1,…,M,j=1,…N。定义如下矩阵：</p>
+</blockquote>
+<p><img src="/2019/07/06/JRM/media/5a303ac5a34a7866cc9a01fe7d66dec1.png" alt=""></p>
+<blockquote>
+<p>  其中，第一个式子代表DCT系数绝对值，第二个到第四个表示块内DCT系数绝对值差值，第五个和第六个式子表示块间DCT系数绝对值的差值。</p>
+</blockquote>
+<ol>
+<li>基本共生矩阵的计算方法：</li>
+</ol>
+<blockquote>
+<p>  在矩阵A*中，*∈{x，→，←，↘，⇉，⇊}，由(x,y)和(x+▲x，y+▲y)模式上的元素构造2阶共生矩阵CT*(x,y, ▲x,▲y),形成JRM中单个子模型，其中，（x,y)也是分块内坐标，但▲x与▲y是固定的位置偏移，其偏移范围可以至其他分块。CT*中的元素可由下式计算:</p>
+</blockquote>
+<p><img src="/2019/07/06/JRM/media/49f816aa4ae6b0df5268a0e68550d3b2.png" alt=""></p>
+<p>其中，归一化常数Z（总情况数）确保</p>
+<p><img src="/2019/07/06/JRM/media/3ddc0753ab5d4e7515a8197a4e33f7e0.png" alt=""></p>
+<p>截断操作：</p>
+<p><img src="/2019/07/06/JRM/media/a3378358c626da6e279612033f940d86.png" alt=""></p>
+<p>由于DCT变换矩阵关于分块对角线具有对称性以及图像内容各向分布接近，一般自然图像分块的JPEG系数沿主对角线镜像后，其统计特征基本不发生变化，因此，可以通过以下方向合并得到稳健性更强的共生矩阵：</p>
+<p><img src="/2019/07/06/JRM/media/f81b8a2958b8f024afcbf18cdfe92b02.png" alt=""></p>
+<p>因为系数Aijx是非负的，对应的2维系数共生矩阵为0，维度为（T+1）的平方。对应的其他5种差分矩阵元素有正有负，由于JEPG系数分布在正值与负值上基本关于原点对称，对应的差分矩阵可以进一步利用符号对称性得到，其中的元素可以通过下式计算：</p>
+<p><img src="/2019/07/06/JRM/media/b7e3842bcc911c544fe2a861bcf32baa.png" alt=""></p>
+<p>其中每个矩阵的特征维度为（2T+1）(2T+1)/2+1/2,后面加1/2的原因是c00向量没有合并。因此，其个数在第一项种被除以2后，误差的1/2要不回来。最后得到</p>
+<p><img src="/2019/07/06/JRM/media/5541202ae2b5fed52e034a1e1d1a1d83.png" alt=""></p>
+<p>。</p>
+<p>3.JRM特征的第一部分——DCT模式专有部分<br>最终的JRM特征由DCT模式专有部分与累加部分组成。这里先介绍第一部分特征的提取方法。以上基于分块DCT系数及其块内、块间的差值构造了4个经过对称合并的共生矩阵，DCT模式专有部分的特征来自于以下10组共生矩阵，它们分别对应10类子模型：</p>
+<p><img src="/2019/07/06/JRM/media/d54d3e77b1f1ec8ca64711787ab4ce17.png" alt=""></p>
+<p>以上子模型的作用是，通过选择模式位置与位置偏移，具体确定提取前述2阶共生矩阵特征的方法。其中，<strong>前6类子模型考虑了系数域块内相关性，后4类子模型由于考察了相邻块同频率系数的相关性</strong>，在4类输入下分别总称为这样—共40个子模型。对每个子模型中的一对位置(x，y)和(x+▲x,y+▲y)，针对取截断长度T为3,因此单个共生矩阵维度是(T+1)的平方=16;针对基于差分的共生矩阵取截断长度T为2,因此单个共生矩阵的维度是(2T+1)（2T+1)/2+1/2=13。这些子模型位置的特征维度乘以其位置总数就是子模型的特征维度，它们的和为DCT模式专有部分特征的总维度，为8635。</p>
+<p><img src="/2019/07/06/JRM/media/90342895e88a676ea0cebe718f882199.png" alt=""></p>
+<p><strong>4.JRM特征的第二部分——累加部分</strong></p>
+<p>以上子模型每次只考察一对相对位置上JPEG系数或差值的分布，为了同时考察更多位置上的分布，JRM分析方法也设置了基于多个共生矩阵不同偏移位置上元素值累加的子模型。针对这类子模型，由于要进行数值累加，统计上稳健性更好。在提取这类特征中，截断长度T设置为5,并且计算中只进行前述对角线镜像合并与符号对称合并，而不进行方向合并，因此，相应的累加特征可以描述为：</p>
+<p><img src="/2019/07/06/JRM/media/a5059e709d1c6be30b2372250e77c7a8.png" alt=""></p>
+<p>以上第一个式子对应包含特征的维度是5x(T+1)(T+1)=180,其余两个的特征维度是4X[(2T+1)2/2+1/2]=244，因此,汇合部分总特征维度是180+10x244=2620。这样，JRM特征的总维度是8635+2620 = 11255。</p>
+<p>通过一些改造可以进一步提升了JRM特征的分析效果，如通过笛卡儿校准(Cartesiancalibration,CC)使得特征维度翻倍为22510,得到了CC-JRM特征，这里简要介绍CC：由于很多特征已经是样点间的差值，如果像提取Pev-274特征那样获得校准特征，即将待检测样本的特征减去校准后参考图像的特征，会丢失一些有利于检测的细节，因此，通过一系列尝试，他们在公开的代码中将获得校准特征的方式改为：将待检测图像变换至空间域后取整，裁剪4行4列后，按照原质量因子进行JPEG压缩，得到参考图像；对原待检测图像与参考图像均提取一次特征，拼接两组特征得到最后的CC特征。因此，CC特征一般是原特征维数的两倍，例如，CC-Pev-548就是改造后的Pev-274特征。此外，Kodovsky等也将JRM与SRM的特征组合起来得到J+SRM特征(也称为JSRM),其中，SRM是包含12753维特征的SRMQ1,因此总特征维度为12753+22510=35263。</p>
+<p>Kodovsky将BOSSbase图像库中的图像转化成JPEG图像，针对nsF5与MME等主要隐写，对结合FLD集成分类器的JRM与CC-JRM特征进行了实验。实验比较的隐写分析主要包括CC-Pev-548、1234维CDF(cross-domainfeuture)特征等的分析方法，其中，CDF特征融合了SPAM与Pev-274特征，都是当时非常有效和典型的通用JPEG隐写分析特征组。实验结果如表9.3所示，可以发现，相比CC-Pev-548、CDF等分析方法，J+SRM特征均取得了最好的检测效果，其次是CC-JRM特征与JRM特征，例如，对负载率为0.10bpnac的MME隐写，J+SRM、CC-JRM、JRM、CDF与CC-Pev-548的错误率分别为18.91%、20.91%、22.86%、25.01%与26.13%,对负载率为0.15bpnac的nsF5隐写，它们的错误率分别为4.68%、6.63%、7.93%、9.06%与11.71%。值得注意的是，对0.20bpnac的MME与nsF5,CC-JRM方法的错误率已分别低至0.8%与2.55%,实验结果如下图。说明前期基于矩阵编码与湿纸编码的隐写己不够安全，这也是后期自适应隐写得到迅猛发展的原因之一。</p>
+<p><img src="/2019/07/06/JRM/media/9b5bd5b0a292f2cf6944f7c3d8fb12b3.png" alt=""></p>
+<p><img src="/2019/07/06/JRM/media/feacf9a8289fbba7a848f3b0964a9d43.png" alt=""></p>
+<p>总结：</p>
+<p><img src="/2019/07/06/JRM/media/bd5678d6fe62ebb14d3fec9c978ea9d3.png" alt=""></p>
+<p>实验代码：<a href="http://dde.binghamton.edu/download/feature_extractors/download/ccJRM.m" target="_blank" rel="noopener">http://dde.binghamton.edu/download/feature_extractors/download/ccJRM.m</a></p>
+<p>运行结果：</p>
+<p><img src="/2019/07/06/JRM/media/16edfb97f22cd3bf75a81e044e5b16ce.png" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/steganalysis/" rel="tag"><i class="fa fa-tag"></i> steganalysis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/06/SRM/" rel="next" title="SRM">
+                <i class="fa fa-chevron-left"></i> SRM
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100017135643802" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                    
+                      FB Page
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/6862942751/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://isujin.com/" title="素锦" target="_blank">素锦</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://imkira.com/" title="Kira" target="_blank">Kira</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"mobile":{"show":false},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>

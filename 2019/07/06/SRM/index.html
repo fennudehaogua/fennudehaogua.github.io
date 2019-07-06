@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="steganalysis," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="SRM 论文：Rich Models for Steganalysis of Digital Images(2012,TIFS,CR238) 总结：SRM采用图像定性隐写分析框架，即先对训练样本图像抽取统计特征，然后结合机器学习工具训练隐写分析分类器，最后根据训练好的分类器对待检测图像进行分类。与早期隐写分析方法相比，SRM的不同点体现在以下两个方面: 1.在隐写分析特征抽取方面，SRM设计了丰富">
+<meta name="keywords" content="steganalysis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SRM">
+<meta property="og:url" content="http://fennudehaogua.top/2019/07/06/SRM/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="SRM 论文：Rich Models for Steganalysis of Digital Images(2012,TIFS,CR238) 总结：SRM采用图像定性隐写分析框架，即先对训练样本图像抽取统计特征，然后结合机器学习工具训练隐写分析分类器，最后根据训练好的分类器对待检测图像进行分类。与早期隐写分析方法相比，SRM的不同点体现在以下两个方面: 1.在隐写分析特征抽取方面，SRM设计了丰富">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/d16acaf33c60d50435b1587ffa328021.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/79184dfb495666452bf8a6944f16ed01.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/fb039896ca34459708b8aca5f0a35845.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/5249aabb8e48e40ef88896f661f7fb61.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/b804a81d2c92674289736188b418bbbd.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/0f869dce856332bf408d24fdb420d6cb.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/74d9e33ed659865e4e593a9be5c80edb.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/d3c7a99a3c7b0202ea08b9eb373f8024.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/799e7bb89f4cac797bd185b11668d6ad.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/114df8219f816699fcd4489326de4f82.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/61de3aedfdd3417f094f5afba5204e9a.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/c1cc2c484768a7db9be37a29d3f7cb35.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/5ece263f23a1401944481273a8dbb0e8.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/6456149d0dd0a00c03af9794d261e796.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/2e2048d1205ebbb3f4d27e8c1b16ad80.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/dd12e833fa4808ae51993a86233c30a7.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/accdae51eb3361b875155a136bbfefa6.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/4974d3bfc86a76ee04c41b874abf79c4.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/4a2e30a238ea9ac67b1bededddfa1ecc.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/3f2b52f2fe84061501fb1e926bd4418b.png">
+<meta property="og:updated_time" content="2019-07-06T07:49:45.702Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SRM">
+<meta name="twitter:description" content="SRM 论文：Rich Models for Steganalysis of Digital Images(2012,TIFS,CR238) 总结：SRM采用图像定性隐写分析框架，即先对训练样本图像抽取统计特征，然后结合机器学习工具训练隐写分析分类器，最后根据训练好的分类器对待检测图像进行分类。与早期隐写分析方法相比，SRM的不同点体现在以下两个方面: 1.在隐写分析特征抽取方面，SRM设计了丰富">
+<meta name="twitter:image" content="http://fennudehaogua.top/2019/07/06/SRM/media/d16acaf33c60d50435b1587ffa328021.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2019/07/06/SRM/"/>
+
+
+
+
+
+  <title>SRM | fennudehaogua.top</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?727b9992a1a14607aebb47500e5bcc08";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2019/07/06/SRM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SRM</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-06T15:49:07+08:00">
+                2019-07-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>SRM</p>
+<p>论文：Rich Models for Steganalysis of Digital Images(2012,TIFS,CR238)</p>
+<p>总结：<br>SRM采用图像定性隐写分析框架，即先对训练样本图像抽取统计特征，然后结合机器学习工具训练隐写分析分类器，最后根据训练好的分类器对待检测图像进行分类。与早期隐写分析方法相比，SRM的不同点体现在以下两个方面:</p>
+<p>1.在隐写分析特征抽取方面，SRM设计了丰富多样的线性和非线性的空域高通滤波器，并使用这些滤波器对图像进行滤波，结果得到丰富多样的残差图像作为SRM的子模型（submodels）。这些残差图像是图像的高频成分，是高通滤波后的图像，SRM提取每一幅残差图像的四阶共生矩阵，并把这些共生矩阵的元素重新排列构成隐写分析特征。SRM还设计了精巧的对称合并规则，并采用这些合并规则增加特征的稳健性同时对特征降维;</p>
+<p>2.在机器学习方面，Fridrich等人设计了一个隐写分析专用的集成分类器与SRM特征配合使用，该集成分类器是目前隐写分析常用的分类器之一。</p>
+<p><img src="/2019/07/06/SRM/media/d16acaf33c60d50435b1587ffa328021.png" alt=""></p>
+<p>SRM使用丰富多样的残差图像作为子模型的主要动机是:对图像的某个像素的隐写嵌入改动可能会导致某些残差图像的相应位置的相邻像素相关性发生变化，但未必能导致另一些残差图像的相应位置的相邻像素相关性发生变化。单独使用某一幅残差图像不能全面地反映所有可能的隐写嵌入改动引起的图像相邻像素相关性变化。SRM方法设计的丰富的子模型能增加隐写分析特征的多样性，以更全面地感知隐写引起的图像相邻像素相关性变化。</p>
+<p>在隐写分析机器学习研究中，用于训练分类器的载密图像样本不是采集到的，而是根据隐写算法和载体图像生成的，即:在隐写分析机器学习的训练过程中，每幅载体图像样本都可以有一幅载密图像与之对应。因此，与其它机器学习问题相比，隐写分析机器学习具有鲜明的特点:用于隐写分析机器学习的训练样本可以由载体一载密图像对构成。隐写分析专用的集成分类器使用载体一载密图像对作为训练样本。SRM隐写分析特征的维数高达上万维，而集成分类器很好地解决了高维隐写分析特征的机器学习问题。在高安全性的内容自适应隐写图像检测方面，SRM方法取得了优异的隐写分析性能。</p>
+<p><strong>SRM特征提取：</strong></p>
+<ol>
+<li>计算残差：‘</li>
+</ol>
+<p>子模型由噪声残差生成，使用以下形式的高通滤波器计算：</p>
+<p><img src="/2019/07/06/SRM/media/79184dfb495666452bf8a6944f16ed01.png" alt=""></p>
+<p>其中c称之为残差阶，Nij是Xij的相邻像素，Xij不属于Nij，X（hat）ij（.）代表通过邻域预测cXij，一般Nij中像素的数量等于c。对残差而不是像素值进行建模的优点是，在很大程度上抑制了图像内容，使得动态变化的范围更小，使得统计描述更加紧凑和健壮。在过去，许多隐写分析特性都是以这种方式形成的。</p>
+<ol>
+<li>量化与截断</li>
+</ol>
+<blockquote>
+<p>  每个子模型由对残差量化和截断形成。量化的目的是使得残差对嵌入图像中局部不连续点(边缘和纹理)的变化更加敏感。</p>
+</blockquote>
+<p><img src="/2019/07/06/SRM/media/fb039896ca34459708b8aca5f0a35845.png" alt=""></p>
+<p>其中q>0,代表量化步长。</p>
+<p><img src="/2019/07/06/SRM/media/5249aabb8e48e40ef88896f661f7fb61.png" alt=""></p>
+<blockquote>
+<p>  截断的目的是抑制残差的动态范围，使残差的描述使用的共生矩阵拥有一个小的阈值T。一方面，隐写分析对相关性较强、残差较小的区域更感兴趣；另一方面，将残差截断有利于降低最后提取特征的维度。</p>
+</blockquote>
+<ol>
+<li>统计共生矩阵</li>
+</ol>
+<blockquote>
+<p>  随着像素间距增加，相关关系递减，对角线方向下降更快。</p>
+</blockquote>
+<p><img src="/2019/07/06/SRM/media/b804a81d2c92674289736188b418bbbd.png" alt=""></p>
+<p>所以我们选择水平和垂直方向四维共生矩阵，即残差水平或者垂直方向上4个连续样点d=（d1，d2，d3，d4）的联合分布概率估计。其中，水平方向估计为：</p>
+<p><img src="/2019/07/06/SRM/media/0f869dce856332bf408d24fdb420d6cb.png" alt=""></p>
+<p>其中Z代表全部出现情况的总数量，它作为归一化的参数使得：</p>
+<p><img src="/2019/07/06/SRM/media/74d9e33ed659865e4e593a9be5c80edb.png" alt=""></p>
+<p>垂直方向的共生矩阵计算过程类似，他们对应在一个子模型下提取的特征。一个4阶共生矩阵一共有（2T+1）的4次方个元素，一般T取2，则有625个元素。</p>
+<p><strong>各种类型的残差计算：</strong></p>
+<p>残差主要包括一阶、二阶、三阶、SQUARE、EDGE3x3与EDGE5x5六类，每类残差中又分为线性滤波残差与非线性滤波残差。下图分类描绘了部分残差的计算方法。</p>
+<p>下表所示为高阶残差表。表中只对水平方向进行描述，其他的方向可以进行类推。于是得到垂直方向、对角线方向、反对角线方向的残差依次表示为Rv，Rd，Rm。这样会得到很多不同的残差，便于得到最佳的实验效果。</p>
+<p><img src="/2019/07/06/SRM/media/d3c7a99a3c7b0202ea08b9eb373f8024.png" alt=""></p>
+<p>于是MINMAX残差定义:</p>
+<p><img src="/2019/07/06/SRM/media/799e7bb89f4cac797bd185b11668d6ad.png" alt=""></p>
+<p><strong>线性残差</strong>：一阶线性残差是用一个相邻像素预测当前像素的误差，下图1a描述的残差是Ri,j=Xi,j+1-Xi,j类似地，二阶线性残差（图2a）是Ri,j=Xi,j-1+Xi,j+1-2Xi,j同理，三阶线性残差是Ri,j=-Xi,j+2+3Xi,j+1+Xi,j-1-3Xi,j,它们均在一个方向上预测;不难发现，SQUARE、EDGE3x3与EDGE5x5线性残差只是在计算中使用了更多方向的邻域像素，其中，3x3与5x5的SQUARE核分别为：</p>
+<p><img src="/2019/07/06/SRM/media/114df8219f816699fcd4489326de4f82.png" alt=""></p>
+<p>EDGE3x3与EDGE5x5分别为：</p>
+<p><img src="/2019/07/06/SRM/media/61de3aedfdd3417f094f5afba5204e9a.png" alt=""></p>
+<p>在每一大类残差中，<strong>非线性残差</strong>是<strong>通过求取两个或更多线性滤波残差（包括下图中其在各个水平、垂直或对角线方向计算的残差）的最大值或最小值得到的</strong>，“子类型名标识”中的滤波器数就是指求极值前使用的线性滤波器数量，对应除黑圆点外不同形状点的数量。例如，图1g描述的最小残差是：</p>
+<p><img src="/2019/07/06/SRM/media/c1cc2c484768a7db9be37a29d3f7cb35.png" alt=""></p>
+<p>图2b描述的最小残差是：</p>
+<p><img src="/2019/07/06/SRM/media/5ece263f23a1401944481273a8dbb0e8.png" alt=""></p>
+<p>各种类型残差如下图所示：</p>
+<p><img src="/2019/07/06/SRM/media/6456149d0dd0a00c03af9794d261e796.png" alt=""></p>
+<p><img src="/2019/07/06/SRM/media/2e2048d1205ebbb3f4d27e8c1b16ad80.png" alt=""></p>
+<p><strong>残差的方向性与对称性：</strong></p>
+<p>如果将图像旋转90°后，残差未发生变化，则认为其无方向性，否则认为有方向性。如图1a,1b,2a,2e,E3c有方向性，而图1e.2b.2c.S3a.E3d没有，这是由<strong>残差滤波核的对称性</strong>决定的。<strong>如果图像旋转90°后共生矩阵不变，则称相应残差水平与垂直对称，显然，无方向性残差有这种对称性。</strong>另外，<strong>由于图像水平与垂直方向的统计特性基本相同，一些有方向性的残差也有这种统计对称性</strong>，如图1c,1h,2e,E3b所示，它们的特点是，残差的计算同时涉及按对角线对称的水平与垂直方向；但是图1a,1g,2a,2d,E3c等没有水平与垂直对称性，这样的残差名称标识中有h、v，表示每类残差进一步按照水平与垂直方向统计共生矩阵，例如，对图1a的统计方法是，第一次不旋转图像，以下连续三次旋转图像90°，对这4种情况分别合并统计水平与垂直两类残差共生矩阵，以上统计出的共生矩阵数量或残差类型有待于下面进一步合并。</p>
+<p><strong>子类型残差命名与共生矩阵计数:</strong> 这里给出残差的子类型命名格式:</p>
+<p><img src="/2019/07/06/SRM/media/dd12e833fa4808ae51993a86233c30a7.png" alt=""></p>
+<p>其中类型type∈spam，minmax两种，可以认为minmax下又分为min与max两种。前者取名spam是由于线性滤波类似于提取SPAM特征的处理；f表示使用的线性滤波器数，即上图中单个子模型中除黑圆点外其他记号的数量，对minmax来说这些滤波仅仅是预处理；σ表示对称指数(symmetry index),它指通过旋转图像能带来的不同种类残差数，如对图2c、1b、1c、1g，σ分别为1、2、4与8;scan表示残差计算方向，即以上h、v,含义参见前面的解释，如果没有这项，则说明各个方向的残差有统计对称性并需要合并处理。</p>
+<p>这样，一阶残差有22个共生矩阵，每个对应一个类型的残差或子模型，其中图1a、图1c、1e、1f与1h各2个,图1b、1d与1g各有4个；同理，三阶残差也有22个共生矩阵；二阶残差有12个共生矩阵，其中图2a、2b、2c与2e各两个，2d有4个;SQUARE有2个共生矩阵,对应图S3a与图S5a；EDGE3x3与EDGE5x5均有10个共生矩阵，其中，图E3a、E3b(对角线对称)与E3d各2个，E3c有4个,因此，共有22（1阶）+12（2阶）+22（3阶）+2（SQUARE阶）+10（EDGE3x3）+10（EDGE5x5）=78个共生矩阵。</p>
+<p><strong>共生矩阵对称性的利用：</strong></p>
+<p>一般认为，负残差图像(<strong>按照均值轴线向符号相反方向对称映射</strong>）的统计特性基本不变，即正负符号对称；图像信号在相反扫描方向上统计特性基本一致，即有扫描方向对称。因此，对spam子类型的4阶共生矩阵可以进行以下合并(相应的残差可合并统计）</p>
+<p><img src="/2019/07/06/SRM/media/accdae51eb3361b875155a136bbfefa6.png" alt=""></p>
+<p>其中-<strong>d</strong>={-d1,-d2,-d3,-d4,);<strong>d</strong>(hat)=(d4,d3,d2,d1)。当T=2时，以上合并使spam残差共生矩阵元素的数量从625下降为169。显然minmax子类型的共生矩阵也满足扫描方向对称。另外，由于对任意实数集合X属于正整数,有min(X)=-max(-X),因此对minmax类型可以进行以下合并：</p>
+<p><img src="/2019/07/06/SRM/media/4974d3bfc86a76ee04c41b874abf79c4.png" alt=""></p>
+<p>其中，Cd(min)与C-d(max)是类型相同残差的共生矩阵，这意味着min与max残差共生矩阵可以合并。当T=2时，以上合并将每类min与max残差共生矩阵元素的数量从2x625下降为1x325。</p>
+<p>由于min与max残差共生矩阵进行了合并，矩阵的数量从78个下降为45个。最后总体看，有12个spam类矩阵，33个minmax类矩阵。例如，一阶残差矩阵有12个，其中包含2个spam类和10个minmax类矩阵。这样，残差共生矩阵总的元素数量(特征维度)为12x169+33x325=12753个。</p>
+<p><strong>量化步长确定：</strong></p>
+<p>残差的阶c是被预测像素值的倍数，因此，量化步长q的选择与它相关。考虑到用多个量化步长进一步丰富特征的表达能力，因此取q∈[c,2c]并满足：</p>
+<p><img src="/2019/07/06/SRM/media/4a2e30a238ea9ac67b1bededddfa1ecc.png" alt=""></p>
+<p>因此，对一阶残差有两个量化步长，对其他大类残差有3个，这样，当T=2时，共生矩阵的特征总维数是2x(2x169+10x325)+3x(10x169+23x325)=34671。如果将spam的水平与垂直共生矩阵算在一个模型下，则有2x169=338维特征，数量接近minmax的325,有利于比较和选择，这样，spam的模型数量变为2x1+3x5=17个，minmax的为2x10+3x23=89个，因此总模型数为106个，不考虑量化为1+5+10+23=39个。在实际中，由于存在性能饱和现象，往往用其中一部分模型特征即可，其中模型减少的原因也包括量化步长个数的减少因素，例如，Q1与BEST-q-CLASS是两种常用模型选择策略，前者在39个模型中均取q=1c，即任何模型均只有一个量化步长，得到338x(1+5)+325x(10+23)=12753维特征，也称为SRMQ1特征，而根据上式分别采用两个量化步长的版本称为SRMQ2或SRMq2特征；BEST-q-CLASS是每轮在每个大类残差的子模型中选取一个优化的量化步长，将这个子模型移除后进行下一轮选择，最终结果也是每个子模型仅有一个量化步长，特征维度也是12753维。</p>
+<p>SRM特征分析方法采用了前述FLD集成分类器，一般优化确定的基础分类器有数十个。</p>
+<p>Fridrich在BOSSbase图像库上进行了实验，验证了SRM特征分析的优势。实验检测的隐写是LSBM、HUGO等算法，用于对比的分析方法是融合了SPAM与融合校准特征Pev-274的1234维CDF(cross-domainfeature)特征分析方法，后者采用的分类器是具有高斯核的SVM(G-SVM)。实验结果表明，当在BEST-q-CLASS策略下取一部分子模型组成12753维特征时，性能已经非常接近34671维的情况，在前者情况下，对0.30bpp负载率的LSBM与HUGO,SRM分析方法的检测错误率分别为9.68%与19.15%,而CDF分析方法的错误率分别为14.90%与34.35%;实验结果还表明，如果让G-SVM采用3300维的特征进行训练和检测，时间开销是以上12753维特征SRM分析方法的30〜90倍，前者需要运行数天，后者仅运行数小时。</p>
+<p>以上主要针对图像的单个色彩分量或者亮度分量(灰度图像)进行隐写分析，并没有专门针对彩色图像进行设计。Goljan专门针对空间域编码彩色图像提出了相应的富模型分析方法，称为CRM(colorrichmodel)分析方法，采用的特征来自不同的两种类型。</p>
+<p>(1)第一部分是(RGB)三个色彩分量上SRMQ1特征的和，也是12753维。</p>
+<p>(2)第二部分特征的提取方法是，在提取SRMQ1特征的子模型中选取其中的31个，分别针对(RGB)上的三维残差建立三维共生矩阵。通过符号合并、方向合并并取T=3后，这些特征的维度是5404,并被称为CRMQ1特征。</p>
+<p>因此，以上特征的总维度是12753+5404=18157,被称为SCRMQ1(spatialCRMQ1)特征。Goljan在BOSSbase图像库上的实验结果表明，在釆用FLD集成分类器的情况下，对空域编码彩色图像，SCRMQ1与SRMQ1相比具有显著优势。典型地，对0.2bpp的LSBM隐写，在不同分组样本上釆用SCRMQ1特征能够降低错误率3%〜12%。</p>
+<p>实验代码：<a href="http://dde.binghamton.edu/download/feature_extractors/download/SRM.m" target="_blank" rel="noopener">http://dde.binghamton.edu/download/feature_extractors/download/SRM.m</a></p>
+<p>运行结果：</p>
+<p><img src="/2019/07/06/SRM/media/3f2b52f2fe84061501fb1e926bd4418b.png" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/steganalysis/" rel="tag"><i class="fa fa-tag"></i> steganalysis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/06/Ensemble-Classifiers/" rel="next" title="Ensemble-Classifiers">
+                <i class="fa fa-chevron-left"></i> Ensemble-Classifiers
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/06/JRM/" rel="prev" title="JRM">
+                JRM <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100017135643802" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                    
+                      FB Page
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/6862942751/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://isujin.com/" title="素锦" target="_blank">素锦</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://imkira.com/" title="Kira" target="_blank">Kira</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"mobile":{"show":false},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>
