@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="steganalysis," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="随机投影特征分析（PSRM）论文：Random projections of residuals for digital image steganalysis(2013,TIFS,CR52) 总结：SRM与PSRM的特征向量分别是量化残留噪声共生矩阵的并集与残留噪声随机投影直方图的并集。这些特征在本质上分别是量化残噪随机向量与残噪投影随机变量的概率质量函数，是对残噪样本的一种统计量，刻画概率分布的">
+<meta name="keywords" content="steganalysis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Projection And Phase Aware Feature analysis">
+<meta property="og:url" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="随机投影特征分析（PSRM）论文：Random projections of residuals for digital image steganalysis(2013,TIFS,CR52) 总结：SRM与PSRM的特征向量分别是量化残留噪声共生矩阵的并集与残留噪声随机投影直方图的并集。这些特征在本质上分别是量化残噪随机向量与残噪投影随机变量的概率质量函数，是对残噪样本的一种统计量，刻画概率分布的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/b9e5368082af4a0e1ee0942d1813de1d.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/ac012617ce3f9d9b17fab613274cff14.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/27a6432202cb97f903b33edf0b764859.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/f971e0009b5a9e0f03d0985230df6b65.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/44b74543f4ca1cc5b1c4c941fc3bb576.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/57b3eb241446c7cee4f2239601a6878d.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/d28d1570e14b0aff0126ea7a835ed8db.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/0f6306e1fecd8f3d3491c80d0ac92843.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/90fab53466728c9b32fc6387c8eeb8dc.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/30991c5125e6355bbb8d96dcbaac8e34.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/e0f48ef8a9e846ceaf186bb1191db787.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/7ab415a048456e125ff01d2944973e9a.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/d1988bb077ab68231ea8086575bf5787.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/45b06c6e4d88ea371f4a867ba3e63bc6.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/0a52c7db0ad8c235fb06fffa50a0bd29.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/207602e4ee797b8a7d0990cbf19d4f39.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/474f010ea1f305fa9b6b3521638c8b9e.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/5fdade4c8b6e5ca91bf69c6353dd1ac5.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/f23745ce303e2f4144f6ee36c030a65d.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/07bab1da60dac03de20f3c28d4f19aff.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/07bab1da60dac03de20f3c28d4f19aff.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/07bab1da60dac03de20f3c28d4f19aff.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/930370db2019c0ff0dab4ee849c154cd.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/b9c693c4c3686c63c1baa61b402d201b.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/3fb1ce4c9c6eb2cb95fa424a5d5123e4.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/512bc6073925dc581a7247796c8e8857.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/c593ab6997c357ddea8f1c1564e1eacf.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/99ac6ac60eb48c9d4d84896973d6c8e5.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/3cf31ce075da5055a70b32a7b21cb5b3.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/85af710025c8e121a83012a7c211c306.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/dc19a3a8d8c9b05362a5caff9e23d961.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/774d35963c64a34056df6d1080e1293f.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/855aefd2b91b94006a61c26133f4346a.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/a6b1f0eeb63c347b0234118e44170502.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/2087f6b82dc8919cfc19305f595348e5.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/6f611a9468a3f12651585fa53b57269f.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/1eee1cddc157864d4064fbc08bbab9e2.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/53d3a4054b54bcca11c613fc6221ed73.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/a0e3e77eb47dc898ec6a1e54d43df22a.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/86f1b32ffc7bcf4ff5255a2c8af0a323.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/9aaf1d81f83ea12283e29aad2619c79b.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/897f8dbb380e56c8fc20345e445d0322.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/ab4bdd6dc1e016a14301e9f578d15103.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/fb9dbd1d2210f9743e8b62409086a1b9.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/7cd57aa7479a0ed930b55686ff2edde3.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/ca1dd5f8db9f72c1b3563517f332474e.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/826116ba04f2cf415b5e6281d6d6d99d.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/16885884ea66c80996cb3f9509330950.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/85b78aa1aee89380736cfb9bb5ca7c69.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/716d566f9e1eb537db791adfa6707a64.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/4fd196d1801afd2e5d77d4642c6280cf.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/569657bef76ab9a435d493c3903c0574.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/73cdcc8534839c16def764fc08b38600.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/edf4d277a6f39f1ad9bc27a8a61cf444.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/4af7d939fd15cad16a2ac5aec079dc33.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/28f2d55bcdbd8625ef570dfc3af6e834.png">
+<meta property="og:updated_time" content="2019-07-21T10:12:57.991Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Projection And Phase Aware Feature analysis">
+<meta name="twitter:description" content="随机投影特征分析（PSRM）论文：Random projections of residuals for digital image steganalysis(2013,TIFS,CR52) 总结：SRM与PSRM的特征向量分别是量化残留噪声共生矩阵的并集与残留噪声随机投影直方图的并集。这些特征在本质上分别是量化残噪随机向量与残噪投影随机变量的概率质量函数，是对残噪样本的一种统计量，刻画概率分布的">
+<meta name="twitter:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/b9e5368082af4a0e1ee0942d1813de1d.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/"/>
+
+
+
+
+
+  <title>Projection And Phase Aware Feature analysis | fennudehaogua.top</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?727b9992a1a14607aebb47500e5bcc08";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Projection And Phase Aware Feature analysis</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-21T18:01:50+08:00">
+                2019-07-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="随机投影特征分析（PSRM）"><a href="#随机投影特征分析（PSRM）" class="headerlink" title="随机投影特征分析（PSRM）"></a>随机投影特征分析（PSRM）</h1><p>论文：Random projections of residuals for digital image steganalysis(2013,TIFS,CR52)</p>
+<p>总结：SRM与PSRM的特征向量分别是量化残留噪声共生矩阵的并集与残留噪声随机投影直方图的并集。这些特征在本质上分别是量化残噪随机向量与残噪投影随机变量的概率质量函数，是对残噪样本的一种统计量，刻画概率分布的形态，充当集成分类器的判据。PSRM采用与SRM相同的预测器计算残噪，所得残噪矩阵Z与SRM的完全相同。与SRM不同的是:PSRM不用共生矩阵、而是采用残噪向多个随机方向投影的直方图(一阶统计量)来刻画残噪的统计特性。</p>
+<p>之前富模型方法提取的特征主要是残差邻域共生矩阵，从增强隐写分析性能的角度看，一般希望增加共生矩阵的阶数，但是特征的维数与阶数是指数关系，过高维度的特征不但计算负担重，而且使很多维度上的统计样本数量不稳定，影响了分类效果，因此前面考察的残差邻域都比较小。以上情况影响了前述高维特征分析的准确性，例如，CC-JRM高维特征虽然能够有效检测传统的JPEG隐写，但是对JPEG自适应隐写效果并不好。为了解决上述问题，Holub与Fridrich提出了随机投影特征分析方法，将空域残差随机投影到特征空间，虽然最后用于分析的特征是投影数据(亦称残差）的一阶分布特征，但任何一个投影值都是基于一个空域样点邻域与投影核进行卷积得到的；后来提出的一系列算法也采用了类似的处理架构，其中，从JPEG图像投影数据提取特征的过程普遍利用了分块DCT的8x8相位特性，称为相位感知术。</p>
+<h2 id="主要设计思想"><a href="#主要设计思想" class="headerlink" title="主要设计思想"></a>主要设计思想</h2><p>Holub与Fridrich提出的随机投影特征分析是基于SRM残差构造的，因此一般称为PSRM。其主要设计思想是，<strong>用SRM滤波核对图像进行卷积操作，对卷积输出的残差不进行量化，而是进行不同的随机投影，将投影数据的直方图作为隐写分析特征</strong>。以上设计的好处在于，首先，对残差不进行量化更<strong>有利于保持载体特性</strong>；投影变换核的尺寸普遍大于前述共生矩阵的阶，因此，虽然最后在投影空间中仅采用了一阶分布特征，但能够<strong>刻画更大邻域范围的特征变化</strong>；最后，不同的随机投影<strong>丰富了特征的类型</strong>。PSRM也适合分析JPEG隐写，做法是先在JPEG图像的实数空间域求以上残差，之后再投影与提取特征。</p>
+<h2 id="随即投影"><a href="#随即投影" class="headerlink" title="随即投影"></a>随即投影</h2><p>随机投影就是进行随机线性变换，PSRM分析首先生成一批随机变换矩阵(核），将它们分别与实数残差进行卷积得到不同类型的随机投影。设R表示未量化的SRM残差，<strong>Π∈Rk*l</strong>表示一个随机变换矩阵，则变换表示为：</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/b9e5368082af4a0e1ee0942d1813de1d.png" alt=""></p>
+<p>其中k,l≤s是任意选定的两个正整数，s称为邻域尺寸，<strong>Π</strong>满足范数条件||<strong>Π</strong>||2=1，其中元素Πij~(0，1)。与SRM特征提取类似，为增加提取特征的稳健性，PSRM的特征提取也利用了图像在不同方向上统计特性接近的性质，具体的做法是，针对非方向性的SRM残差，对随机变换<strong>Π</strong>,它与以下一组变换得到的投影数据可以合并提取特征。</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/ac012617ce3f9d9b17fab613274cff14.png" alt=""></p>
+<p>它们分别表示对<strong>Π</strong>的换列、换行、旋转与转置，这样以上四种变换以及它们的转置一共有8个不同的同类变换，它们变换后的数据可以合并进行特征提取；对于SRM方向性残差，以上四种变换对水平预测残差的输出可以与它们的转置对垂直预测残差的输出合并进行特征提取，这是由于这些变换对水平方向残差的处理与其转置对垂直方向残差的处理是一样的。需指出，以上投影也可看作滤波，又由于投影变换是小区域上的变换，也可以认为这类变换是时频变换(time-frequencytransform)或短时变换(short-timetransform)。</p>
+<p>PSRM分析方法提取的特征是以上合并后投影数据的直方图，也可以等价地认为是直方图的合并。由于计算残差的线性滤波一般是高通滤波或输出值的均值接近零，随机投影后这个特性基本得到保持，PSRM方法对这类残差的投影值取绝对值量化后进行直方图统计。PSRM分析方法提取的特征是以上合并后投影数据的直方图，也可以等价地认为是直方图的合并。由于计算残差的线性滤波一般是高通滤波或输出值的均值接近零，随机投影后这个特性基本得到保持，PSRM方法对这类残差的投影值取绝对值量化后进行直方图统计。</p>
+<h2 id="构造PSRM"><a href="#构造PSRM" class="headerlink" title="构造PSRM"></a>构造PSRM</h2><ol>
+<li><p>生成v个随机矩阵<strong>Πk∈Rr*s</strong>，其中R是全体实数集，k∈{1，…,v},r和s从{1,…,max}随机均匀选取，v,max是PSRM的整数参数，由实验确定。<strong>Πk</strong>的元素服从标准正态分布且须规范化。</p>
+</li>
+<li><p>对每个k∈{1,…,v},计算残噪投影</p>
+</li>
+</ol>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/27a6432202cb97f903b33edf0b764859.png" alt=""></p>
+<p>其中*是卷积运算符。</p>
+<ol>
+<li>对于线性残噪投影，按式</li>
+</ol>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/f971e0009b5a9e0f03d0985230df6b65.png" alt=""></p>
+<blockquote>
+<p>  进行量化，共T+1个量化级：</p>
+</blockquote>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/44b74543f4ca1cc5b1c4c941fc3bb576.png" alt=""></p>
+<blockquote>
+<p>  对于非线性残噪投影，按式</p>
+</blockquote>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/57b3eb241446c7cee4f2239601a6878d.png" alt=""></p>
+<blockquote>
+<p>  进行量化，共2（T+1）个量化级：</p>
+</blockquote>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/d28d1570e14b0aff0126ea7a835ed8db.png" alt=""></p>
+<ol>
+<li>分别计算v个量化投影矩阵<strong>Pk</strong>,k∈{1,…,v}的直方图，对于spam线性残噪投影按式:</li>
+</ol>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/0f6306e1fecd8f3d3491c80d0ac92843.png" alt=""></p>
+<blockquote>
+<p>  对于minma非线性残噪投影按式：</p>
+</blockquote>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/90fab53466728c9b32fc6387c8eeb8dc.png" alt=""></p>
+<p>以上统计方法与统计绝对值的不同，前者数据基于少轴旋转，而后者是折叠。由于仍保留了正负符号并且去除了冗余项，以上直方图特征的维度是2T。设v表示投影Π的数量，前面提到在SRM中有78个子模型，如果按照以上处理将max与min残差直方图进行合并，将同类型spam残差水平与垂直方向的直方图拼接为2T维特征，则模型的数量从78个下降为39个，其中包括6个spam类模型，33个minmax类模型，因此，PSRM提取的特征总维度是：</p>
+<p><strong>d=39*2T*v</strong></p>
+<p>PSRM与22510维的CC-JRM特征也可以合并使用，此时的特征被称为JPSRM(JRMPSRM)特征。</p>
+<p>Holub与Fridrich基于BOSSbase图像库的实验结果表明：在采用FLD集成分类器的情况下，PSRM各种参数较好的取值是T=3,v=55,5=8,因此特征总维度是12870维(此时JPSRM特征的维度是12870+22510=35380);对分析空域隐写取q=1,对分析JPEG隐写取q=3,两者情况下PSRM分别称为PSRMQ1与PSRMQ3.分析空域自适应隐写，PSRMQ1在全部实验嵌入率下的错误率均低于SRMQ1与SRM;PSRMQ3或者JPSRM在大多数实验嵌入率下的错误率均低于SRMQKJRM与JSRM,其中JSRM只在QF较高时对检测0.2bpnac的UED与J-UNIWARD有一定优势，但是，总体来看这些方法在检测较低嵌入率下的自适应隐写时错误率仍然较高。</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/30991c5125e6355bbb8d96dcbaac8e34.png" alt=""></p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/e0f48ef8a9e846ceaf186bb1191db787.png" alt=""></p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/7ab415a048456e125ff01d2944973e9a.png" alt=""></p>
+<p>代码：<a href="http://dde.binghamton.edu/download/feature_extractors/download/PSRM.m" target="_blank" rel="noopener">http://dde.binghamton.edu/download/feature_extractors/download/PSRM.m</a></p>
+<p>实验结果：</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/d1988bb077ab68231ea8086575bf5787.png" alt=""></p>
+<h1 id="相位感知特征分析1（DCTR）"><a href="#相位感知特征分析1（DCTR）" class="headerlink" title="相位感知特征分析1（DCTR）"></a>相位感知特征分析1（DCTR）</h1><p>论文：Low Complexity Features for JPEG Steganalysis Using Undecimated DCT(2015,TIFS,CR26)</p>
+<p>总结：</p>
+<p><strong>问题：</strong>JPEG图像的相位性质不能通过前述残差随机投影得到清晰的刻画。</p>
+<p><strong>解决方法：</strong>直接对实数JPEG空域数据进行一系列 8x8 DCT基时频变换，针对每一变换的输出进行相应位置上直方图的统计与合并，最后也是基于FLD集成分类器进行训练与识别。</p>
+<p>JPEG编码以8x8分块为操作单元，块间与块内系数有较强的相关性。在JPEG图像空域或其时频变换域位置上隔8采样与模8采样得到的数据有类似的性质或更显著的相关性，这种特性称为<strong>相位特性</strong>。<strong>相位感知隐写分析通过对JPEG图像空域时频变换的输出进行相应位置上的直方图统计与合并，较好地刻画了相位特性的变化，在分析自适应JPEG隐写方面相比之前的方法有显著提高。</strong>当前，这类分析方法主要包括DCTR(discrete cosine transform residual)[124]与GFR(Gabor filter residual)两类。</p>
+<h2 id="DCTR特征分析："><a href="#DCTR特征分析：" class="headerlink" title=" DCTR特征分析："></a> DCTR特征分析：</h2><ol>
+<li><p><strong>两个准备步骤</strong></p>
+</li>
+<li><p>计算JPEG图像实数空域数据。根据JPEG图像编码的量化表，将待检测JPEG图像Y通道每个8x8分块中的JPEG系数进行反量化，然后用DCT逆转换为空域像素。与普通的JPEG图像解压缩过程不同，这里对得到的像素灰度值不取整，而是保持为实数。以下记变换到实数空域的JPEG图像为X∈RM*N。</p>
+</li>
+</ol>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/45b06c6e4d88ea371f4a867ba3e63bc6.png" alt=""></p>
+<ol>
+<li>用8x8DCT基滤波实数空域数据。生成64个二维8x8DCT变换基(核)B(i,j)，对0≤i，j≤7，对特定的模式(i,j)，变换基可表示为及B(i,j)=(B(i,j)mn)，其中</li>
+</ol>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/0a52c7db0ad8c235fb06fffa50a0bd29.png" alt=""></p>
+<blockquote>
+<p>  其中，<img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/207602e4ee797b8a7d0990cbf19d4f39.png" alt="">；k,l>0。使用DCT基对实数空域图像进行卷积操作，即进行滤波，分别得到64幅卷积后的滤波图像</p>
+</blockquote>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/474f010ea1f305fa9b6b3521638c8b9e.png" alt=""></p>
+<blockquote>
+<p>  其中符号“★”表示无填充卷积，</p>
+</blockquote>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/5fdade4c8b6e5ca91bf69c6353dd1ac5.png" alt=""></p>
+<blockquote>
+<p>  表示卷积后的滤波图像(亦称残差图像），由于进行无填充8x8卷积，滤波图像的尺寸从MxN下降为(M-7)x(N-7)。</p>
+</blockquote>
+<p>在进一步描述DCTR特征的提取方法前有必要研究以上滤波图像的相位性质。首先，参照下图可以发现，在圆圈标出的纵向与横向均隔8的网格(grid)点上，卷积核B(i,j)与JPEG图像空域8x8分块正好重合，因此这些位置上的滤波输出值等于相应分块上的反量化DCT系数，对其中标出的4个邻块上的格点A、B、C、D，记相应的滤波输出值或反量化DCT系数为Aij,Bij,Cij,Dij。其次，对8x8DCT块(k,l)模式的JPEG系数加1或者减1,会引起图像空域相应8x8范围像素值的变化，进而引起滤波图像U(i,j)中15x15个相邻样点的变化，对应的单位响应可表示为:</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/f23745ce303e2f4144f6ee36c030a65d.png" alt=""></p>
+<p>其中，<img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/07bab1da60dac03de20f3c28d4f19aff.png" alt="">表示交叉相关运算(cross-correlation)，它的简单定义是f(x)<img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/07bab1da60dac03de20f3c28d4f19aff.png" alt="">g(x)=f*(-x)<img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/07bab1da60dac03de20f3c28d4f19aff.png" alt=""><br>g(x),f*(-x)表示f(x)的共轭复数，但这里均是实数因而没有实际意义；需注意的是，对于R(i,j)(k,l)其绝对值满足左右(轴)对称和上下(轴)对称，即:</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/930370db2019c0ff0dab4ee849c154cd.png" alt=""></p>
+<p>这可以直接从下图中的数据情况得到示例，而图中取绝对值后的情况类似,其中0≤a，b≤7，R的坐标(a，b)为{-7,…,-1,0,1,…,7}x{-7,…,-1,0,1,…,7},如果把每8个同方向样点作为一个单元模8重复标注方向坐标(0,1,…,7)，下图中的圆圈坐标均为(0,0),任何一个模式(k,l)上JPEG系数的改动都是以相应(0,0)为中心扩散的。基于以上分析，可以将滤波图像中任一样点ua,b∈U(i,j)基于4个邻块JPEG系数表示为:</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/b9c693c4c3686c63c1baa61b402d201b.png" alt=""></p>
+<p>其中，坐标(a，b)是模8标注的，参见图中三角形标出的点；Akl,Bkl,Ckl,Dkl是4个邻块(k,l)模式上的JPEG系数；Qkl是相应模式上的JPEG量化步长。基于上式，滤波图像样点u(a,b)可以表示成4个相邻图像块256个反量化DCT系数在向量P(i,j)(a,b)上的投影:</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/3fb1ce4c9c6eb2cb95fa424a5d5123e4.png" alt=""></p>
+<p>可以证明以上投影向量满足：</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/512bc6073925dc581a7247796c8e8857.png" alt=""></p>
+<p>因此可以进一步认为，投影方式在8x8块间表现为隔8相同，在块内表现为模8相同。</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/c593ab6997c357ddea8f1c1564e1eacf.png" alt=""></p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/99ac6ac60eb48c9d4d84896973d6c8e5.png" alt=""></p>
+<ol>
+<li><strong>量化与截断滤波图像样点。</strong>对64个滤波图像的样点绝对值进行量化与截断，对任一样点u,可表示为QT(|u|/q),其中q为量化步长，一般按照JPEG像的质量因子K计算：</li>
+</ol>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/3cf31ce075da5055a70b32a7b21cb5b3.png" alt=""></p>
+<blockquote>
+<p>  截断量化函数QT的计算方法是</p>
+</blockquote>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/85af710025c8e121a83012a7c211c306.png" alt=""></p>
+<p>在提取DCTR特征时，一般取T=4,这样滤波图像样点在上述处理后取值范围为[0，T]。</p>
+<ol>
+<li><strong>隔8直方图统计。</strong>针对每一个滤波图像U(i,j),对量化与截断后的样点隔8统计直方图,即在，每个子块的相同模8位置(a，b)上统计一个直方图，这可以表示为：</li>
+</ol>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/dc19a3a8d8c9b05362a5caff9e23d961.png" alt=""></p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/774d35963c64a34056df6d1080e1293f.png" alt=""></p>
+<ol>
+<li><p><strong>直方图合并。</strong>对在每个滤波图像上得到的64个直方图</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/855aefd2b91b94006a61c26133f4346a.png" alt="">，若(a,b)∈{1,2,3,5,6,7}2,这些下标的模8加法逆-a或-b不等于自己，一共有36个直方图，因此可以按照模8对称原则将相应每4个直方图合并；若(a，b)中有一个属于{0,4}2,则这些下标中只有一个的模8加法逆不等于自己，一共有24个直方图，因此可以将相应每两个直方图合并；如果(a,b)∈{0,4}2,任何一维坐标的模8加法逆都等于自己，一共有4个直方图，这里没有坐标值模8新产生的同类位置。这样，如果将每个直方图的一个值作为一维特征，那么特征总维数为64x(36/4+24/2+4)x(T+1)=1600x(T</p>
+</li>
+</ol>
+<blockquote>
+<p>  +1),前面提到，一般取T=4，因此特征总维数为8000维。以上步骤(3)与步骤(4)可合并，即在合并的数据上提取直方图而不是进行等价的直方图合并。</p>
+</blockquote>
+<p><strong>实验结果：</strong></p>
+<p>在BOSSbase图像库进行的实验结果表明，相比JRM、PSRMQ3、SRMQ1与J+SRM，DCTR分析方法在降低了特征维度的同时，在多数情况下均降低了错误率，尤其是计算速度得到大幅度提高。针对检测UED与J-UNIWARD隐写，DCTR仅在分析较高嵌入率的UED时错误率略高于J+SRM,如在检测0.3bpnac与QF为75的UED时，前者错误率约为11%，后者约为9%;而在其他情况下，DCTR比以上比较的分析方法错误率都要低，典型地，对检测0.3bpnac与QF为75的J-UNIWARD,DCTR、PSRMQ3、J+SRM、SRMQ1与JRM的错误率分别约为23.5%、23.4%、26.7%、29.2%与33.5%。值得注意的是，虽然部分情况下PSRMQ3的错误率与DCTR非常接近，但DCTR的计算效率大幅度提升，典型地，针对512x512的JPEG图像,在釆用Inteli52.4GHzCPU的工作站上，提取DCTR特征的时间是0.5〜1s,这个速度大约是提取JRM特征的2倍、提取SRMQ1特征的10余倍以及提取PSRMQ3特征的200倍。</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/a6b1f0eeb63c347b0234118e44170502.png" alt=""></p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/2087f6b82dc8919cfc19305f595348e5.png" alt=""></p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/6f611a9468a3f12651585fa53b57269f.png" alt=""></p>
+<p>实验代码：<a href="http://dde.binghamton.edu/download/feature_extractors/" target="_blank" rel="noopener">http://dde.binghamton.edu/download/feature_extractors/</a></p>
+<p>结果：</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/1eee1cddc157864d4064fbc08bbab9e2.png" alt=""></p>
+<h1 id="相位感知特征分析2（GFR）"><a href="#相位感知特征分析2（GFR）" class="headerlink" title="相位感知特征分析2（GFR）"></a>相位感知特征分析2（GFR）</h1><p>论文：Steganalysis of Adaptive JPEG Steganography Using 2D Gabor Filters(2015,IN&amp;&amp;MMSec,CR9)</p>
+<p>总结：</p>
+<p>借鉴DCTR分析方法的框架，Song等提出了基于二维Gabor滤波的GFR特征。GFR特征分析采用的分类器仍然是FLD集成分类器，但与DCTR最大的不同是釆用Gabor滤波(变换)核代替了DCT滤波核。</p>
+<h2 id="Gabor变换"><a href="#Gabor变换" class="headerlink" title="Gabor变换"></a>Gabor变换</h2><p>Gabor变换是D.Gabor 1946年提出的，为了由信号的Fourier变换提取局部信息，引入了时间局部化的窗函数，得到了窗口Fourier变换。由于窗口Fourier变换只依赖于部分时间的信号，所以，现在窗口Fourier变换又称为短时Fourier变换，这个变换又称为Gabor变换。Gabor变换相比于Fourier变换来说是积分时间上的改变，Fourier变换是基于整个时间域(−∞,+∞)(−∞,+∞) 上的积分，而Gabor变换是基于一个局部时间窗口上的积分。</p>
+<p><strong>优点：</strong></p>
+<p>Gabor小波与人类视觉系统中简单细胞的视觉刺激响应非常相似。在提取目标的局部空间和频率域信息方面具有良好的特性。Gabor小波对于图像的边缘敏感，能够提供良好的方向选择和尺度选择特性，而且对于光照变化不敏感，能够很好的适应光照的变换。上述特点使得Gabor小波被广泛用于视觉信息理解和图像处理领域。</p>
+<p>传统的傅立叶变换相比，Gabor小波变换具有良好的时频局部化特性。即非常容易地调整Gabor滤波器的方向、基频带宽及中心频率从而能够最好的兼顾信号在时空域和频域中的分辨能力；Gabor小波变换具有多分辨率特性即变焦能力。即采用多通道滤波技术，将一组具有不同时频域特性的Gabor小波应用于图像变换，每个通道都能够得到输入图像的某种局部特性，这样可以根据需要在不同粗细粒度上分析图像。此外，在特征提取方面，Gabor小波变换与其它方法相比：一方面其处理的数据量较少，能满足系统的实时性要求；另一方面，小波变换对光照变化不敏感，且能容忍一定程度的图像旋转和变形，当采用基于欧氏距离进行识别时，特征模式与待测特征不需要严格的对应，故能提高系统的，能满足系统的实时性要求；另一方面，小波变换对光照变化不敏感，且能容忍一定程度的图像旋转和变形，当采用基于欧氏距离进行识别时，特征模式与待测特征不需要严格的对应，故能提高系统的鲁棒性。</p>
+<p>Gabor滤波器和脊椎动物视觉皮层感受野响应的比较：第一行代表脊椎动物的视觉皮层感受野，第二行是Gabor滤波器，第三行是两者的残差。可见两者相差极小。Gabor滤波器的这一性质，使得其在视觉领域中经常被用来作图像的预处理。</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/53d3a4054b54bcca11c613fc6221ed73.png" alt=""></p>
+<p><strong>定义：</strong></p>
+<p>Gabor变换的基本思想是把信号划分成很多小的时间间隔，用傅立叶变换分析每个时间间隔，以便确定信号在该时间间隔存在的频率，其处理方法是对 f(t)函数加一个滑动窗，再进行傅立叶变换。Gabor变换是一种更接近小波变换的短时变换，它的滤波函数是对余弦信号加上高斯窗函数，以实现对信号的局部时频分析，可以表示为：</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/a0e3e77eb47dc898ec6a1e54d43df22a.png" alt=""></p>
+<p>其中</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/86f1b32ffc7bcf4ff5255a2c8af0a323.png" alt=""></p>
+<p>，参数γ=0.5控制高斯窗函数的纵横比，λ控制余弦信号波长。它直接影响控制分辨率的尺度参数σ=0.56λ；Φ为相位 偏移，一般设为0与Π/2；θ为滤波方向参数。二维Gabor滤波能从不同尺度和方向反映图像的时频特性，因此，相比DCTR特征，基于二维Gabor滤波器提取的GFR特征能够更丰富地表达隐写对图像统计特征的扰动。提取GFR特征的总体框架如下图所示，值得注意的是，这个框架也基本是提取DCTR与PSRM特征的框架，是这类隐写分析的共性技术路线。</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/9aaf1d81f83ea12283e29aad2619c79b.png" alt=""></p>
+<h2 id="GFR特征提取流程图："><a href="#GFR特征提取流程图：" class="headerlink" title="GFR特征提取流程图："></a>GFR特征提取流程图：</h2><p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/897f8dbb380e56c8fc20345e445d0322.png" alt=""></p>
+<p>以下基于该框舉描述<strong>GFR特征的提取过程</strong>：</p>
+<ol>
+<li><p><strong>计算JPEG图像实数空域数据。</strong>这个过程与提取DCTR特征的第一步相同，这里将变换到实数空域的JPEG图像记作X∈RM*N。</p>
+</li>
+<li><p><strong>用8x8二维Gabor滤波核滤波实数空域数据。</strong>为增加分析特征的多样性和有效性，不同参数设置的二维Gabor滤波核被用于滤波图像实数空域数据，具体地,采用4个尺度σ∈{0.5，0.75，1，1.25},32个方向θ∈{0，Π/32，…,31Π/32}，2个相位Φ∈{0，Π/2}，因此一共产生256=4*32*2个Gabor滤波核。利用8*8的二维Gabor核对空域图像进行卷积滤波，分别得到256幅滤波后的图像</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/ab4bdd6dc1e016a14301e9f578d15103.png" alt="">，符号*表示无填充卷积操作。由于进行8*8卷积，滤波图像的尺寸从M*N下降为（M-7）*（N-7）。</p>
+</li>
+<li><p><strong>量化与截断滤波图像样点。</strong>对256幅滤波图像的样点绝对值进行量化与截断，过程与提取DCTR特征的对应环节类似，这里仍以[0，T]表示以上处理后的整数范围，在提出GFR方法的文献中取T=4。</p>
+</li>
+<li><p><strong>隔8位置直方图统计。</strong>针对每一个滤波图像，对量化与截断后的样点隔8位置统计直方图,即在其每个子块的相同位置(a，b)上统计一个直方图，这样实际每个滤波图像被划分为64个子图像，每个统计一个直方图。</p>
+</li>
+<li><p><strong>分两步合并直方图。</strong>首先，对同一滤波图像中64个子图像的直方图，根据对称位置进行直方图合并（如下图），这与DCTR的相应处理类似，这样64个子图像数量降低为25个。其次，对由对称方向二维Gabor滤波得到的滤波图像直方图进行合并:在生成Gabor滤波核时，对相同的尺度参数σ和相位参数Φ，方向参数在[0,Π)均匀选择，因此存在对称的方向，例如，对θ∈{0,Π/32,2Π/32,…，31Π/32}，Π/32与31Π/32以及2Π/32与30Π/32是两对对称方向，一共有15对对称方向，相应滤波图像的直方图可以合并，但是0与16Π/32没有对称方向，因此单独统计，这样对相同的尺度和相位参数一共有17=15+2种方向情况，合并每种情况下的全部直方图。最后，可以计算GFR特征的总维数为|Φ|x|σ|x25x17x(T+l)=2x4x25x17x(4+1)=17000。</p>
+</li>
+</ol>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/fb9dbd1d2210f9743e8b62409086a1b9.png" alt=""></p>
+<p><strong>实验结果：</strong></p>
+<p>实验结果表明，同样在采用FLD集成分类器的情况下，针对检测性能较领先的JPEG图像自适应隐写J-UNIWARD，UED，SI-UNIWARD，相比于8000维的DCTR特征与22510维的CC-JRM特征，GFR特征分析方法在各种嵌入率下均取得了更好的检测效果。</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/7cd57aa7479a0ed930b55686ff2edde3.png" alt=""></p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/ca1dd5f8db9f72c1b3563517f332474e.png" alt=""></p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/826116ba04f2cf415b5e6281d6d6d99d.png" alt=""></p>
+<p>实验代码：<a href="http://dde.binghamton.edu/download/feature_extractors/download/GFR.m" target="_blank" rel="noopener">http://dde.binghamton.edu/download/feature_extractors/download/GFR.m</a></p>
+<p>实验结果：</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/16885884ea66c80996cb3f9509330950.png" alt=""></p>
+<h1 id="相位感知随机投影特征分析（PHARM）"><a href="#相位感知随机投影特征分析（PHARM）" class="headerlink" title="相位感知随机投影特征分析（PHARM）"></a>相位感知随机投影特征分析（PHARM）</h1><p>论文：Phase-Aware Projection Model for Steganalysis of JPEG Images(2015,SPIE,CR11)</p>
+<p>总结：</p>
+<p>PSRM随机投影特征分析通过随机投影增加特征的丰富性，DCTR与GFR等相位感知特征分析在时频变换域利用JPEG相位特性提高特征表达的精准性，而Holub与Fridrich提出的PHARM(phase-aware projection model)特征分析综合了以上两种方法。</p>
+<p>与PSRM分析类似，PHARM分析也对SRM的残差进行随机投影，但是仅使用7类线性残差以保持相位特性。如果分析JPEG图像，图像首先需要用反量化与分块DCT逆变换转换到空域，但也不进行取整操作。对应的7类线性残差滤波核为：</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/85b78aa1aee89380736cfb9bb5ca7c69.png" alt=""></p>
+<p>它们是通过实验选择出来的。在得到以上SRM残差后，生成v个随机投影Π（i）,i∈{1,…,v}，生成方式与PSRM中基本相同，但为了保持相位特性，尺寸必须在8x8以内。记R表示一类残差，则其第i种投影为P(i)=R*Π(i),在计算直方图前，需要对投影进行取绝对值、量化与截断，仍记量化步长为q,截断长度为T,这样投影样点在上述处理后取值范围为[0,T]。通过实验推荐设置为T=2,当JPEG<br>QF为75时，q=5,当QF为95时，q=2,一般情况下可以按照以下公式确定q:</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/716d566f9e1eb537db791adfa6707a64.png" alt=""></p>
+<p>在PHARM分析中，直方图基于任选的相位坐标计算。这里，相位坐标实际上就是8x8分块内的一个相对坐标(w,v)，u,v∈{0,…，7}。对于每个P(i)，PHARM随机选择一个(u，v),之后仅在P(i)每个分块的(u,v)上统计直方图，即统计的对象是P(i)的抽样。为了增加直方图统计的稳健性，根据分块DCT变换基的相位对称特性，PHARM分析方法将坐标(u,v)扩展为在8x8分块内相互对称的4个坐标，但需要旋转相应的投影核Π(i)，下图给出了旋转方式。</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/4fd196d1801afd2e5d77d4642c6280cf.png" alt=""></p>
+<p>在以上处理下，PHARM特征的维度为7xTxv。相比PSRM，由于PHARM特征仅使用了7类线性残差，使得可以将v扩大到900,因此，PHARM推荐的维度为7x2x900=12600。在上述参数设置下，基于BOSSbase图像库进行的实验表明，针对检测自适应JPEG图像隐写，在QF=75与95两种情况下，PHARM相比DCTR、JRM、SRMQ1与JSRM均体现出了相对的优势。典型地，当J-UNIWARD嵌入率为0.3bpnac与QF=75时，PHARM、DCTR、JSRM>SRMQ1与JRM的检测错误率分别约为20.0%、23.9%、27.3%、29.1%与33.1%;当J-UNIWARD嵌入率为0.3bpnac与QF=95时，它们的检测错误率分别约为37.8%、40.6%,42.7%、44.8%与44.9%。另外，PHARM比PSRMQ3的错误率也有显著降低。</p>
+<p>实验结果：</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/569657bef76ab9a435d493c3903c0574.png" alt=""></p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/73cdcc8534839c16def764fc08b38600.png" alt=""></p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/edf4d277a6f39f1ad9bc27a8a61cf444.png" alt=""></p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/4af7d939fd15cad16a2ac5aec079dc33.png" alt=""></p>
+<p>实验代码：<a href="http://dde.binghamton.edu/download/feature_extractors/" target="_blank" rel="noopener">http://dde.binghamton.edu/download/feature_extractors/</a></p>
+<p>运行结果：</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/28f2d55bcdbd8625ef570dfc3af6e834.png" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/steganalysis/" rel="tag"><i class="fa fa-tag"></i> steganalysis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/06/JRM/" rel="next" title="JRM">
+                <i class="fa fa-chevron-left"></i> JRM
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100017135643802" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                    
+                      FB Page
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.youtube.com/channel/UC8TkFUpWAS2wzj34ijgAZGA?view_as=subscriber" target="_blank" title="YouTube">
+                  
+                    <i class="fa fa-fw fa-youtube"></i>
+                  
+                    
+                      YouTube
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ws.binghamton.edu/fridrich/?tdsourcetag=s_pctim_aiomsg" title="Fridrich" target="_blank">Fridrich</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://imkira.com/" title="Kira" target="_blank">Kira</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#随机投影特征分析（PSRM）"><span class="nav-number">1.</span> <span class="nav-text">随机投影特征分析（PSRM）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#主要设计思想"><span class="nav-number">1.1.</span> <span class="nav-text">主要设计思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#随即投影"><span class="nav-number">1.2.</span> <span class="nav-text">随即投影</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造PSRM"><span class="nav-number">1.3.</span> <span class="nav-text">构造PSRM</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相位感知特征分析1（DCTR）"><span class="nav-number">2.</span> <span class="nav-text">相位感知特征分析1（DCTR）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DCTR特征分析："><span class="nav-number">2.1.</span> <span class="nav-text"> DCTR特征分析：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相位感知特征分析2（GFR）"><span class="nav-number">3.</span> <span class="nav-text">相位感知特征分析2（GFR）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gabor变换"><span class="nav-number">3.1.</span> <span class="nav-text">Gabor变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GFR特征提取流程图："><span class="nav-number">3.2.</span> <span class="nav-text">GFR特征提取流程图：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相位感知随机投影特征分析（PHARM）"><span class="nav-number">4.</span> <span class="nav-text">相位感知随机投影特征分析（PHARM）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"mobile":{"show":false},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>
