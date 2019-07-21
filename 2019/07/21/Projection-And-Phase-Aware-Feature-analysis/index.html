@@ -158,7 +158,7 @@
 <meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/edf4d277a6f39f1ad9bc27a8a61cf444.png">
 <meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/4af7d939fd15cad16a2ac5aec079dc33.png">
 <meta property="og:image" content="http://fennudehaogua.top/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/28f2d55bcdbd8625ef570dfc3af6e834.png">
-<meta property="og:updated_time" content="2019-07-21T10:12:57.991Z">
+<meta property="og:updated_time" content="2019-07-21T10:16:00.147Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Projection And Phase Aware Feature analysis">
 <meta name="twitter:description" content="随机投影特征分析（PSRM）论文：Random projections of residuals for digital image steganalysis(2013,TIFS,CR52) 总结：SRM与PSRM的特征向量分别是量化残留噪声共生矩阵的并集与残留噪声随机投影直方图的并集。这些特征在本质上分别是量化残噪随机向量与残噪投影随机变量的概率质量函数，是对残噪样本的一种统计量，刻画概率分布的">
@@ -527,12 +527,9 @@
 <p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/774d35963c64a34056df6d1080e1293f.png" alt=""></p>
 <ol>
 <li><p><strong>直方图合并。</strong>对在每个滤波图像上得到的64个直方图</p>
-<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/855aefd2b91b94006a61c26133f4346a.png" alt="">，若(a,b)∈{1,2,3,5,6,7}2,这些下标的模8加法逆-a或-b不等于自己，一共有36个直方图，因此可以按照模8对称原则将相应每4个直方图合并；若(a，b)中有一个属于{0,4}2,则这些下标中只有一个的模8加法逆不等于自己，一共有24个直方图，因此可以将相应每两个直方图合并；如果(a,b)∈{0,4}2,任何一维坐标的模8加法逆都等于自己，一共有4个直方图，这里没有坐标值模8新产生的同类位置。这样，如果将每个直方图的一个值作为一维特征，那么特征总维数为64x(36/4+24/2+4)x(T+1)=1600x(T</p>
+<p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/855aefd2b91b94006a61c26133f4346a.png" alt="">，若(a,b)∈{1,2,3,5,6,7}2,这些下标的模8加法逆-a或-b不等于自己，一共有36个直方图，因此可以按照模8对称原则将相应每4个直方图合并；若(a，b)中有一个属于{0,4}2,则这些下标中只有一个的模8加法逆不等于自己，一共有24个直方图，因此可以将相应每两个直方图合并；如果(a,b)∈{0,4}2,任何一维坐标的模8加法逆都等于自己，一共有4个直方图，这里没有坐标值模8新产生的同类位置。这样，如果将每个直方图的一个值作为一维特征，那么特征总维数为64x(36/4+24/2+4)x(T+1)=1600x(T+1),前面提到，一般取T=4，因此特征总维数为8000维。以上步骤(3)与步骤(4)可合并，即在合并的数据上提取直方图而不是进行等价的直方图合并。</p>
 </li>
 </ol>
-<blockquote>
-<p>  +1),前面提到，一般取T=4，因此特征总维数为8000维。以上步骤(3)与步骤(4)可合并，即在合并的数据上提取直方图而不是进行等价的直方图合并。</p>
-</blockquote>
 <p><strong>实验结果：</strong></p>
 <p>在BOSSbase图像库进行的实验结果表明，相比JRM、PSRMQ3、SRMQ1与J+SRM，DCTR分析方法在降低了特征维度的同时，在多数情况下均降低了错误率，尤其是计算速度得到大幅度提高。针对检测UED与J-UNIWARD隐写，DCTR仅在分析较高嵌入率的UED时错误率略高于J+SRM,如在检测0.3bpnac与QF为75的UED时，前者错误率约为11%，后者约为9%;而在其他情况下，DCTR比以上比较的分析方法错误率都要低，典型地，对检测0.3bpnac与QF为75的J-UNIWARD,DCTR、PSRMQ3、J+SRM、SRMQ1与JRM的错误率分别约为23.5%、23.4%、26.7%、29.2%与33.5%。值得注意的是，虽然部分情况下PSRMQ3的错误率与DCTR非常接近，但DCTR的计算效率大幅度提升，典型地，针对512x512的JPEG图像,在釆用Inteli52.4GHzCPU的工作站上，提取DCTR特征的时间是0.5〜1s,这个速度大约是提取JRM特征的2倍、提取SRMQ1特征的10余倍以及提取PSRMQ3特征的200倍。</p>
 <p><img src="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/a6b1f0eeb63c347b0234118e44170502.png" alt=""></p>
