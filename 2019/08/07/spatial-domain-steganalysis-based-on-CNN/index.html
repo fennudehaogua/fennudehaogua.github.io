@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="steganalysis," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="深度学习隐写分析的特点：  通过样本训练，自动得到隐写分析特征，从特征设计转变为构建CNN网络；  提取和分类两个任务同时完成  训练参数量大，需要的训练数据量多   深度学习隐写分析的基本框架： 图像预处理+卷积部分+分类部分  图像预处理：强化隐写信号、抑制图像内容对隐写分析的影响  卷积部分：卷积层以及相应的辅助部分  分类部分：全连接神经网络   针对空域隐写的CNN分析：  GNCNN">
+<meta name="keywords" content="steganalysis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spatial domain steganalysis based on CNN">
+<meta property="og:url" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="深度学习隐写分析的特点：  通过样本训练，自动得到隐写分析特征，从特征设计转变为构建CNN网络；  提取和分类两个任务同时完成  训练参数量大，需要的训练数据量多   深度学习隐写分析的基本框架： 图像预处理+卷积部分+分类部分  图像预处理：强化隐写信号、抑制图像内容对隐写分析的影响  卷积部分：卷积层以及相应的辅助部分  分类部分：全连接神经网络   针对空域隐写的CNN分析：  GNCNN">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/9d3746c298f4c460340a1d2d12e4d5ce.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/f504db009ad3ec220554c40120806428.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/5228861be48bede937f8b4878f807c15.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/5e5421a49bd70af16de84f8d349e52a9.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/cdb5186680885da83946463c6451910d.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/e59cff305f7b32652176c78815ac8ee3.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/4a5d923241cfe450c348e0562dd1845b.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/5e84ad3ebcba37618b4bf7bcafa38471.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/d4e2f88f55cc112ef250d3ea87c9258f.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/87a3e3c824536819e6ea6ec1bee3f424.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/751416f34151e0cc6fd6047065f4ebcf.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/51dfda151db9352c2179304dd67cf7f0.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/9dd55d04e2168ad8a24a0fa6a82f46d5.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/3c1d4ba0c39d056a5a7a5b5f77260e32.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/51dfda151db9352c2179304dd67cf7f0.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/2635809097e85f5f880f4bbe067fa51a.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/493b440c6c909456c3323c04add8ca45.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/907d42b60f4e9b22e581c9cc9c8d06cf.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/9b883f54b4216fe3c91199321b5eeb6a.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/07ea286451a368179e85b840301627ff.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/1de6d7c08ffd54f64d608710b16cb5e2.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/c923cd91d5e25c29f5e73ea2616b446b.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/80abfcace27d2d5bd003b1716cec3362.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/69e322613a4a0fef96d48d40712c13cc.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/f69adc46644b6027f9a31a983070f7a2.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/dffc048df83b97c15ca940f2ef78de1e.png">
+<meta property="og:updated_time" content="2019-08-07T02:45:36.171Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spatial domain steganalysis based on CNN">
+<meta name="twitter:description" content="深度学习隐写分析的特点：  通过样本训练，自动得到隐写分析特征，从特征设计转变为构建CNN网络；  提取和分类两个任务同时完成  训练参数量大，需要的训练数据量多   深度学习隐写分析的基本框架： 图像预处理+卷积部分+分类部分  图像预处理：强化隐写信号、抑制图像内容对隐写分析的影响  卷积部分：卷积层以及相应的辅助部分  分类部分：全连接神经网络   针对空域隐写的CNN分析：  GNCNN">
+<meta name="twitter:image" content="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/9d3746c298f4c460340a1d2d12e4d5ce.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/"/>
+
+
+
+
+
+  <title>spatial domain steganalysis based on CNN | fennudehaogua.top</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?727b9992a1a14607aebb47500e5bcc08";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2019/08/07/spatial-domain-steganalysis-based-on-CNN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">spatial domain steganalysis based on CNN</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-07T10:36:49+08:00">
+                2019-08-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>深度学习隐写分析的特点：</strong></p>
+<ul>
+<li><p>通过样本训练，自动得到隐写分析特征，从特征设计转变为构建CNN网络；</p>
+</li>
+<li><p>提取和分类两个任务同时完成</p>
+</li>
+<li><p>训练参数量大，需要的训练数据量多</p>
+</li>
+</ul>
+<p><strong>深度学习隐写分析的基本框架：</strong></p>
+<p><strong>图像预处理+卷积部分+分类部分</strong></p>
+<ul>
+<li><p><strong>图像预处理</strong>：强化隐写信号、抑制图像内容对隐写分析的影响</p>
+</li>
+<li><p><strong>卷积部分</strong>：卷积层以及相应的辅助部分</p>
+</li>
+<li><p><strong>分类部分</strong>：全连接神经网络</p>
+</li>
+</ul>
+<p><strong>针对空域隐写的CNN分析：</strong></p>
+<ul>
+<li><p><strong>GNCNN</strong></p>
+</li>
+<li><p><strong>XuNet</strong></p>
+</li>
+<li><p><strong>YeNet</strong></p>
+</li>
+</ul>
+<h1 id="GNCNN"><a href="#GNCNN" class="headerlink" title="GNCNN"></a>GNCNN</h1><p>论文：Qian Y, Jing D, Wei W. Deep learning for steganalysis via convolutional neural networks[J]. Proceedings of SPIE - The International Society for Optical Engineering, 2015, 9409:94090J-94090J-10.</p>
+<p>总结：GNCNN提供了一种新的隐写分析设计方法，但是它也遗留了一些典型问题。首先，所需训练样本数量大，一定程度上削弱了其相对高维特征方法的优势;其次，虽然从时间效率上看，GNCNN的计算没有太大的障碍，但是整个训练过程需要在GPU显存中存储全部中间状态，受GPU存储容量制约，能够处理的样本尺寸很有限（256×256）。GNCNN的性能超过了SPAM,但仍低于SRM。</p>
+<p><strong>预处理：</strong></p>
+<p>GNCNN采用一个图像处理层对图像进行预处理。预处理的方法是，釆用以下5x5的卷积核对图像进行无填充高通滤波。</p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/9d3746c298f4c460340a1d2d12e4d5ce.png" alt=""></p>
+<p>输入为256×256维特征，使用以上5×5的无填充滤波，所以预处理滤波输出是第0层的252x252维特征映射。以上滤波核也常被称为KV核，它在SRM中的名称是SQUARE5x5。以上设计的依据是，高通滤波有利于抑制内容对隐写分析的影响，有利于强化隐写信号。</p>
+<p><strong>卷积层：</strong></p>
+<p>每个卷积层的输入和输出都是一组称为特征映射的数组。在输出端，每个特征图是在输入端所有位置提取的特定特征表示。在卷积层上，通常依次应用卷积、非线性和池化三种操作，如下所示：</p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/f504db009ad3ec220554c40120806428.png" alt=""></p>
+<p>其中f()代表的就是非线性操作，pool代表池化操作，Xlj代表l层的第j个特征。Kij代表连接第j个输出映射和第i个输入映射的可训练卷积核，blj是第j个输出映射的一个可训练的偏置参数。</p>
+<p>对于卷积运算，每个输出特征图通常结合卷积和多个输入特征图。卷积结构涉及到局部区域和共享权重的思想。对于局部区域，每个低水平的特征将只从输入的子集中计算出来，比如图像给定位置上像素的邻域。该局部特征提取器在不同的相邻输入位置应用相同的参数，相当于图像像素值与包含权值参数的核的卷积。参数共享产生移不变操作，同时减少了自由变量的数量，提高了网络的泛化性能。</p>
+<p>GNCNN中，卷积部分包括5层，卷积为无填充卷积，每个卷积层滤波核的数量与尺寸见下图,池化窗口尺寸为2x2,步幅为2,设计者通过实验比较选择了平均池化。以上处理决定了每层输出的特征映射尺寸与个数，其中比较有特色的是釆用了高斯激活函数。</p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/5228861be48bede937f8b4878f807c15.png" alt=""></p>
+<p>模型中卷积层的组成包括卷积、高斯非线性和平均池化如下图：</p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/5e5421a49bd70af16de84f8d349e52a9.png" alt=""></p>
+<p><strong>高斯激活函数：</strong></p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/cdb5186680885da83946463c6451910d.png" alt=""></p>
+<p>上图展示一个简单的例子说明了为什么高斯激活在所提出的模型中适用于隐写分析。高斯激活可以从预测误差值中区分出stego信号和cover信号。高斯激活函数表示如下：</p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/e59cff305f7b32652176c78815ac8ee3.png" alt=""></p>
+<p>其中σ是决定曲线宽度的设定参数，可每层不同。以上函数以Y轴对称，当X=0时取最大值1,因此它将输出限定在[0,1]范围内，起到了规范化作用；如果把前面的处理视为高通滤波或者载体预测，那么一般绝对值较大的输入包含更多隐写特征，而绝对值较小的输入包含更多载体特征，以上高斯函数将这两种情况统一分别描述为接近0的正数与接近1的正数，更有利于后面的处理。最后得到的特征映射为16x4x4=256维。</p>
+<p><strong>分类层：</strong></p>
+<p>GNCNN的分类部分采用3个全连接层，分别包含128、128与2个神经元。前两层采用ReLU激活函数，最后一层采用两个输入两个输出的Softmax激活函数，因此输出结果是两个小数，其和为1，分别代表有隐写与无隐写的可能性。</p>
+<p><strong>实验：</strong></p>
+<p>在训练中，采用的图像来自BOSSbase与ImageNet像库，从前者中选取了1万幅图像，从后者中选取了10万幅，图像均通过缩放将尺寸降到256x256,并转换为8bit深的灰度图像，其中80%用于训练，其余的用于检测；每个小批量训练样本中有128个图像，隐写图像占一半，高斯激活函数的参数a的设置是，第一个卷积层为1,其他的为0.5。整个网络基于Cuda-convnet平台实现，学习率参数为0.001，动量参数为0.9。在BOSSbase图像集上，GNCNN的错误率比使用高斯核SVM分类器的SPAM有显著降低，但是比使用集成分类器的SRM高2%〜5%；在ImageNet图像集上，GNCNN的错误率与使用集成分类器的SRM相差不是很大。</p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/4a5d923241cfe450c348e0562dd1845b.png" alt=""></p>
+<h1 id="XuNet"><a href="#XuNet" class="headerlink" title="XuNet"></a>XuNet</h1><p>论文：Xu G, Wu H Z, Shi Y Q. Structural Design of Convolutional Neural Networks for Steganalysis[J]. IEEE Signal Processing Letters, 2016, 23(5):1-1.</p>
+<p>总结：</p>
+<p>在GNCNN基础上，提出了XuNet网络，同样在前端添加一个固定的高通滤波层(KV核)。由于隐写的高频噪声信号关于0对称且符号无关，XuNet在第一个卷积层采用零值偏置参数，同时添加ABS(绝对值)层来缩小特征图的范围。增加BN层来提高收敛速度，避免陷入局部最小值。此外，XuNet采用混合激活函数，在网络前端使用tanH提高特征的学习能力在网络深层使用ReLU减少反向传播的难度。最后，XuNet还在网络后几层使用1X1卷积核和全局平均池化，用以防止网络模型过拟合和信息损失。XuNet对卷积神经网络的改造使之获得了较大的性能提升，在BOSSbase图像库上对S-UNIWARD和HILL的检测，XuNet的检测准确率基本超过SRM。</p>
+<p>XuNet同样分为预处理，卷积，分类三个部分。其中预处理模块与GNCNN类似的图像预处理层与相同的预处理滤波核，每个卷积模块包括卷积、激活函数、归一化以及池化四个子层，向全连接层输出128维特征映射。在分类模块中采用了两个全连接层，后面一层与两输入Softmax激活函数的组合也被称为Softmax层。</p>
+<p><strong>XuNet卷积层：</strong></p>
+<p>(1)<strong>BN子层</strong>(<strong>加速模型的收敛速度</strong>)。对卷积操作的输出或者取绝对值后的输出均采用BN子层进行规格化，这有利于控制特征映射的数值范围，更有效地釆用激活函数进行非线性处理，也有助于提高反向传播的效能。</p>
+<p>(2)<strong>激活函数多样化。</strong>在第1卷积层的卷积操作后，采用了绝对值激活函数，记为ABS,这样设计的理由是，预处理层得到的残差经过第1卷积层后，具有符号对称性，取绝对值<strong>有利于增强统计模型</strong>；在BN子层后，前两个卷积层采用了双曲正切函数(Tanh)作为激活函数，<strong>减少信息的丢失</strong>。后3层采用ReLU激活函数，<strong>这考虑了特征映射从浅层到深层的变化</strong>。</p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/5e84ad3ebcba37618b4bf7bcafa38471.png" alt=""></p>
+<p>(3)<br><strong>卷积核数量与1x1卷积。（训练参数更少抑制过拟合；保持特征图不变的情况下，增加非线性特性；灵活控制特征图的深度；）</strong>5个卷积层釆用的滤波核数量分别为8、16、32、64与128,这远远多于GNCNN，但是，为了<strong>防止过拟合</strong>，除前两个卷积层采用5×5卷积外，XuNet从第3卷积层开始就一直采用1x1卷积，这意味着，对计算每个卷积输出样点，输入仅为来自不同特征映射上相同位置的一个样点，这个处理也被以后的网络用于<strong>保持图像编码的相位特性。</strong></p>
+<p>(4)<br><strong>扩大的池化窗。</strong>相比GNCNN，XuNet卷积层使用的池化也是均值池化，但窗口尺寸较大，前4个卷积层都是5X5,步幅是2，对最后一层的窗口尺寸为32x32,<br>已经是一组特征映射的整个尺寸，因此32x32窗口的池化称为全局(global)池化。</p>
+<p><strong>XuNet总体架构如下图所示：</strong></p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/d4e2f88f55cc112ef250d3ea87c9258f.png" alt=""></p>
+<p><strong>实验：</strong></p>
+<p>基于CNN公开实验平台Caffe的实验结果表明，XuNet在检测S-UNIWARD与HILL上性能超过了SRM。实验的图像样本来自BOSSbasev1.01的1万幅256x256灰度图像，对每种隐写情况，其中5000幅用于训练，另外5000幅用于检测；隐写有4种情况，分别是0.1bpp与0.4bpp下的S-UNIWARD以及0.1bpp与0.4bpp下的HILL；训练中，学习率参数为0.001，动量参数为0.9。检测结果如下表所示：</p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/87a3e3c824536819e6ea6ec1bee3f424.png" alt=""></p>
+<p>以及对应的ROC曲线如下所示：</p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/751416f34151e0cc6fd6047065f4ebcf.png" alt=""></p>
+<p>XuNet性能在某些情况下超过SRM，这是深度学习隐写分析方法首次超过SRM，里程碑。</p>
+<h1 id="YeNet"><a href="#YeNet" class="headerlink" title="YeNet"></a>YeNet</h1><p>论文：Ni J , Ye J , Yi Y . Deep Learning Hierarchical Representations for Image Steganalysis[J]. IEEE Transactions on Information Forensics and Security,2017:1-1.</p>
+<p>总结：</p>
+<p>基于前面所学过的选择信道感知隐写分析，它主要分析自适应隐写，特点是可以利用自适应隐写在嵌入位置选择上的先验知识。通过将这一思路引入基于CNN的图像隐写分析，将SRM中的30个KV核放到模型的第一层中提取残差信息，并结合了信道选择信息，使用截断线性单元对特征进行过滤，之后再使用10组卷积提取丰富的高阶特征，性能超过了SRM及其变种算法。重点有以下四个部分：</p>
+<p><strong>1.利用选择信道信息</strong>：</p>
+<p>利用SRM卷积核取绝对值的结果对待检测图像各元素被修改的概率进行卷积。将上一步中的结果与第一个卷积层输出的特征图相加</p>
+<p><strong>2.TLU</strong>：模拟SRM中的截断操作，模拟SRM中的截断操作。隐写信号主要在[1-,1]，保留阈值中间的信息，忽略与隐写无关的信息，有利于提升准确率。</p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/51dfda151db9352c2179304dd67cf7f0.png" alt=""></p>
+<p><strong>3.图像预处理</strong>：采用更多种类的滤波器，SRM使用的30个线性滤波器作为第一个卷积层的kernel的初始值，该层不参与训练。</p>
+<p><strong>4.更少的池化</strong>：第4个卷积层开始使用平均池化；</p>
+<p><strong>YeNet总体网络架构如下所示：</strong></p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/9dd55d04e2168ad8a24a0fa6a82f46d5.png" alt=""></p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/3c1d4ba0c39d056a5a7a5b5f77260e32.png" alt=""></p>
+<p><strong>创新点：</strong></p>
+<ol>
+<li>针对隐写分析设计了新的激活函数TLU (truncated linear unit)</li>
+</ol>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/51dfda151db9352c2179304dd67cf7f0.png" alt=""></p>
+<p>其中，T为截断长度。以上激活函数类似于SRM中对残差的截断，并能<strong>保护中间区域数值的信息</strong>，实验结果表明，由它处理第一层的输出能够提高分析正确率，由于第一层是不参加参数学习的预处理层，此时TLU不是通常意义上的激活函数。</p>
+<p>（2）具有非SCA与SCA（selection channel）分析两种基本配置，分别称为TLU-CNN与SCA-TLU-CNN。在图14.5中，左上角由虚线连接的部分表示SCA处理，在此情况下第一层特征映射，在卷积基础上被叠加了SCA信息，由从上往下的虚线输入第二层。</p>
+<p>SCA-TLU-CNN中最核心的技术是对SCA分析方法的支持。SCA-TLU-CNN引入SCA技术的做法是，对图像预处理层的残差输出进行SCA加性调整（图14.5),嵌入影响较大的区域被叠加更强的信号。由于空间域的嵌入影响可以用失真函数值代入加性模型最优嵌入概率公式进行估计，为了将这种概率表达的影响从空间域转换至卷积后的残差域，Ye借鉴了SCA隐写分析方法，采用残差域绝对值差值的期望上限进行估计。记含密载体Y=(yij)与载体X=(xij)的差为：</p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/2635809097e85f5f880f4bbe067fa51a.png" alt=""></p>
+<p>记隐写修改+1与-1的概率均为βij，它们是用失真函数代入加性模型最优嵌入概率公式得到的，则nij=-1，0，1的概率分别为βij、1-2βij、βij，有：</p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/493b440c6c909456c3323c04add8ca45.png" alt=""></p>
+<p>设K为第一层的一个卷积核，则X与Y残差的差为：</p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/907d42b60f4e9b22e581c9cc9c8d06cf.png" alt=""></p>
+<p>因此有</p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/9b883f54b4216fe3c91199321b5eeb6a.png" alt=""></p>
+<p>进一步得到：</p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/07ea286451a368179e85b840301627ff.png" alt=""></p>
+<p>其中，φ（ρij）是用于评估残差域（i，j）上嵌入影响的统计指标。可以通过下式计算：</p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/1de6d7c08ffd54f64d608710b16cb5e2.png" alt=""></p>
+<p>SCA-TLU-CNN的设计者经过实验发现，基于以上φ（P）叠加到残差上比乘到残差上效果更好，因此，设在TLU-CNN下第2层的输入是F(1),则在SCA-TLU-CNN下为F(1)+φ（P）。</p>
+<p>（3）<strong>图像预处理层采用了更多类型卷积</strong>。在第一层进行图像预处理时，釆用了SRM中30个线性滤波核，因此第一层的输出有30个特征映射，其设计目的与SRM类似，即<strong>通过滤波的多样性丰富对隐写分析特征的表达</strong>。</p>
+<p>（4）<strong>压制池化操作</strong>。<strong>池化操作的降采样会丢失特征信息</strong>，由于TLU-CNN与SCA-TLU-CNN层数较多，设计者只在第4-7层安排了步幅为2的池化。</p>
+<p>实验：</p>
+<p>YeNet的实验结果表明，TLU-CNN与SCA-TLU-CN相比SRM与maxSRMd2具有明显的分析正确性优势。实验采用的训练集主要分为两组，第一组包括BOSSbasev1.01库中5000幅以及BOWS2库中1万幅图像，第二组包括第一组的1.5万幅图像，另外通过转置与旋转等变换将图像数量扩大到之前的8倍；测试集由BOSSbasev1.01库中剩余的5000幅图像组成。这些图像最后通过重采样、剪切等方法将尺寸调整到256x256;实验基于Caffe平台实现，动量参数为0.95,权值衰减参数为0.0005，对学习率的设定采用了Caffe的多阶段策略：初值设为0.4,在第50万次、第60万次与第65万次迭代后，分别下降到0.08、0.016与0.0032;每个小批量训练集中包含32个（16对）图像。实验结果表明，SRM与maxSRMd2在第一组上训练效果较好，TLU-CNN与SCA-TLU-CN在第二组上训练效果较好，在此训练方案下，得到的检测结果如下所示：</p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/c923cd91d5e25c29f5e73ea2616b446b.png" alt=""></p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/80abfcace27d2d5bd003b1716cec3362.png" alt=""></p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/69e322613a4a0fef96d48d40712c13cc.png" alt=""></p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/f69adc46644b6027f9a31a983070f7a2.png" alt=""></p>
+<p><img src="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/dffc048df83b97c15ca940f2ef78de1e.png" alt=""></p>
+<p>YeNet是另外一座里程碑，它代表着深度学习隐写分析方法对于空域隐写的检测准确率第一次全面超过SRM。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/steganalysis/" rel="tag"><i class="fa fa-tag"></i> steganalysis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/21/Projection-And-Phase-Aware-Feature-analysis/" rel="next" title="Projection And Phase Aware Feature analysis">
+                <i class="fa fa-chevron-left"></i> Projection And Phase Aware Feature analysis
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100017135643802" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                    
+                      FB Page
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.youtube.com/channel/UC8TkFUpWAS2wzj34ijgAZGA?view_as=subscriber" target="_blank" title="YouTube">
+                  
+                    <i class="fa fa-fw fa-youtube"></i>
+                  
+                    
+                      YouTube
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ws.binghamton.edu/fridrich/?tdsourcetag=s_pctim_aiomsg" title="Fridrich" target="_blank">Fridrich</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://imkira.com/" title="Kira" target="_blank">Kira</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GNCNN"><span class="nav-number">1.</span> <span class="nav-text">GNCNN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XuNet"><span class="nav-number">2.</span> <span class="nav-text">XuNet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#YeNet"><span class="nav-number">3.</span> <span class="nav-text">YeNet</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"mobile":{"show":false},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>
