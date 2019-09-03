@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="环境搭建," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="记录一下大致碰到的问题。  因为当初用anaconda安装tensorflow，它不支持python3.7版本。所以anaconda选择比较老一点的版本Anaconda3-5.2.0-Windows-x86_64。  按照网上的流程安装好Anaconda。  安装CUDA，cudnn。并配置好相关的环境变量。  Anaconda安装Pytorch。      在官网（https://pytorch">
+<meta name="keywords" content="环境搭建">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pytorch+anaconda">
+<meta property="og:url" content="http://fennudehaogua.top/2019/09/03/pytorch-anaconda/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="记录一下大致碰到的问题。  因为当初用anaconda安装tensorflow，它不支持python3.7版本。所以anaconda选择比较老一点的版本Anaconda3-5.2.0-Windows-x86_64。  按照网上的流程安装好Anaconda。  安装CUDA，cudnn。并配置好相关的环境变量。  Anaconda安装Pytorch。      在官网（https://pytorch">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/03/pytorch-anaconda/dfa3827f3fa38d6c230dac553ee797f0.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/03/pytorch-anaconda/dcba16a968221f75b0acb1165e282a16.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/03/pytorch-anaconda/69d0fcaaeee60e2d6fdae0bbb18fd800.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/03/pytorch-anaconda/60316deadd6c3065aa06394f6ee49d4f.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/03/pytorch-anaconda/1eb7c3a37beb0661a96fb9431899aa8c.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/03/pytorch-anaconda/2e1de2b15bc3e845cb5d012811fb00cd.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/03/pytorch-anaconda/5090a5929cbe04f0d9e0f279695877dd.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/03/pytorch-anaconda/fc604039ccb44267c7cec3b5a2d21854.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/03/pytorch-anaconda/93b80d5cab5d0cf301576a4c833a9c32.png">
+<meta property="og:updated_time" content="2019-09-03T03:26:36.299Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="pytorch+anaconda">
+<meta name="twitter:description" content="记录一下大致碰到的问题。  因为当初用anaconda安装tensorflow，它不支持python3.7版本。所以anaconda选择比较老一点的版本Anaconda3-5.2.0-Windows-x86_64。  按照网上的流程安装好Anaconda。  安装CUDA，cudnn。并配置好相关的环境变量。  Anaconda安装Pytorch。      在官网（https://pytorch">
+<meta name="twitter:image" content="http://fennudehaogua.top/2019/09/03/pytorch-anaconda/dfa3827f3fa38d6c230dac553ee797f0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2019/09/03/pytorch-anaconda/"/>
+
+
+
+
+
+  <title>pytorch+anaconda | fennudehaogua.top</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?727b9992a1a14607aebb47500e5bcc08";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2019/09/03/pytorch-anaconda/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">pytorch+anaconda</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-03T11:24:59+08:00">
+                2019-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记录一下大致碰到的问题。</p>
+<ol>
+<li><p>因为当初用anaconda安装tensorflow，它不支持python3.7版本。所以anaconda选择比较老一点的版本Anaconda3-5.2.0-Windows-x86_64。</p>
+</li>
+<li><p>按照网上的流程安装好Anaconda。</p>
+</li>
+<li><p>安装CUDA，cudnn。并配置好相关的环境变量。</p>
+</li>
+<li><p>Anaconda安装Pytorch。</p>
+</li>
+</ol>
+<blockquote>
+<p>  在官网（<a href="https://pytorch.org/get-started/locally/" target="_blank" rel="noopener">https://pytorch.org/get-started/locally/</a>）下载系统相应版本安装。</p>
+</blockquote>
+<blockquote>
+<p>  为了防止其他的环境之间影响，先创建一个环境，命名为pytorch：</p>
+</blockquote>
+<blockquote>
+<p>  conda create -n pytorch python=3.6</p>
+</blockquote>
+<p><img src="/2019/09/03/pytorch-anaconda/dfa3827f3fa38d6c230dac553ee797f0.png" alt=""></p>
+<blockquote>
+<p>  然后切换到该环境：</p>
+</blockquote>
+<blockquote>
+<p>  activate pytorch</p>
+</blockquote>
+<p><img src="/2019/09/03/pytorch-anaconda/dcba16a968221f75b0acb1165e282a16.png" alt=""></p>
+<p>然后根据官网的内容：</p>
+<p><img src="/2019/09/03/pytorch-anaconda/69d0fcaaeee60e2d6fdae0bbb18fd800.png" alt=""></p>
+<blockquote>
+<p>  如上图，根据相应的环境执行对应的语句，例如我的是：</p>
+</blockquote>
+<p>conda install pytorch torchvision cudatoolkit=10.0 -c pytorch</p>
+<p><img src="/2019/09/03/pytorch-anaconda/60316deadd6c3065aa06394f6ee49d4f.png" alt=""></p>
+<p><img src="/2019/09/03/pytorch-anaconda/1eb7c3a37beb0661a96fb9431899aa8c.png" alt=""></p>
+<p>安装Pytorch过程中会连接失败，这是因为Anaconda.org的服务器在国外。网上说的使用清华，中科大的镜像并没有用，已经都失效了，更改了镜像库也没有用。所以直接不要改。</p>
+<p>直接看报错信息，可以看到我们是下载pytorch和torchvision失败了。</p>
+<p><img src="/2019/09/03/pytorch-anaconda/2e1de2b15bc3e845cb5d012811fb00cd.png" alt=""></p>
+<p>报错信息中给出了对应的连接下载超时的地址，这时候只需要我们翻墙然后输入对应的网址</p>
+<p>(torchvision)<a href="https://conda.anaconda.org/pytorch/win-64/torchvision-0.4.0-py36_cu100.tar.bz2" target="_blank" rel="noopener">https://conda.anaconda.org/pytorch/win-64/torchvision-0.4.0-py36_cu100.tar.bz2</a></p>
+<p>(pytorch)<a href="https://conda.anaconda.org/pytorch/win-64/pytorch-1.2.0-py3.6_cuda100_cudnn7_1.tar.bz2" target="_blank" rel="noopener">https://conda.anaconda.org/pytorch/win-64/pytorch-1.2.0-py3.6_cuda100_cudnn7_1.tar.bz2</a></p>
+<p>即可下载对应的两个源文件。</p>
+<p>然后在对应的文件夹中对两个文件进行离线安装，即可完成对应的pytorch安装。</p>
+<p><img src="/2019/09/03/pytorch-anaconda/5090a5929cbe04f0d9e0f279695877dd.png" alt=""></p>
+<p>检验的时候发现缺少了部分依赖（numpy，pillow，six），报错缺少什么直接pip安装什么即可（或者直接执行pip<br>install torchvision即可自动安装所有的必备的依赖）：</p>
+<p><img src="/2019/09/03/pytorch-anaconda/fc604039ccb44267c7cec3b5a2d21854.png" alt=""></p>
+<p>安装成功：</p>
+<p><img src="/2019/09/03/pytorch-anaconda/93b80d5cab5d0cf301576a4c833a9c32.png" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/环境搭建/" rel="tag"><i class="fa fa-tag"></i> 环境搭建</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/07/spatial-domain-steganalysis-based-on-CNN/" rel="next" title="spatial domain steganalysis based on CNN">
+                <i class="fa fa-chevron-left"></i> spatial domain steganalysis based on CNN
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100017135643802" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                    
+                      FB Page
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.youtube.com/channel/UC8TkFUpWAS2wzj34ijgAZGA?view_as=subscriber" target="_blank" title="YouTube">
+                  
+                    <i class="fa fa-fw fa-youtube"></i>
+                  
+                    
+                      YouTube
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ws.binghamton.edu/fridrich/?tdsourcetag=s_pctim_aiomsg" title="Fridrich" target="_blank">Fridrich</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://imkira.com/" title="Kira" target="_blank">Kira</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"mobile":{"show":false},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>
