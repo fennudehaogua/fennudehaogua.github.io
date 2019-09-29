@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Steganography," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Deep Learning Applied to Steganalysis of Digital Images： A Systematic Review(2019,IEEE Access) 摘要： 隐写术是将信息隐藏在某个被称为载体的对象中，以便建立一个隐蔽的通信通道，以便能够访问该通道的观察者不会注意到通信行为本身。隐写分析用于隐写术中隐藏信息的检测;这些信息可以隐式地出现在不同类型的媒体中，比">
+<meta name="keywords" content="Steganography">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DL-stegaography">
+<meta property="og:url" content="http://fennudehaogua.top/2019/09/29/DL-steganography/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="Deep Learning Applied to Steganalysis of Digital Images： A Systematic Review(2019,IEEE Access) 摘要： 隐写术是将信息隐藏在某个被称为载体的对象中，以便建立一个隐蔽的通信通道，以便能够访问该通道的观察者不会注意到通信行为本身。隐写分析用于隐写术中隐藏信息的检测;这些信息可以隐式地出现在不同类型的媒体中，比">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/6e2cb0c12c3ca5b7f31d182a502baf6f.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/58d6fa8826ef1f97caa80e20da1bd30b.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/79e678068418491173d4123c7f69ac66.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/94d6c5af9714253cd375e811412e2a4d.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/ec882f656e89d0ef3f6e134b77a413ee.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/1277c179d345ff78a889f148e7001fea.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/fa6599cf6f54cdb20de203a0a18a0606.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/8c9b6eb86517d86d188b99503f63480b.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/cb6161b3430901fab172bf76d5005ed2.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/405304be328c8414ef2b94deda5f6e84.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/2f83939f8bc968a72788b103f718baf2.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/c72cd1f068395ddf796e58a30d11ef48.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/c23558313a4b96f42ced84e489771e02.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/63ef2867725711aa773126dad140896f.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/99d007ebf531cd2b7cedeedb322685c0.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/da406719b7386d5ee48a29694d047ab3.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/f83b1aedbf6362395b231dffd965bed2.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/19b6702d8f9d431414926af0f2ba2042.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/4dbc252b5ba5ca4f55bcc0f116368feb.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/bb1320710ecb43746b80aeba99e3589a.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/521c7735c29cff23e53614dff219b0e6.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/97acc4c8fbfb34951528741067fc9c24.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/745d017d7eb23aa3acae9c18f7a3562b.png">
+<meta property="og:updated_time" content="2019-09-29T04:23:41.216Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DL-stegaography">
+<meta name="twitter:description" content="Deep Learning Applied to Steganalysis of Digital Images： A Systematic Review(2019,IEEE Access) 摘要： 隐写术是将信息隐藏在某个被称为载体的对象中，以便建立一个隐蔽的通信通道，以便能够访问该通道的观察者不会注意到通信行为本身。隐写分析用于隐写术中隐藏信息的检测;这些信息可以隐式地出现在不同类型的媒体中，比">
+<meta name="twitter:image" content="http://fennudehaogua.top/2019/09/29/DL-steganography/DL-stegaography/6e2cb0c12c3ca5b7f31d182a502baf6f.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2019/09/29/DL-steganography/"/>
+
+
+
+
+
+  <title>DL-stegaography | fennudehaogua.top</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?727b9992a1a14607aebb47500e5bcc08";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2019/09/29/DL-steganography/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DL-stegaography</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-29T12:15:05+08:00">
+                2019-09-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Steganography/" itemprop="url" rel="index">
+                    <span itemprop="name">Steganography</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Deep Learning Applied to Steganalysis of Digital Images： A Systematic Review(2019,IEEE Access)</p>
+<p><strong>摘要：</strong></p>
+<p>隐写术是将信息隐藏在某个被称为载体的对象中，以便建立一个隐蔽的通信通道，以便能够访问该通道的观察者不会注意到通信行为本身。隐写分析用于隐写术中隐藏信息的检测;这些信息可以隐式地出现在不同类型的媒体中，比如数字图像、视频文件、音频文件或纯文本。传统上，隐写分析分为两个独立的阶段，第一个阶段是手工提取复杂的特征，第二个阶段是使用集成分类器或支持向量机进行分类。近年来，深度学习的发展使得将这两个传统阶段统一起来并实现自动化成为可能，最终得到了一种有前景的结果。本文介绍了近年来使用深度学习技术进行隐写分析的进展。这些技术的结果在空域和频域(JPEG)上都超过了传统的使用富模型集成分类器的方法。2014年以来，研究人员利用卷积神经网络解决了这一问题，生成了多种架构和策略，提高了上一代算法(WOW,S-UNIWARD, HUGO,J-UNIWARD等)上隐写图像的检测率。应用于隐写分析的深度学习目前正在构建过程中，到目前为止的结果对于对该主题感兴趣的研究人员来说是令人鼓舞的。</p>
+<p><strong>索引词：卷积神经网络，深度学习，隐写分析，隐写术</strong></p>
+<p><strong>Ⅰ 引言：</strong></p>
+<p>隐写术是将信息隐藏在数字多媒体文件(图像、声音和视频)中，任何接收者都察觉不到。最早描述这些技术使用的文献可以追溯到古希腊希罗多德时代。有一个故事描述了他们如何向斯巴达发出警告，说薛西斯想要入侵希腊，这样它就不会被发现，也不会引起怀疑。那时，它是写在板上覆盖蜡。所以，为了掩饰他们直接写在木头上的信息，他们用蜡把它盖上，然后再写一遍。乍一看，人们只能看到蜡上的字迹，但如果把它拿掉，人们就能看到隐藏在木头里的信息。在第二次世界大战期间，最常用的系统是将信息缩微成胶片，并将其缩小到一个小点的极限，这样它就可以在另一段文本中作为字符的标点符号传递。例如，元音“i”上的点可以是带有信息的缩微胶片[1]。这种技术已经成为一种令人兴奋的隐藏信息的替代方法，因为在所有国家都没考虑到加密[2]。密写过程的形成源于中解释的著名的Simmons囚徒问题[3]，该问题由Alice和Bob两名囚犯组成，他们希望在不断被监狱主管Eve截获的同时交换消息。如果Eve认为Alice和Bob之间交换的消息是可疑的，她将不允许消息到达收件人。</p>
+<p>工业隐写术已被用来控制数字材料非法的复制,所以通过修改数字内容版权引入社会信息在人眼无法察觉的方式,目的是提供的证据,谁拥有的图像或已出售或送[4]。在军事级别，这种技术被用来传送重要的信息而不被对方识别。人们还认为，即使在非法组织和恐怖分子的通信中，也有使用隐写术[4]。</p>
+<p>隐写术可以从两个领域进行:空域或频域。从空间域上看，该算法的特点是直接改变图像的某些像素点，这些像素点人眼难以察觉。实现这一目标的一种方法是通过按顺序或随机地更改每个像素的最小有效位(LSB)来引入消息。目前，隐写术是一种自适应的方法，即考虑图像的内容，将信息引入到隐写者较难检测到的区域。该领域应用最广泛的算法有HUGO[7]、HILL[8]、MiPOD[9]、S-UNIWARD[10]和WOW[11]。图1显示了隐写处理后的stego图像与cover图像的比较，使用的是S-UNIWARD算法，有效负载(嵌入更改的数量)为0.4位/像素(bpp)。在图的右侧，显示了图像的差异，以说明算法对stego图像的影响。</p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/6e2cb0c12c3ca5b7f31d182a502baf6f.png" alt=""></p>
+<p>利用频域变换(JPEG - Joint photography expert<br>Group)进行隐写，如离散余弦变换(DCT)、离散小波变换(DWT)和奇异值分解(SVD)等，都在[13]中进行了解释。JPEG是基于DCT的数码相机、扫描仪和其他摄影捕捉设备生成的图像中最常见的丢失压缩格式。使用的转换的一些系数被更改为以人眼无法察觉的方式插入JPEG域中的消息。该领域应用最广泛的算法有J-UNIWARD[10]、F5[14]、UED[15]和UERD[16]。</p>
+<p>隐写分析包括检测图像是否有隐藏信息。在[13]中，对隐写术和隐写分析的分类有了更深入的解释。隐写术传统上分为两个阶段。第一阶段由手动提取特征组成，其中使用富模型(RM)[17]实现了最佳结果。第二阶段是基于二进制分类器(图像是否是隐写的)，通常使用集成分类器(EC)[18]、支持向量机(SVM)[19]或感知器[20]。由于深度学习(DL)[21]和图形处理单元(gpu)[22]的进步，研究人员已经开始将这些技术应用于隐写术和隐写分析中，从而获得更好的隐写图像检测百分比。采用DL进行隐写分析时，将特征提取阶段和分类统一在同一架构下，同时对参数进行优化，降低了人工特征提取引入的复杂度和维数[17]。图2显示了隐写分析的总体结构，手工提取特征(顶部)和在相同架构下统一提取和分类的隐写分析(底部)。</p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/58d6fa8826ef1f97caa80e20da1bd30b.png" alt=""></p>
+<ol>
+<li>背景</li>
+</ol>
+<p>深度学习在隐写分析中的第一个应用是在2014年由Tan和Li[23]开发的，他们的方法使用了从一堆训练卷积神经网络(CNN)的自动编码器的无监督学习。然后利用监督学习，利用高通滤波器(HPF)对图像进行预处理，提高嵌入过程引入的隐写噪声的影响。隐写图像的检出率约为10%。与空间富模型(SRM)[17]相比，低17%左右。与用减像素邻接矩阵(SPAM)[24]得到的结果相比，提高了11%。</p>
+<p>2015年Qian等人[25]设计了第一个采用监督学习方法的CNN，该方法由5个卷积层和一个特定的激活函数高斯激活组成。隐写图像的检出率约为10%。与SRM[17]相比，降低了4%左右。比SPAM[24]获得的高10%。</p>
+<p>然后在2016年Pibre,Chaumont等人[26]接手了钱的工作，提出了两种新的神经网络。第一个是两层CNN，第二个是由两层组成的全连通神经网络(FNN)。他们的实验使用相同的加密密钥。Xu,Shi等人提出了一种类似于Qian的5个卷积层的CNN。与该网络不同的是，Xu,Shi等人使用了绝对值层(ABS)和1×1卷积核来加强统计建模，得到了更好的结果。Xu,Shi等人将他们提出的网络作为基础学习者[28]训练神经网络集合，以获得更好的训练参数，进一步提高其检测结果。同年，Qian,Tan等人使用迁移学习[29]交换一个CNN的参数，这个CNN是用高负载的隐写图像训练的，而另一个CNN是用低负载的图像训练的。与不使用迁移学习的神经网络相比，该算法的性能有所提高，但仍不能超过传统的神经网络算法。以前取得的所有进展都是在空间领域实现的。之后，研究人员将重点放在使用DL技术进行频域(JPEG)隐写分析。</p>
+<p>2017年，Zeng,Huang等人[30]，[31]提出了一种CNN方法，利用ImageNet[32]提供的大量图像的RM-inspired的预处理，对JPEG格式的图像进行隐写分析。所得结果与文献记载的结果接近。同年，Chen、Fridrich等人受JPEG压缩过程[30]的启发，使用分组构建了一个新的网络。使用CNN汇编器获得的结果显著高于现有方法的结果。随后Xu[33]在ResNet[34]的启发下，提出了一种新的CNN，由20个卷积层组成，再经过批量归一化(BN)处理[35]、[36]。Tang,Li等人提出将空域内的图像隐写作为参考，作为两个相互竞争的网络。这种方法被称为生成对抗网络(GAN)，它利用隐写术和隐写分析(两个相互竞争的网络)之间的竞争来自动学习哪一个位置是嵌入消息的最佳位置。Ye,Yi等人[38]提出了一种新的8个卷积层的空间域CNN，一种称为截断线性单元(TLU)的自激活函数，以及用于图像预处理的滤波器组。这些滤波器组初始化基于SRM的权值，以获得残差特征图，避免使用所有以前的CNN使用的静态滤波器。2017年的趋势是训练一组CNNs，修改网络架构，模仿SRM特征提取过程。另一个重要的贡献是在不同的卷积层(ResNet[34]，[39])之间跳转，从而可以设计更深层次的CNNs，确保网络收敛，提高检测精度;在此之前，与文献记录相比，检测结果提高了约10%。</p>
+<p>2018年Yedroudj、Chaumont等人在空间领域提出了一种新的CNN。这个CNN集合了其前身的最好的特征(一组基于SRM特征提取的预处理输入滤波器，5个卷积层，BN,TLU激活单元，增加训练数据库的大小)，从文献报道中得到更好的结果。在[41]Tsang,Fridrich等人将Ye的网络进行修改，使其能够对来自CNNs训练的高分辨率隐写图像与低分辨率图像进行分类。Yedroudj,Chaumont等人研究了丰富传统上用于隐写分析的数据库(称为BOSSBase[43])的效果。添加的图像属于BOWS2[44]数据库，以及使用相机捕获的图像，这些相机的特征与用于创建传统数据库的相机相似。最后，通过裁剪、调整大小、旋转和插值操作，增加了两个数据库中的图像数量。他们的结论是，为了提高隐写分析的性能，建议使用类似摄像机和尺寸的大型数据库。Chen,Fridrich, etal.[45]提出使用DL技术进行定量隐写分析，以预测空间和频域隐写图像(JPEG)中包含的有效载荷。Li等人提出将3个CNN并行合并。每个网络使用不同的预处理层进行特征提取(Gabo<br>filter [47]， Linear-SRM [17]， nonlinear-SRM[17])，同时使用3个激活函数(ReLU[48]， Sigmoid [49]，TanH[49])来考虑更多的预处理信息。曾等人对彩色图像进行了类似的实验。Boroumand Fredrich等人提出了一种新的CNN，它尽可能避免使用技巧，比如使用SRM过滤器进行预处理。该网络在空间域和频域均可工作。Zhang等人[51]提出了一种新的CNN，优化预处理层滤波器的权值，提高隐写噪声的影响，降低图像内容影响。它使用单独的卷积分别获得残差信道相关和空间相关，以获得更好的特征表示，最后使用空间金字塔池(SPP)[52]来添加局部特征，提高特征表示能力，并允许任意图像大小。</p>
+<p>本文的其余部分按如下顺序展开:第二部分对文献进行了系统的回顾。第三节介绍了所发现的结果和目前的技术状况。第四节给出了一些结论和今后的工作。</p>
+<p><strong>Ⅱ文献系统回顾</strong></p>
+<p>这篇综述的目的是展示DL在隐写分析中的应用近年来是如何发展的，并强调最重要的结果和未来可能的工作。建议读者先浏览一下[53]中的回顾，其中详细解释了隐写术和隐写分析背后的基本方法。这篇文献综述使用了[54]中提出的阶段，如下所述。</p>
+<p>A.必要的文献回顾</p>
+<p>由于应用于人工智能(AI)的硬件和软件的技术进步，gpu[22]的不断发展，以及支持机器学习算法设计和实现工作流的框架的出现，如TensorFlow[55]，研究者们已经开始深入使用这些技术和技术。DL应用于隐写分析也不例外，自2014年以来，该领域的研究人员一直将其用于隐写图像的检测。因此，我们进行了大量的实验，获得了超过SRM检测率13%的检测率，提高了人们对这一课题的整体兴趣。</p>
+<p>B .研究问题</p>
+<p>为了明确DL在隐写分析中的应用现状，系统地获取科学生产、期刊文章或会议记录的数据是关键，这也是本文的目的。为此目的，在不同的数据库中检索了相关文章，出现了以下研究问题:</p>
+<p>问1:在检测性能方面，使用CNNs进行隐写图像检测是否优于传统方法?</p>
+<p>问2:CNNs用于数字图像隐写分析的不同架构和新组件是什么?</p>
+<p>问3:使用CNNs的隐写图像的检测百分比是多少?</p>
+<p>问4:在隐写分析的DL实验中，使用最多的数字图像数据库是什么?</p>
+<p>c .文献搜索</p>
+<p>对法医学、计算机安全、数字信号处理、数字图像处理和人工智能等科学领域的文献进行了系统的回顾。在搜索信息时，考虑了研究人员、学生或教授等作者，目的是获得一份解释CNNs设计和实现的文章列表，以便进行隐写分析。本研究选择的词语如下:</p>
+<p>•深度学习</p>
+<p>•卷积神经网络</p>
+<p>•隐写分析</p>
+<p>使用上面定义的搜索术语，查询字符串(由逻辑操作符补充)被构建来改进执行结果。搜索过程仅限于2014年至2018年期间发表在期刊或会议记录上的文章，仅使用英语。</p>
+<p>下面列出了通用搜索字符串</p>
+<p>(“深度学习”或“卷积神经网络”)和(“隐写分析”)</p>
+<p>表1显示了用于审查的数据库和搜索字符串。对灰色文献的搜索包括该领域最相关的研究人员提供的所有类型的文件。在[42]、[56]-[60]、[80]中公开的代表大会、专题讨论会或短期课程的介绍中，发现一个好的基线是从文献的时间回顾开始的。</p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/79e678068418491173d4123c7f69ac66.png" alt=""></p>
+<p>D.纳入和排除标准</p>
+<p>纳入标准包括:</p>
+<p>•英语写作</p>
+<p>•2014 - 2018年间发表的文章</p>
+<p>•会议、大会或期刊发表的文章。</p>
+<p>•仅包含在表1数据库中的文章。</p>
+<p>•将DL应用于steganalysis的文章。</p>
+<p>排除标准:</p>
+<p>•只有目录和摘要的文章。</p>
+<p>•与研究无关的文章。</p>
+<p>•不应用DL进行隐写分析的文章。</p>
+<p>E.信息的提取和评价</p>
+<p>通过对信息源文献的系统检索，利用表1提供的检索字符串，发现312个条目分布如表2所示，其百分比分布如图3所示。以IEEExplore数据库检索到的79篇文章为参考，按年份进行分类，结果如图4所示，显示了感兴趣领域的文章发表趋势。需要澄清的是，大量重复的文章是在不同的搜索源中找到的。将重复的文章统一起来，得到110篇文章的基数。系统文献检索的步骤如下:</p>
+<p>1)开始:定义检索字符串，选择数据库。</p>
+<p>2)搜索:在选定的数据库中执行搜索字符串(共找到312篇文章)。</p>
+<p>3)重复:统一出现在多个数据库中的文章(结果压缩为110篇文章)。</p>
+<p>4)标题:阅读标题后，接受24篇，拒绝86篇。</p>
+<p>5)摘要:阅读摘要后，18篇文章被接受，6篇文章被拒绝。</p>
+<p>6)全文:阅读全文后，14篇文章被接受，4篇文章被拒绝。</p>
+<p>本文选择的14篇文献作为系统的文献综述，由于它们在高影响力的国际数据库中被发现，因此具有很高的可靠性，它们也有大量的引用，其作者在该领域享有很高的声誉。在表3中。文章的标题、作者和出版年份按时间顺序显示。对于文档的其余部分，当需要其中一篇文章时，将使用该表中给出的列表作为约定。这些文章是通过Mendeley应用程序组织的。</p>
+<p>最后，选取所选文章，根据谷歌Scholar提取被引次数，结果如图5所示。</p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/94d6c5af9714253cd375e811412e2a4d.png" alt=""></p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/ec882f656e89d0ef3f6e134b77a413ee.png" alt=""></p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/1277c179d345ff78a889f148e7001fea.png" alt=""></p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/fa6599cf6f54cdb20de203a0a18a0606.png" alt=""></p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/8c9b6eb86517d86d188b99503f63480b.png" alt=""></p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/cb6161b3430901fab172bf76d5005ed2.png" alt=""></p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/405304be328c8414ef2b94deda5f6e84.png" alt=""></p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/2f83939f8bc968a72788b103f718baf2.png" alt=""></p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/c72cd1f068395ddf796e58a30d11ef48.png" alt=""></p>
+<p><strong>Ⅲ 学科发展</strong></p>
+<p>在使用第二节的标准对文献进行了系统的搜索之后，这个主题的发展集中在14篇文章中，这些文章的进展有共同的主线就是将DL应用于隐写分析。出版地点和主要稿件见表5。可以看出，在过去的2年里，由于频繁的出版文章，这个主题也相应的火热起来。对本课题贡献最大的研究人员有:Jessica Fridrich, Marc Chaumont, Yinlong Qian, Guanshuo Xu, Tieniu Tan, Shunquan Tan,Yun-Qing Shi, Jishen Zeng, Mo Chen, Bin Li,Jiwu Huang, Jian Ye, Jiangqun Ni。研究结果发表在高影响力的研讨会、大会和期刊上。主要贡献是不同CNNs的产生，这些CNNs的发展得益于前代网络的贡献。目前提出的CNNs按时间顺序为QianNet或GNCNN[25]、XuNet[27]、YeNet[38]、Yedroudj-Net[40]、ZhuNet[51]。</p>
+<p>表6显示了每位作者实现的体系结构、用于训练、验证和测试的数据库、实验的领域(空间或频域)、用于隐写分析的隐写算法和最佳结果。</p>
+<p>从表5和表6可以看出，第一个实验是通过实现一个自动编码器堆栈，使用无监督学习完成的。从那时起，有监督学习的工作就一直在进行，它遵循了3条隐写分析的基本原则:<strong>增强隐写噪声，通过固定高通滤波器，提取特征和分类;</strong>所有这些都统一在一个同时优化其参数的单一架构下。该课题的第一个进展是在空间域，然后，研究人员进入了频域(JPEG)。</p>
+<p>研究人员在他们的实验中使用CNNs测试了不同的想法，其中最重要的是:增加网络的高度或使用完全连接的网络[26];采用自定义激活特性，保证网络收敛，提高隐写图像检测率[25]、[38]、[40];利用卷积层(残差网络或密集网络)间跳变的CNNs来设计非常深的网络(20层以上)，实现网络收敛，提高检测率[33]，[34]，[62]-[66];训练神经网络集合，将学习到的参数转移到收敛性复杂或检测率较低的神经网络[28]、[29]，[61];用一定的数据库训练CNNs，用完全不同的数据库对网络进行测试，以确定所设计的CNNs(Cover-Source Mismatch)[26]的可靠性[61];利用绝对值层(ABS)[27]、[28]、[40]、[51]加强统计建模;利用SRM设计的滤波器改进隐写噪声提取，利用CNNs[30]、[38]、[40]、[51]进行特征提取和分类;使用ImageNet等现实世界数据库，查看CNN如何很好地适应任何分辨率不同的数据集，并捕获特征[25]、[30]、[33]、[34]，[62]、[63];放置两个CNNs竞争。在这种情况下，第一个网络用于隐写，第二个网络用于隐写分析，目的是通过学习两个过程[36]，[37]，[67]-[72]的特点，获得一个自动的隐写过程;[41]训练一个能够从低分辨率图像中对高分辨率图像进行分类的网络;使用DL在空间和JPEG域[45]预测隐写图像的有效载荷(定量隐写分析)[73];考虑到修剪、旋转和插值操作，以及使用具有相似或不同特征的摄像机进行图像采集，在数据库中生成一个增量，注意调整[30]、[38]、[51]的大小，[74];将3个CNN并联于[46]中，每个网络在预处理层使用激活函数(ReLU、Sigmoid和TanH)和不同的滤波器，其灵感来自Gabo滤波器[47]和SRM(线性和非线性)[17];[50]做一个类似的工作，但是在彩色图像。</p>
+<p>所提出的网络大多采用Equation1的高通滤波器，该滤波器是在[17]中开发的，并首次用于[25]的隐写分析。在训练过程中没有对高通滤波器参数进行优化。<strong>该滤波器对图像进行预处理，增强了隐写噪声的影响，减小了图像内容的影响。该滤波器有助于CNN训练的收敛性;如果没有使用收敛，它可能会变慢或不存在。</strong>最新设计的CNNs不使用此过滤器;他们使用SRM提出的一组滤波器来获得残差特性的映射。</p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/c23558313a4b96f42ced84e489771e02.png" alt=""></p>
+<p>在CNN上进行的一般操作如Equation2所示。M（l）代表第l层特征映射，M（i）（l−1）是前一层的第i个特征映射,Ki l是第l层的第i个卷积核,bl表示第l层的偏置参数,∗代表卷积操作,f()是非线性操作称为激活函数,pool()表示池化操作和norm()表示归一化操作。<strong>卷积层的操作顺序为卷积、归一化、激活函数和池化</strong>。将最后一层得到的特征图传递给分类模块，分类模块由一个或多个完全连接的神经元层和一个Softmax层组成;最后一层负责对[0,1]之间的CNN值进行归一化，这是表示图像是cover还是stego的概率值。</p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/63ef2867725711aa773126dad140896f.png" alt=""></p>
+<p>所研究的神经网络的非线性激活函数分别为整流线性单元(ReLU)[48]、正切双曲函数TanH[49]、高斯函数和TLU。<strong>最后一个激活函数不包括DL应用于隐写分析，它的功能是限制值的范围，避免将网络建模为大值。通常TanH用于第一层，ReLU用于最后一层。</strong></p>
+<p>数据归一化操作为BN，如式3[35]所示。BN包括对特征图的每个特征的分布进行标准化，使平均值为零，方差统一，并且可能在必要时允许分布的重新缩放和重新平移。</p>
+<p>给定一个随机变量X，其实现为特征映射的值X∈R，则该值X的BN为:</p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/99d007ebf531cd2b7cedeedb322685c0.png" alt=""></p>
+<p>E(X)的期望,Var[X]方差,γ和β代表re-scaling和re-translation两个标量。期望E(X)和方差Var[X]在每个批处理更新,而γ和β被反向传播学习。在实践中，BN使得学习对参数[35]的初始化不那么敏感，允许使用较高的学习率，加快了学习速度，提高了分类的准确性[61]。在第一个提议的CNNs中，BN没有被使用。</p>
+<p>平均池化[75]操作是所有CNN池化操作中常用，因为在由于隐写过程引入的噪音非常弱,使用这个操作支持这种类型的噪声的传播和保存,在使用中不发生最大池化[75]。通常使用的池化是与它的邻居一起计算的本地操作。</p>
+<p>研究中得到的最重要的CNNs有: QianNet或GNCNN (2015) [25]，[76]，XuNet (2016)[27]，YeNet (2017)[38]，YedroudjNet(2018)[40]和ZhuNet(2018)[51]，都是最初在空间域设计的，有些适合在频域工作(JPEG)。<strong>QianNet的特点是有5个卷积层，一个高斯激活函数，每个卷积层后平均池化，2个全连通层，1个Softmax</strong>。<strong>XuNet的特点是有5个卷积层，在第一个卷积层之后有一个ABS层，前2层使用TanH激活函数，后3层使用ReLU，每个卷积层BN,<br>2个全连通层，1个Softmax。YeNet采用SRM滤波器组进行隐写噪声提取，代替了传统的Equation2(1)高通滤波器。该CNN由8个卷积层组成，第一个卷积层使用TLU激活函数后，另一个使用TanH，它有1个全连通层和1个Softmax</strong>。<strong>YedroudjNet使用SRM-inspired滤波器组对隐写噪声提取、5卷积层,一层ABS只有第一次卷积后层,TLU激活函数在前2层,ReLU在最后的3层,平均池化2到5层,2个完全连接层,1个Softmax层</strong>。<strong>CNN采用了XuNet和YeNet的最佳特性，并将它们统一在同一个架构下。ZhuNet的特点是使用SRM-inspired滤波器组初始化预处理层权值，在训练过程中优化预处理层权值，以增强隐写过程引入的噪声，降低图像内容影响。ZhuNet使用单独的卷积来改进特征提取过程，最后，平均池多层次称为空间金字塔池(SPP)[52]，允许网络分析任意大小的图像，该CNN的结果优于XuNet,YeNet,YedroudjNet和SRM+EC得到的结果。</strong>表4显示了上述CNNs和SRM+EC在空间域检测两种算法(S-UNIWARD和WOW)的误码率，有效载荷分别为0.4bpp和0.2bpp。在[34]中，观察到一种新的网络设计，称为SRNet，它减少了手动设计并启发式的使用其他网络用于捕获隐写噪声;这个网络在空间域和频域上运行。 </p>
+<p>图6显示了到目前为止最重要的网络的体系结构。紫色表示CNN的像素项。在大多数实验中，由于处理限制和计算内存，图像大小为256×256。预处理层为黄色，其目的是增加隐写过程引入的噪声影响，降低图像内容影响。在绿色部分，卷积层出现在进行分层特征提取的地方。蓝色表示激活、缩放、绝对值层和归一化的函数。白色显示了池操作，它降低了特征映射的维数和计算复杂度。由于隐写噪声的低功耗，目前设计的所有CNNs都采用平均池操作，因此需要考虑池操作发生区域的所有像素，以免丢失信息。红色和蓝绿色表示由完全连接的神经元层和Softmax组成的分类模块，Softmax负责为定义图像是cover还是stego的每个类提供0到1之间的概率分布。 </p>
+<p>要正确阅读图6，必须考虑以下信息。盒子内的结构表示内核数量×(内核的高度×内核的宽度×作为内核条目的特征映射的数量)。框外结构为特征映射数量×(特征映射高x宽)。如果没有指定Stride或Padding，则假定Stride= 1, Padding = 0。</p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/da406719b7386d5ee48a29694d047ab3.png" alt=""></p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/f83b1aedbf6362395b231dffd965bed2.png" alt=""></p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/19b6702d8f9d431414926af0f2ba2042.png" alt=""></p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/4dbc252b5ba5ca4f55bcc0f116368feb.png" alt=""></p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/bb1320710ecb43746b80aeba99e3589a.png" alt=""></p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/521c7735c29cff23e53614dff219b0e6.png" alt=""></p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/97acc4c8fbfb34951528741067fc9c24.png" alt=""></p>
+<p><img src="/2019/09/29/DL-steganography/DL-stegaography/745d017d7eb23aa3acae9c18f7a3562b.png" alt=""></p>
+<p>图7和图8显示了基于S-UNIWARD(图7)和WOW(图8)算法的隐写图像检测的平均错误率，根据有效载荷的不同，范围为0bpp到0.4bpp。需要注意的是，随着负载的增加，图像中引入的隐写噪声也会增加，这使得CNNs可以从这种类型的噪声中获得更多的信息，从而提高检测率。对于S-UNIWARD算法(图7)，无论有效载荷大小，ZhuNet的误码率最低(图7)，具体观察到的有效载荷为0.4bpp(研究人员使用最多)，ZhuNet的误码率较YedroudjNet(前代网络)降低7.5%，较SRM+EC(传统方法)降低9.4%。YeNet获得了所有有效载荷下的最高错误率。值得注意的是，SRM+EC、Qiannet、XuNet、YeNet和YedroudjNet具有相似的行为，这使得ZhuNet成为第一个显著超过SRM+EC对S-UNIWARD算法检测百分比的CNN。对于WOW算法(图8)，ZhuNet获得的误码率最低，无论负载值如何，具体观察0.4bpp,<br>ZhuNet的误码率比YedroudjNet降低了2.3%，比SRM+EC降低了13.7%。Qiannet获得了所有有效载荷下的最高错误率。需要指出的是，对于WOW算法，唯一没有超过SRM+EC结果的CNN是QianNet(CNN的第一个提出)，其他CNN都超过了SRM+EC检测百分比。</p>
+<p>最常用的算法用于研究文章都是S-UNIWARD,HUGO,HILL,WOW在空间域和J-UNIWARD,UED,UERD在频域中（JEPG）,所有不同的载荷,通常最有效负载用于实验0.4bpp空间域或0.4 bpnzAC(位/非0 cover AC DCT系数)JPEG域。</p>
+<p>相对于传统算法即使手动提取复杂的特性,，比较检测提出的CNN隐写图像结果,最重要的算法SRM[17],SPAM[24]和变异信道选择感知[58],[59]针对于空间域。选择-通道感知Gabor滤波器残差(SCA-GFR)[47]，[77]，离散余弦变换残差(DCTR)[78]，JPEG富模型(JRM)[79]，频域相位感知投影模型(PHARM)针对于频域（JEPG）[80]。第一个网络神经网络的计算结果低于传统算法的计算结果，但随着研究人员对新网络或自定义计算元素设计的深入，这些网络神经网络的计算结果优于这些文献的结果。大多数实验使用的是Clairvoyant[26]场景，其特点如下:</p>
+<p>•隐写分析者知道用于生成消息结块的算法。</p>
+<p>•隐写分析人员对隐写者使用的图像数据库具有良好的统计知识分布。</p>
+<p>•嵌入流程消息的有效负载是已知的。</p>
+<p>•总是使用相同的图像大小。</p>
+<p>•隐写分析者可以访问一组cover-stego图像，这些图像是隐写者使用的。</p>
+<p>•基于BOSSBase数据库，可运行10000张图片，尺寸为512×512或256×256，视硬件情况而定。</p>
+<p>•从最初的10000幅图像(cover)的BOSSBase开始，其他10000幅图像由一些现有的隐写算法(stego)以信息的结块方式构造而成，使得整套图像有10000对(cover-stego)。从该集合中随机选取5000对图像(cover-stego)，用4000对训练CNN，用1000对进行验证，剩余5000对图像用于CNN评价。</p>
+<p>•过滤器权重的初始化采用Xavier方法[81]。</p>
+<p>实验主要使用数据库BOSSBase<br>V1.01[12]、[43]，其中包含10000张8位便携式灰度地图格式(PGM)的图像，大小为512×512。第二个数据库是BOWS2[82]，它由8位PGM格式的10000张图像组成，大小为512×512。最后，第三个数据库是广泛的ImageNet[32]，它由1400多万幅不同大小的图像组成。通常使用ImageNet数据库进行频域(JPEG)实验。在一些实验中，由于研究团队的计算成本和内存限制，之前的数据库被调整或缩减到256×256。</p>
+<p>大多数用于CNNs实现的框架是Cuda-convnet[83]、Caffe[84]和TensorFlow[55]，这些工具箱允许以灵活和快速的方式创建CNNs。宾厄姆顿大学(美国)[85]有大量的工具，如用于隐写术和隐写分析的算法(包括空间域和频域)、传统的隐写分析仪以及DL技术的应用、用于实验的数字图像数据库和一些出版物。同样,在实验室的信息,机器人技术和微电子的Montpellier-France<br>(LIRMM) [86]DL应用于隐写式密码解密,有几个项目的算法可以下载,以及CNN的参数训练他们,一些重要的出版物。</p>
+<p><strong>Ⅳ、结论与未来工作</strong></p>
+<p>本文对DL在隐写分析中的应用进行了系统的回顾，从时间的角度揭示了该学科的发展历程。自2014年首次提出CNN以来，Tan和Li提出了一堆用于无监督学习的自动编码器，他们的结果并没有超过SRM的结果，但确实超过了SPAM的结果，成为其他研究者的合理依据。自那以后,提出了各种各样的研究,如CNN的训练集,将参数从一个网络向另一个，定量隐写分析，对任意大小的图像隐写分析,丰富图像数据库,考虑到介绍载体失源配效应实验,其中,可以到第三章看到详细内容。</p>
+<p>提出了不同结构的CNNs进行隐写分析的方法，如前面提到的Qiannet、YuNet、YeNet、YedroudjNet、ZhuNet等都是在空间域进行隐写分析，此外还对CNN<br>YuNet进行了改进，利用ResNet在频域(JPEG)进行隐写分析。观察到，CNN<br>ZhuNet提供的最佳空间域检测结果也改善了SRM提供的结果。SRNet是一种网络方案，它尽可能避免使用技巧或启发式来提取隐写噪声，并在空间域和JPEG域中工作。</p>
+<p>通过放置两个互相竞争的CNN(一个用于隐写，另一个用于隐写分析)来实现自动隐写过程的GAN方法的实现是很有趣的。</p>
+<p>对于II-B部分提出的问题，我们可以看到(1)DL应用于隐写分析得到的检测性能已经超过了传统方法(SRM+EC)得到的结果，如图7、8和表4、6所示;(2)各种架构解决了图6和表6所示的隐写分析的特定挑战，并且开发了特定的网络组件来解决这个挑战(如TLU和高斯激活函数);(3)目前的检测水平如表4、表6所示，但与大多数文献中所表达的研究群体所针对的结果相差甚远，尤其是在[34]、[40]、[42]、[45]、[56]、[60]等[87];(4)对隐写分析方法进行基准测试的数据库数量有限，但很活跃(见表6)，然而在ALASKA隐写分析的新挑战[87]中发布了新的面向现实世界的数据库。这些数据库将作为隐写术和隐写分析新实验的基础。</p>
+<p>根据目前的文献回顾，我们设想今后可能进行的工作如下:</p>
+<p>•生成新的CNNs，统一现有网络的优势，或生成全新的体系结构(密集、浅层和/或更深层次的体系结构)，以提高空间域和频域的检测率。</p>
+<p>•使用不同的数字图像数据库，考虑到不同相机的使用，进行更多的实验测试，更深入地研究载体源失配效应。</p>
+<p>•通过测试JPEG域中更多的隐写算法来执行隐写分析。</p>
+<p>•采用GAN方法在空间域进行隐写分析，并使用它在JPEG域进行自动隐写。</p>
+<p>•调整进行定量隐写分析的CNNs，以改进您的负载预测结果。</p>
+<p>•将DL应用于定量隐写分析，预测图像的频域隐写有效载荷(JPEG)。</p>
+<p>•利用大型数据库和更大的图像尺寸培训现有的CNNs。为此，需要在CPU和GPU集群架构下进行训练，以满足处理和内存的需求。</p>
+<p>•使用给定的隐写算法训练CNNs，并对另一种算法进行测试，以研究从一种算法到另一种算法的传输量。</p>
+<p>•将提出的ASDL-GAN框架应用于JPEG领域，其中有数以百万计的图像可用，并结合更先进的深度学习体系结构，以提高其安全性性能。</p>
+<p>•生成新的CNN和设计新的计算元素,允许以更有效的方式获得噪声产生的隐写术过程,改善的代表性特征,分类图像在空间和频域处理任意图像,所有上述避免使用技巧和最自动的方式。</p>
+<p>•研究现有CNNs与传统方法相比的计算效率。</p>
+<p>•与用于隐写分析的DL中使用的激活函数相比，测量预处理阶段(HPF)使用的过滤器性能。正如上面所看到的，在未来的工作中有很多的可能性可以激发研究人员继续为这个主题做出贡献，并邀请新的研究人员对DL应用于隐写分析感兴趣。</p>
+<p>参考文献：</p>
+<p>[1] N. Naranjo and V. Adolfo. (2007). Estenografía en Contenido</p>
+<p>Multimedia. [Online]. Available: <a href="http://openaccess.uoc.edu/webapps/o2/" target="_blank" rel="noopener">http://openaccess.uoc.edu/webapps/o2/</a></p>
+<p>bitstream/10609/929/1/40114tfc.pdf</p>
+<p>[2] Crypto Law Survey. Accessed: Dec. 15, 2018. [Online]. Available:</p>
+<p><a href="http://www.cryptolaw.org" target="_blank" rel="noopener">http://www.cryptolaw.org</a></p>
+<p>[3] G. J. Simmons, ‘‘The prisoners’ problem and the subliminal channel,’’</p>
+<p>in Advances in Cryptology, D. Chaum, Ed. Boston, MA, USA: Springer,</p>
+<p>1984, pp. 51–67. doi: 10.1007/978-1-4684-4730-9_5.</p>
+<p>[4] (2015). Aplicaciones de la esteganografía en la seguridad informática.</p>
+<p>[Online]. Available: <a href="https://www.sans.org/reading-room/whitepapers/" target="_blank" rel="noopener">https://www.sans.org/reading-room/whitepapers/</a></p>
+<p>stenganography/hiding-plain-view-steganography-terrorist-tool-551</p>
+<p>[5] N. F. Johnson and S. Jajodia, ‘‘Exploring steganography: Seeing</p>
+<p>the unseen,’’ Computer, vol. 31, no. 2, pp. 26–34, Feb. 1998.</p>
+<p>doi: 10.1109/MC.1998.10029.</p>
+<p>[6] J. Fridrich, M. Goljan, and R. Du, ‘‘Detecting LSB steganography in color,</p>
+<p>and gray-scale images,’’ IEEE Multimedia Mag., vol. 8, no. 4, pp. 22–28,</p>
+<p>Oct./Dec. 2001.</p>
+<p>[7] T. Pevný, T. Filler, and P. Bas, ‘‘Using high-dimensional image models</p>
+<p>to perform highly undetectable steganography,’’ in Information Hiding,</p>
+<p>R. Böhme, P. W. L. Fong, and R. Safavi-Naini, Eds. Berlin, Germany:</p>
+<p>Springer, 2010, pp. 161–177.</p>
+<p>[8] B. Li, M. Wang, J. Huang, and X. Li, ‘‘A new cost function for spatial</p>
+<p>image steganography,’’ in Proc. IEEE Int. Conf. Image Process. (ICIP),</p>
+<p>Oct. 2014, pp. 4206–4210.</p>
+<p>[9] V. Sedighi, R. Cogranne, and J. Fridrich, ‘‘Content-adaptive steganography</p>
+<p>by minimizing statistical detectability,’’ IEEE Trans. Inf. Forensics Security,<br>vol. 11, no. 2, pp. 221–234, Feb. 2016.[10] V. Holub, J. Fridrich, and T.<br>Denemark, ‘‘Universal distortion function for</p>
+<p>steganography in an arbitrary domain,’’ EURASIP J. Inf. Secur., vol. 2014,</p>
+<p>p. 1, Dec. 2014. doi: 10.1186/1687-417X-2014-1.</p>
+<p>[11] V. Holub and J. Fridrich, ‘‘Designing steganographic distortion</p>
+<p>using directional filters,’’ in Proc. IEEE Int. Workshop Inf. Forensics</p>
+<p>Secur. (WIFS), Dec. 2012, pp. 234–239.</p>
+<p>[12] BOSS. Accessed: Dec. 15, 2018. [Online]. Available: <a href="http://agents" target="_blank" rel="noopener">http://agents</a>.</p>
+<p>fel.cvut.cz/boss/index.php?mode=VIEW&amp;tmpl=materials</p>
+<p>[13] Y. J. Chanu, K. M. Singh, and T. Tuithung, ‘‘Image steganography and</p>
+<p>steganalysis: A survey,’’ Int. J. Comput. Appl., vol. 52, no. 2, pp. 1–11,</p>
+<p>2012.</p>
+<p>[14] A. Westfeld, ‘‘F5—A steganographic algorithm,’’ in Information Hiding,</p>
+<p>I. S. Moskowitz, Ed. Berlin, Germany: Springer, 2001, pp. 289–302.</p>
+<p>[15] L. Guo, J. Ni, and Y. Q. Shi, ‘‘Uniform embedding for efficient JPEG</p>
+<p>steganography,’’ IEEE Trans. Inf. Forensics Security, vol. 9, no. 5,</p>
+<p>pp. 814–825, May 2014.</p>
+<p>[16] L. Guo, J. Ni, W. Su, C. Tang, and Y.-Q. Shi, ‘‘Using statistical image<br>model</p>
+<p>for JPEG steganography: Uniform embedding revisited,’’ IEEE Trans. Inf.</p>
+<p>Forensics Security, vol. 10, no. 12, pp. 2669–2680, Dec. 2015.</p>
+<p>[17] J. Fridrich and J. Kodovský, ‘‘Rich models for steganalysis of digital</p>
+<p>images,’’ IEEE Trans. Inf. Forensics Security, vol. 7, no. 3, pp. 868–882,</p>
+<p>Jun. 2012.</p>
+<p>[18] J. Kodovský, J. Fridrich, and V. Holub, ‘‘Ensemble classifiers for<br>steganalysis of digital media,’’ IEEE Trans. Inf. Forensics Security, vol. 7,<br>no. 2,</p>
+<p>pp. 432–444, Apr. 2012.</p>
+<p>[19] C.-C. Chang and C.-J. Lin, ‘‘LIBSVM: A library for support vector</p>
+<p>machines,’’ ACM Trans. Intell. Syst. Technol., vol. 2, no. 3, pp. 27:1–27:27,</p>
+<ol start="2011">
+<li>[Online]. Available: <a href="http://doi.acm.org/10.1145/1961189.1961199" target="_blank" rel="noopener">http://doi.acm.org/10.1145/1961189.1961199</a></li>
+</ol>
+<p>[20] I. Lubenko and A. D. Ker, ‘‘Steganalysis with mismatched covers: Do</p>
+<p>simple classifiers help?’’ in Proc. Multimedia Secur., New York, NY,</p>
+<p>USA, 2012, pp. 11–18. [Online]. Available: <a href="http://doi.acm.org/10.1145/" target="_blank" rel="noopener">http://doi.acm.org/10.1145/</a></p>
+<p>2361407.2361410</p>
+<p>[21] M. A. Nielsen, ‘‘Neural networks and deep learning,’’ Mach. Learn.,</p>
+<p>pp. 875–936, 2015. [Online]. Available: <a href="https://www.sciencedirect" target="_blank" rel="noopener">https://www.sciencedirect</a>.</p>
+<p>com/science/article/pii/B9780128015223000185</p>
+<p>[22] R. T. Soto. (2016). Programación Paralela Sobre Arquitecturas Heterogéneas.<br>[Online]. Available: <a href="http://www.bdigital.unal.edu.co/54267/" target="_blank" rel="noopener">http://www.bdigital.unal.edu.co/54267/</a></p>
+<p>[23] S. Tan and B. Li, ‘‘Stacked convolutional auto-encoders for steganalysis</p>
+<p>of digital images,’’ in Proc. Asia–Pacific Signal Inf. Process. Assoc. Annu.</p>
+<p>Summit Conf. (APSIPA), no. 1, Dec. 2014, pp. 1–4. [Online]. Available:</p>
+<p><a href="https://ieeexplore.ieee.org/document/7041565" target="_blank" rel="noopener">https://ieeexplore.ieee.org/document/7041565</a></p>
+<p>[24] T. Pevný, P. Bas, and J. Fridrich, ‘‘Steganalysis by subtractive pixel</p>
+<p>adjacency matrix,’’ IEEE Trans. Inf. Forensics Security, vol. 5, no. 2,</p>
+<p>pp. 215–224, Jun. 2010.</p>
+<p>[25] Y. Qian, J. Dong, W. Wang, and T. Tan, ‘‘Deep learning for steganalysis</p>
+<p>via convolutional neural networks,’’ Proc. SPIE, vol. 9409, Mar. 2015,</p>
+<p>Art. no. 94090J. [Online]. Available: <a href="https://www.spiedigitallibrary" target="_blank" rel="noopener">https://www.spiedigitallibrary</a>.</p>
+<p>org/conference-proceedings-of-spie/9409/94090J/Deep-learning-forsteganalysis-via-convolutional-neural-networks/10.1117/12.2083479.</p>
+<p>short. doi: 10.1117/12.2083479.</p>
+<p>[26] L. Pibre, P. Jérôme, D. Ienco, and M. Chaumont, ‘‘Deep learning is a good</p>
+<p>steganalysis tool when embedding key is reused for different images, even</p>
+<p>if there is a cover source-mismatch,’’ in Proc. Media Watermarking, Secur.,</p>
+<p>Forensics, San Francisco, CA, USA, Feb. 2016, pp. 14–18. [Online].</p>
+<p>Available: <a href="http://arxiv.org/abs/1511.04855" target="_blank" rel="noopener">http://arxiv.org/abs/1511.04855</a></p>
+<p>[27] G. Xu, H.-Z. Wu, and Y.-Q. Shi, ‘‘Structural design of convolutional neural</p>
+<p>networks for steganalysis,’’ IEEE Signal Process. Lett., vol. 23, no. 5,</p>
+<p>pp. 708–712, May 2016.</p>
+<p>[28] G. Xu, H.-Z. Wu, and Y. Q. Shi, ‘‘Ensemble of CNNs for steganalysis: An<br>empirical study,’’ in Proc. 4th ACM Workshop Inf.</p>
+<p>Hiding Multimedia Secur., 2016, pp. 103–107. [Online]. Available:</p>
+<p><a href="http://doi.acm.org/10.1145/2909827.2930798" target="_blank" rel="noopener">http://doi.acm.org/10.1145/2909827.2930798</a></p>
+<p>[29] Y. Qian, J. Dong, W. Wang, and T. Tan, ‘‘Learning and transferring<br>representations for image steganalysis using convolutional neural network,’’ in</p>
+<p>Proc. IEEE Int. Conf. Image Process. (ICIP), Sep. 2016, pp. 2752–2756.</p>
+<p>[30] J. Zeng, S. Tan, B. Li, and J. Huang, ‘‘Large-scale JPEG image steganalysis<br>using hybrid deep-learning framework,’’ IEEE Trans. Inf. Forensics</p>
+<p>Security, vol. 13, no. 5, pp. 1200–1214, May 2018.</p>
+<p>[31] J. Zeng, S. Tan, B. Li, and J. Huang, ‘‘Pre-training via fitting deep<br>neural</p>
+<p>network to rich-model features extraction procedure and its effect on deep</p>
+<p>learning for steganalysis,’’ Electron. Imag., vol. 6, no. 7, pp. 44–49, 2017.</p>
+<p>[32] A. Krizhevsky, I. Sutskever, and G. E. Hinton, ‘‘ImageNet classification<br>with deep convolutional neural networks,’’ in Proc. 25th</p>
+<p>Int. Conf. Neural Inf. Process. Syst., vol. 1. New York, NY, USA:</p>
+<p>Curran Associates, Inc., 2012, pp. 1097–1105. [Online]. Available:</p>
+<p><a href="http://dl.acm.org/citation.cfm?id=2999134.2999257[33]" target="_blank" rel="noopener">http://dl.acm.org/citation.cfm?id=2999134.2999257[33]</a> G. Xu, ‘‘Deep<br>convolutional neural network to detect J-UNIWARD,’’ in</p>
+<p>Proc. 5th ACM Workshop Inf. Hiding Multimedia Secur., 2017, pp. 67–73.</p>
+<p>[Online]. Available: <a href="http://doi.acm.org/10.1145/3082031.3083236" target="_blank" rel="noopener">http://doi.acm.org/10.1145/3082031.3083236</a></p>
+<p>[34] M. Boroumand, M. Chen, and J. Fridrich, ‘‘Deep residual network for<br>steganalysis of digital images,’’ IEEE Trans. Inf. Forensics Security, vol. 14,</p>
+<p>no. 5, pp. 1181–1193, May 2018.</p>
+<p>[35] S. Ioffe and C. Szegedy, ‘‘Batch normalization: Accelerating deep network<br>training by reducing internal covariate shift,’’ in Proc. 32nd</p>
+<p>Int. Conf. Mach. Learn., vol. 37, 2015, pp. 448–456. [Online].</p>
+<p>Available: <a href="http://arxiv.org/abs/1502.03167" target="_blank" rel="noopener">http://arxiv.org/abs/1502.03167</a> and <a href="http://dl.acm.org/citation" target="_blank" rel="noopener">http://dl.acm.org/citation</a>.</p>
+<p>cfm?id=3045118.3045167</p>
+<p>[36] D. Hu, L. Wang, W. Jiang, S. Zheng, and B. Li, ‘‘A novel image<br>steganography method via deep convolutional generative adversarial networks,’’<br>IEEE</p>
+<p>Access, vol. 6, pp. 38303–38314, 2018.</p>
+<p>[37] W. Tang, S. Tan, B. Li, and J. Huang, ‘‘Automatic steganographic distortion</p>
+<p>learning using a generative adversarial network,’’ IEEE Signal Process.</p>
+<p>Lett., vol. 24, no. 10, pp. 1547–1551, Oct. 2017.</p>
+<p>[38] J. Ni, J. Ye, and Y. I. Yang, ‘‘Deep learning hierarchical representations<br>for</p>
+<p>image steganalysis,’’ IEEE Trans. Inf. Forensics Security, vol. 12, no. 11,</p>
+<p>pp. 2545–2557, Nov. 2017.</p>
+<p>[39] K. He and X. Zhang and S. Ren and J. Sun, ‘‘Deep residual learning for</p>
+<p>image recognition,’’ in Proc. IEEE Conf. Comput. Vis. Pattern Recognit.</p>
+<p>(CVPR), Jun. 2016, pp. 770–778. doi: 10.1109/CVPR.2016.90.</p>
+<p>[40] M. Yedroudj, F. Comby, and M. Chaumont, ‘‘Yedroudj-net: An effi-</p>
+<p>cient CNN for spatial steganalysis,’’ in Proc. Int. Conf. Acoust.,</p>
+<p>Speech, Signal Process., Apr. 2018, pp. 2092–2096. [Online]. Available:</p>
+<p><a href="http://arxiv.org/abs/1803.00407" target="_blank" rel="noopener">http://arxiv.org/abs/1803.00407</a></p>
+<p>[41] C. F. Tsang and J. J. Fridrich, ‘‘Steganalyzing images of arbitrary size</p>
+<p>with CNNs,’’ in Proc. Media Watermarking, Secur., Forensics, Burlingame,</p>
+<p>CA, USA, Jan. /Feb. 2018, pp. 121-1–121-8. doi: 10.2352/ISSN.2470-</p>
+<p>1173.2018.07.MWSF-121.</p>
+<p>[42] M. Yedroudj, M. Chaumont, and F. Comby, ‘‘How to augment a small</p>
+<p>learning set for improving the performances of a CNN-based steganalyzer?’’<br>Electron. Imag., vol. 7, pp. 1–7, Jan. 2018. [Online]. Available:</p>
+<p><a href="http://arxiv.org/abs/1801.04076" target="_blank" rel="noopener">http://arxiv.org/abs/1801.04076</a></p>
+<p>[43] P. Bas, T. Filler, and T. Pevny, ‘‘‘Break our steganographic system’:</p>
+<p>The ins and outs of organizing BOSS,’’ in Information Hiding (Lecture</p>
+<p>Notes in Computer Science), vol. 6958. Czechia: May 2011, pp. 59–70.</p>
+<p>[Online]. Available: <a href="https://hal.archives-ouvertes.fr/hal-00648057" target="_blank" rel="noopener">https://hal.archives-ouvertes.fr/hal-00648057</a>, doi:</p>
+<p>10.1007/978-3-642-24178-9_15.</p>
+<p>[44] W. Mazurczyk and S. Wendzel, ‘‘Information hiding: Challenges for forensic<br>experts,’’ Commun. ACM, vol. 61, no. 1, pp. 86–94, 2017. [Online].</p>
+<p>Available: <a href="http://dl.acm.org/citation.cfm?doid=3176926.3158416" target="_blank" rel="noopener">http://dl.acm.org/citation.cfm?doid=3176926.3158416</a>. doi:</p>
+<p>10.1145/3158416.</p>
+<p>[45] M. Chen, M. Boroumand, and J. Fridrich, ‘‘Deep learning regressors</p>
+<p>for quantitative steganalysis,’’ Soc. Imag. Sci. Technol., vol. 2018, no. 7,</p>
+<p>pp. 160-1–160-7, 2017.</p>
+<p>[46] B. Li, W. Wei, A. Ferreira, and S. Tan, ‘‘ReST-Net: Diverse activation</p>
+<p>modules and parallel subnets-based CNN for spatial image steganalysis,’’</p>
+<p>IEEE Signal Process. Lett., vol. 25, no. 5, pp. 650–654, May 2018.</p>
+<p>[47] X. Song, F. Liu, C. Yang, X. Luo, and Y. Zhang, ‘‘Steganalysis of</p>
+<p>adaptive JPEG steganography using 2D Gabor filters,’’ in Proc. 3rd</p>
+<p>ACM Workshop Inf. Hiding Multimedia Secur., New York, NY, USA,</p>
+<p>2015, pp. 15–23. [Online]. Available: <a href="http://dl.acm.org/citation.cfm" target="_blank" rel="noopener">http://dl.acm.org/citation.cfm</a>?</p>
+<p>doid=2756601.2756608 and <a href="http://doi.acm.org/10.1145/2756601.2756608" target="_blank" rel="noopener">http://doi.acm.org/10.1145/2756601.2756608</a></p>
+<p>[48] V. Nair and G. E. Hinton, ‘‘Rectified linear units improve restricted<br>Boltzmann machines,’’ in Proc. 27th Int. Conf. Int. Conf. Mach. Learn. (ICML),</p>
+<p>no. 3. Madison, WI, USA: Omnipress, 2010, pp. 807–814. [Online]. Available:<br><a href="http://dl.acm.org/citation.cfm?id=3104322.3104425" target="_blank" rel="noopener">http://dl.acm.org/citation.cfm?id=3104322.3104425</a></p>
+<p>[49] B. Karlik and A. Vehbi, ‘‘Performance analysis of various activation<br>functions in generalized MLP architectures of neural networks,’’ Int. J. Artif.</p>
+<p>Intell. Expert Syst., vol. 1, no. 4, pp. 111–122, 2015.</p>
+<p>[50] J. Zeng, S. Tan, G. Liu, B. Li, and J. Huang, ‘‘WISERNet: Wider<br>separatethen-reunion network for steganalysis of color images,’’ Mar. 2018,</p>
+<p>arXiv:1803.04805. [Online]. Available: <a href="http://arxiv.org/abs/1803.04805" target="_blank" rel="noopener">http://arxiv.org/abs/1803.04805</a></p>
+<p>[51] R. Zhang, F. Zhu, J. Liu, and G. Liu, ‘‘Efficient feature learning and<br>multisize image steganalysis based on CNN,’’ Jul. 2018, arXiv:1807.11428.</p>
+<p>[Online]. Available: <a href="http://arxiv.org/abs/1807.11428" target="_blank" rel="noopener">http://arxiv.org/abs/1807.11428</a></p>
+<p>[52] K. He, X. Zhang, S. Ren, and J. Sun, ‘‘Spatial pyramid pooling in deep</p>
+<p>convolutional networks for visual recognition,’’ in Computer Vision—</p>
+<p>ECCV, D. Fleet, T. Pajdla, B. Schiele, and T. Tuytelaars, Eds. Cham,</p>
+<p>Switzerland: Springer, 2014, pp. 346–361.</p>
+<p>[53] K. Karampidis, E. Kavallieratou, and G. Papadourakis, ‘‘A review of image</p>
+<p>steganalysis techniques for digital forensics,’’ J. Inf. Secur. Appl., vol. 40,</p>
+<p>pp. 217–235, Jun. 2018. doi: 10.1016/j.jisa.2018.04.005.</p>
+<p>[54] Software Engineering Group, ‘‘Guidelines for performing systematic<br>literature reviews in software engineering,’’ Softw. Eng. Group School</p>
+<p>Comput. Sci., Math. Keele Univ., Keele, U.K., Dept. Comput. Sci. Univ.</p>
+<p>Durham, Durham, U.K., EBSE Tech. Rep. EBSE-2007-01, 2007.</p>
+<p>[55] M. Abadi et al., ‘‘TensorFlow: A system for large-scale machine learning,’’</p>
+<p>in Proc. 12th USENIX Conf. Oper. Syst. Design Implement., vol. 101.</p>
+<p>Berkeley, CA, USA: USENIX Association, 2016, pp. 265–283. [Online].</p>
+<p>Available: <a href="http://dl.acm.org/citation.cfm?id=3026877.3026899" target="_blank" rel="noopener">http://dl.acm.org/citation.cfm?id=3026877.3026899</a></p>
+<p>[56] M. Chaumont, ‘‘The emergence of Deep Learning in steganography and</p>
+<p>steganalysis,’’ in Journée ‘Stéganalyse, Enjeux et Méthodes’, labelisée</p>
+<p>par le GDR ISIS et le pré-GDR sécurité. Poitiers, France: Philippe</p>
+<p>Carré (XLIM, Poitiers) and Marianne Clausel (IECL,Nancy) and Farida</p>
+<p>Enikeeva (LMA, Poitiers) and Laurent Navarro (CIS-EMSE, St Etienne),</p>
+<p>Jan. 2018. [Online]. Available: <a href="https://hal-lirmm.ccsd.cnrs.fr/lirmm-" target="_blank" rel="noopener">https://hal-lirmm.ccsd.cnrs.fr/lirmm-</a></p>
+<ol start="1777391">
+<li>doi: 10.13140/RG.2.2.35080.32005.</li>
+</ol>
+<p>[57] S. Kouider, M. Chaumont, and W. Puech, ‘‘Technical points about adaptive</p>
+<p>steganography by Oracle (ASO),’’ in Proc. 20th Eur. Signal Process.</p>
+<p>Conf. (EUSIPCO), Aug. 2012, pp. 1703–1707.</p>
+<p>[58] L. Pibre, P. Jérôme, D. Ienco, and M. Chaumont, ‘‘Deep learning is a good</p>
+<p>steganalysis tool when embedding key is reused for different images, even</p>
+<p>if there is a cover source-mismatch,’’ in Media Watermarking, Security, and</p>
+<p>Forensics. San Francisco, CA, USA: IS&amp;T Int. Symp. on Electronic Imaging, 2016,<br>pp. 1–23. [Online]. Available: <a href="http://www.lirmm.fr/\~chaumont/" target="_blank" rel="noopener">http://www.lirmm.fr/\~chaumont/</a></p>
+<p>[59] J. Newman, G. Yong, W. Min, R. Stephanie, and L. Li, ‘‘StegoDB: A</p>
+<p>statistically-designed image dataset for benchmarking steganalysis algorithms<br>WeHide app,’’ in Forensics\@NIST. Ames, IA, USA: Iowa State</p>
+<p>Univ., 2016.</p>
+<p>[60] M. Chaumont. (Oct. 2018). Deep Learning in Steganography and</p>
+<p>Steganalysis Since 2015. [Online]. Available: <a href="http://rgdoi.net/10" target="_blank" rel="noopener">http://rgdoi.net/10</a>.</p>
+<p>13140/RG.2.2.25683.22567</p>
+<p>[61] M. Chen, V. Sedighi, M. Boroumand, and J. Fridrich, ‘‘JPEGphase-aware<br>convolutional neural network for steganalysis of JPEG</p>
+<p>images,’’ in Proc. 5th ACM Workshop Inf. Hiding Multimedia</p>
+<p>Secur. (IHMMSec), 2017, pp. 75–84. [Online]. Available:</p>
+<p><a href="http://dl.acm.org/citation.cfm?doid=3082031.3083248" target="_blank" rel="noopener">http://dl.acm.org/citation.cfm?doid=3082031.3083248</a> and <a href="http://doi.acm" target="_blank" rel="noopener">http://doi.acm</a>.</p>
+<p>org/10.1145/3082031.3083248</p>
+<p>[62] J. Yang, X. Kang, E. K. Wong, and Y.-Q. Shi, ‘‘JPEG steganalysis with</p>
+<p>combined dense connected CNNs and SCA-GFR,’’ Multimedia Tools</p>
+<p>Appl., vol. 78, no. 7, pp. 8481–8495, 2019.</p>
+<p>[63] X. Huang, S. Wang, T. Sun, G. Liu, and X. Lin, ‘‘Steganalysis of adaptive<br>JPEG steganography based on resdet,’’ in Proc. Asia–Pacific Signal Inf. Process.<br>Assoc. Annu. Summit Conf. (APSIPA ASC), Nov. 2018,</p>
+<p>pp. 549–553.</p>
+<p>[64] J. Yang, Y.-Q. Shi, E. K. Wong, and X. Kang, ‘‘JPEG steganalysis based on<br>DenseNet,’’ 2017, arXiv:1711.09335. [Online]. Available:</p>
+<p><a href="https://arxiv.org/abs/1711.09335" target="_blank" rel="noopener">https://arxiv.org/abs/1711.09335</a></p>
+<p>[65] S. Wu, S. Zhong, and Y. Liu, ‘‘Deep residual learning for image<br>steganalysis,’’ Multimedia Tools Appl., vol. 77, no. 9, pp. 10437–10453,</p>
+<p>2017.</p>
+<p>[66] S. Wu, S.-H. Zhong, and Y. Liu, ‘‘Steganalysis via deep residual network,’’</p>
+<p>in Proc. 22nd Int. Conf. Parallel Distrib. Syst. (ICPADS), Dec. 2016,</p>
+<p>pp. 1233–1236.</p>
+<p>[67] Y. Zhang, W. Zhang, K. Chen, J. Liu, Y. Liu, and N. Yu, ‘‘Adversarial<br>examples against deep neural network based steganalysis,’’ in</p>
+<p>Proc. 6th ACM Workshop Inf. Hiding Multimedia Secur., New York,</p>
+<p>NY, USA, 2018, pp. 67–72. [Online]. Available: <a href="http://doi.acm.org/10" target="_blank" rel="noopener">http://doi.acm.org/10</a>.</p>
+<p>1145/3206004.3206012</p>
+<p>[68] J. Hayes and G. Danezis, ‘‘Generating steganographic images via</p>
+<p>adversarial training,’’ 2017, arXiv:1703.00371. [Online]. Available:</p>
+<p><a href="https://arxiv.org/abs/1703.00371" target="_blank" rel="noopener">https://arxiv.org/abs/1703.00371</a></p>
+<p>[69] J. Yang, K. Liu, X. Kang, E. K. Wong, and Y.-Q. Shi, ‘‘Spatial</p>
+<p>image steganography based on generative adversarial network,’’ 2018,</p>
+<p>arXiv:1804.07939. [Online]. Available: <a href="https://arxiv.org/abs/1804.07939" target="_blank" rel="noopener">https://arxiv.org/abs/1804.07939</a></p>
+<p>[70] W. Tang, B. Li, S. Tan, M. Barni, and J. Huang, ‘‘CNN based adversarial</p>
+<p>embedding with minimum alteration for image steganography,’’ 2018,</p>
+<p>arXiv:1803.09043. [Online]. Available: <a href="https://arxiv.org/abs/1803.09043" target="_blank" rel="noopener">https://arxiv.org/abs/1803.09043</a></p>
+<p>[71] J. Liu et al., ‘‘Detection based defense against adversarial examples from</p>
+<p>the steganalysis point of view,’’ 2018, arXiv:1806.09186. [Online]. Available:<br><a href="https://arxiv.org/abs/1806.09186" target="_blank" rel="noopener">https://arxiv.org/abs/1806.09186</a></p>
+<p>[72] J. Zhu, R. Kaplan, J. Johnson, and L. Fei-Fei, ‘‘HiDDeN: Hiding</p>
+<p>data with deep networks,’’ 2018, arXiv:1807.09937. [Online]. Available:</p>
+<p><a href="https://arxiv.org/abs/1807.09937" target="_blank" rel="noopener">https://arxiv.org/abs/1807.09937</a></p>
+<p>[73] A. Zakaria, M. Chaumont, and G. Subsol, ‘‘Quantitative and binary<br>steganalysis in JPEG: A comparative study,’’ in Proc. 26th Eur. Signal Process.<br>Conf. (EUSIPCO), vol. 201, no. 1, 2018, pp. 1422–1426.[74] M. Yedroudj, M.<br>Chaumont, and F. Comby, ‘‘How to augment</p>
+<p>a small learning set for improving the performances of a CNNbased<br>steganalyzer?’’ Jan. 2018, arXiv:1801.04076. [Online]. Available:</p>
+<p><a href="https://arxiv.org/abs/1801.04076" target="_blank" rel="noopener">https://arxiv.org/abs/1801.04076</a></p>
+<p>[75] Y.-L. Boureau, J. Ponce, and Y. LeCun, ‘‘A theoretical analysis of feature</p>
+<p>pooling in visual recognition,’’ in Proc. 27th Int. Conf. Mach. Learn.</p>
+<p>(ICML). New York, NY, USA: Omnipress, 2010, pp. 111–118. [Online].</p>
+<p>Available: <a href="http://dl.acm.org/citation.cfm?id=3104322.3104338" target="_blank" rel="noopener">http://dl.acm.org/citation.cfm?id=3104322.3104338</a></p>
+<p>[76] Y. Qian, J. Dong, W. Wang, and T. Tan, ‘‘Feature learning for</p>
+<p>steganalysis using convolutional neural networks,’’ Multimedia Tools</p>
+<p>Appl., vol. 77, no. 15, pp. 19633–19657, Aug. 2018. [Online]. Available:</p>
+<p><a href="http://proceedings.spiedigitallibrary.org/proceeding.aspx?doi=10.1117/1%" target="_blank" rel="noopener">http://proceedings.spiedigitallibrary.org/proceeding.aspx?doi=10.1117/1%</a></p>
+<p>2.2083479</p>
+<p>[77] T. D. Denemark, M. Boroumand, and J. Fridrich, ‘‘Steganalysis features</p>
+<p>for content-adaptive JPEG steganography,’’ IEEE Trans. Inf. Forensics</p>
+<p>Security, vol. 11, no. 8, pp. 1736–1746, Aug. 2016.</p>
+<p>[78] V. Holub and J. Fridrich, ‘‘Low-complexity features for JPEG steganalysis</p>
+<p>using undecimated DCT,’’ IEEE Trans. Inf. Forensics Security, vol. 10,</p>
+<p>no. 2, pp. 219–228, Feb. 2015.</p>
+<p>[79] J. Kodovský and J. Fridrich, ‘‘Steganalysis of JPEG images using rich</p>
+<p>models,’’ Proc. SPIE, vol. 8303, Feb. 2012, Art. no. 83030A. doi:</p>
+<p>10.1117/12.907495.</p>
+<p>[80] V. Holub and J. Fridrich, ‘‘Phase-aware projection model for steganalysis<br>of JPEG images,’’ p. 94090T, 2015. [Online]. Available:</p>
+<p><a href="http://10.0.4.93/12.2075239" target="_blank" rel="noopener">http://10.0.4.93/12.2075239</a></p>
+<p>[81] X. Glorot and Y. Bengio, ‘‘Understanding the difficulty of training deep</p>
+<p>feedforward neural networks,’’ J. Mach. Learn. Res., vol. 9, pp. 249–256,</p>
+<p>May 2010. [Online]. Available: <a href="http://arxiv.org/abs/1701.05369" target="_blank" rel="noopener">http://arxiv.org/abs/1701.05369</a></p>
+<p>[82] (2007). BOWS-2 Web Page. [Online]. Available:<br><a href="http://bows2.eclille.fr/index.php?mode=VIEW&amp;tmpl=index1" target="_blank" rel="noopener">http://bows2.eclille.fr/index.php?mode=VIEW&amp;tmpl=index1</a></p>
+<p>[83] Google Code Archive—Long-Term Storage for Google Code</p>
+<p>Project Hosting. Accessed: Dec. 15, 2018. [Online]. Available:</p>
+<p><a href="https://code.google.com/archive/p/cuda-convnet/" target="_blank" rel="noopener">https://code.google.com/archive/p/cuda-convnet/</a></p>
+<p>[84] Y. Jia et al., ‘‘Caffe: Convolutional architecture for fast feature<br>embedding,’’ in Proc. 22Nd ACM Int. Conf. Multimedia (MM), New York,</p>
+<p>NY, USA, 2014, pp. 675–678. [Online]. Available: <a href="http://doi.acm.org/10" target="_blank" rel="noopener">http://doi.acm.org/10</a>.</p>
+<p>1145/2647868.2654889</p>
+<p>[85] Universidad de Binghamton. [Online]. Available: <a href="http://dde.binghamton" target="_blank" rel="noopener">http://dde.binghamton</a>.</p>
+<p>edu/download/</p>
+<p>[86] Page d’Accueil de Marc Chaumont. Accessed: Dec. 15, 2018. [Online].</p>
+<p>Available: <a href="http://www.lirmm.fr/\~chaumont/index.html" target="_blank" rel="noopener">http://www.lirmm.fr/\~chaumont/index.html</a></p>
+<p>[87] R. Cogranne, Q. Giboulot, and P. Bas, Alaska. Marc Chaumont’s Web Page.</p>
+<p>Accessed: Jan. 19, 2019. [Online]. Available: <a href="https://alaska.utt.fr/\#top" target="_blank" rel="noopener">https://alaska.utt.fr/\#top</a></p>
+<p>[88] D. M. Chandler and S. S. Hemami, ‘‘VSNR: A wavelet-based visual<br>signalto-noise ratio for natural images,’’ IEEE Trans. Image Process., vol. 16,</p>
+<p>no. 9, pp. 2284–2298, Sep. 2007.</p>
+<p>[89] R. Shah and Y. Yang, ‘‘Health and economic burden of obesity in</p>
+<p>elderly individuals with asthma in the United States,’’ Population Health</p>
+<p>Manage., vol. 18, no. 3, pp. 186–191, 2015. [Online]. Available:</p>
+<p><a href="http://online.liebertpub.com/doi/10.1089/pop.2014.0089" target="_blank" rel="noopener">http://online.liebertpub.com/doi/10.1089/pop.2014.0089</a></p>
+<p>[90] F. Chollet, ‘‘Xception: Deep learning with depthwise separable<br>convolutions,’’ in Proc. 30th IEEE Conf. Comput. Vis. Pattern Recognit. (CVPR),</p>
+<p>Jul. 2017, pp. 1800–1807.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Steganography/" rel="tag"><i class="fa fa-tag"></i> Steganography</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/03/pytorch-anaconda/" rel="next" title="pytorch+anaconda">
+                <i class="fa fa-chevron-left"></i> pytorch+anaconda
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100017135643802" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                    
+                      FB Page
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.youtube.com/channel/UC8TkFUpWAS2wzj34ijgAZGA?view_as=subscriber" target="_blank" title="YouTube">
+                  
+                    <i class="fa fa-fw fa-youtube"></i>
+                  
+                    
+                      YouTube
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ws.binghamton.edu/fridrich/?tdsourcetag=s_pctim_aiomsg" title="Fridrich" target="_blank">Fridrich</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://imkira.com/" title="Kira" target="_blank">Kira</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"mobile":{"show":false},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>
