@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="GAN," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Steganographic Generative Adversarial Networks 隐写生成对抗网络 Abstract隐写术是隐藏非秘密信息（“容器”）内的秘密信息（“有效载荷”）的方法的集合。它的对应物Steganalysis是确定消息是否包含隐藏有效负载并在可能的情况下恢复它的实践。隐藏有效载荷的存在通常由二进制分类器检测。在本研究中，我们提出了一种基于深度卷积生成对抗网络（DCGA">
+<meta name="keywords" content="GAN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SGAN">
+<meta property="og:url" content="http://fennudehaogua.top/2019/12/02/SGAN/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="Steganographic Generative Adversarial Networks 隐写生成对抗网络 Abstract隐写术是隐藏非秘密信息（“容器”）内的秘密信息（“有效载荷”）的方法的集合。它的对应物Steganalysis是确定消息是否包含隐藏有效负载并在可能的情况下恢复它的实践。隐藏有效载荷的存在通常由二进制分类器检测。在本研究中，我们提出了一种基于深度卷积生成对抗网络（DCGA">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SGAN/a6df64060115ec84cae8a7b10465d6e5.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SGAN/e6f1be200280144e29ba62ed3a5cea30.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SGAN/fe2c574cc47735d629c6bfff2d4d2085.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SGAN/7514aea1fb5a4a33496cc8e21262f985.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SGAN/add1cf2521230da787f6f00cd70df340.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SGAN/23a9338de574b8eeac1429efff14a43f.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SGAN/bb5a0b37820731493b2ae82fb100e4a5.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SGAN/4cb536ddc8f7efb3a9e9747eae6464d1.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SGAN/52ca97dacd144e8115c06add079e25de.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SGAN/0942391b1081614c468a1f284daa06dc.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SGAN/a3d561cb9c0784fecd0448f3f1f8a7c2.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SGAN/8c001c59c157fa3ed54cda239fe78fb3.png">
+<meta property="og:updated_time" content="2019-12-02T12:48:52.287Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SGAN">
+<meta name="twitter:description" content="Steganographic Generative Adversarial Networks 隐写生成对抗网络 Abstract隐写术是隐藏非秘密信息（“容器”）内的秘密信息（“有效载荷”）的方法的集合。它的对应物Steganalysis是确定消息是否包含隐藏有效负载并在可能的情况下恢复它的实践。隐藏有效载荷的存在通常由二进制分类器检测。在本研究中，我们提出了一种基于深度卷积生成对抗网络（DCGA">
+<meta name="twitter:image" content="http://fennudehaogua.top/2019/12/02/SGAN/a6df64060115ec84cae8a7b10465d6e5.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2019/12/02/SGAN/"/>
+
+
+
+
+
+  <title>SGAN | fennudehaogua.top</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?727b9992a1a14607aebb47500e5bcc08";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2019/12/02/SGAN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SGAN</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-02T20:46:33+08:00">
+                2019-12-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Steganographic Generative Adversarial Networks</p>
+<p>隐写生成对抗网络</p>
+<h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>隐写术是隐藏非秘密信息（“容器”）内的秘密信息（“有效载荷”）的方法的集合。它的对应物Steganalysis是确定消息是否包含隐藏有效负载并在可能的情况下恢复它的实践。隐藏有效载荷的存在通常由二进制分类器检测。在本研究中，我们提出了一种基于深度卷积生成对抗网络（DCGAN）生成图像类容器的新模型。该方法允许使用标准隐写算法生成更多的setganalysis-secure消息嵌入。实验结果表明，新模型成功地欺骗了隐写分析仪，因此可以用于隐写应用。</p>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>最近开发的生成对抗网络（GAN，见[GPAM +14]）是强大的生成模型，其主要思想是通过玩最小最大游戏来训练生成器和判别器网络。在图像域中，对于由一些密度Pdata（x）生成的数据集，生成器G尝试近似图像生成分布并且尽可能合成为真实图像，而鉴别器D努力将真实图像与假图像区分开。</p>
+<p>有几种GAN的修改可以生成逼真的图像：</p>
+<p>深度卷积生成对抗网络（DCGAN，见[RMC15]） - 该模型是GAN的修改，专门用于生成图像;</p>
+<p>条件GAN - 它允许从指定的类生成对象，参见[MO14];</p>
+<p>从文本描述生成图像，请参阅[RAY + 16]。</p>
+<p>在本研究中，我们将DCGAN模型应用于安全隐写术的问题。我们构建了一个特殊的容器图像生成器，与直接从原始图像派生的容器相比，其合成输出不易成功进行隐写分析。特别是，我们研究这种方法是否允许欺骗给定的隐写分析器，由二进制分类器检测图像中隐藏消息的存在。</p>
+<h1 id="Steganography"><a href="#Steganography" class="headerlink" title="Steganography"></a>Steganography</h1><p>隐写术是隐藏秘密消息的做法，例如，可能以最不显眼的方式在另一个非秘密消息中的文档，图像或视频。在本文中，我们考虑文本嵌入到图像，文本由比特串给出。更正式地说，对于消息T和图像I，隐写算法是映射S：TX I →I‘，其中I’是包含消息T的图像，使得其能在视觉上与I区分不开。</p>
+<p>最流行且易于实现的嵌入算法是最低有效位（LSB）算法。LSB的主要思想是将秘密消息存储在给定图像容器中每个像素的某个颜色通道的最不重要位（最后位）中。由于像素彼此独立地调整，因此LSB算法改变最不重要位的分布，从而简化了有效载荷的检测。这种方法的修改基本上没有改变最不重要位的分布，所谓的±1嵌入。该方法从某个颜色通道像素中随机地添加或减去1，以使最后的位与所需的位匹配。在本文中，我们基本上考虑±1嵌入算法。</p>
+<p>有更复杂的信息嵌入到光栅图像的算法：WOW [HF12]，HUGO [PFB10]，S-UNIWARD[HFD14]等。它们源于LSB算法的关键思想，但采用了更具策略性的像素处理技术：对于原始图像X及其最终版本的带有秘密消息图像X‘，像素的选择方式使得失真函数最小化：</p>
+<p><img src="/2019/12/02/SGAN/a6df64060115ec84cae8a7b10465d6e5.png" alt=""></p>
+<p>其中ρ是改变X像素的成本，具体为每种特定的隐写算法。</p>
+<p>为了检测容器中隐藏信息的存在，通常使用隐写分析。将图像与一些隐藏的消息与空区分开的阶段通常通过二进制分类来执行。隐写分析的基本方法是基于特征提取器（如SPAM<br>[PBF10]，SRM<br>[FK12]等）与传统的机器学习分类器相结合，如SVM，决策树，集合等。随着最近深度神经网络的巨大成功，基于神经网络的新型隐写分析方法越来越受欢迎，[QDWT15a]。例如，在[PJIC15]中，作者提出使用深度卷积神经网络（CNN）进行隐写分析，并表明在使用CNN而不是通常的分类时，分类精度可以显着提高。</p>
+<h1 id="Adversarial-Networks"><a href="#Adversarial-Networks" class="headerlink" title="Adversarial Networks"></a>Adversarial Networks</h1><p>生成性对抗网络（GAN）是2014年在[GPAM +14]中提出的深度无监督学习的最新方法，其能够从输入数据分布动态地表示采样器并生成新的数据样本。这种学习方法的主要思想是同时训练两个神经网络：</p>
+<p>•生成模型（G），接收输入上先验分布pnoise(z)的噪声，并将其转换为近似pdata(x)的分布pg(x)的数据样本。。</p>
+<p>•判别模型（D），它试图检测一个对象是真实的还是由G生成的。</p>
+<p>学习过程可以描述为极小极大游戏：鉴别器D最大化正确区分真实样本和假样本的预期对数似然，而生成器G通过尝试合成更好的图像来最大化鉴别器的预期误差。因此在训练期间GAN解决了以下优化问题：</p>
+<p><img src="/2019/12/02/SGAN/e6f1be200280144e29ba62ed3a5cea30.png" alt=""></p>
+<p>其中D(x)表示x是实际图像而不是合成图像的概率，G(z)是输入噪声z的合成图像。</p>
+<p>耦合优化问题（1）通过交替最大化和最小化步骤来解决：在小批量随机梯度优化的每次迭代中，我们首先在D上进行梯度上升步骤，然后在G上进行梯度下降步骤。如果通过θＭ我们表示神经网络M的参数，那么更新规则是：</p>
+<p><img src="/2019/12/02/SGAN/fe2c574cc47735d629c6bfff2d4d2085.png" alt=""></p>
+<p>在[RMC15]中，GAN的想法扩展到深度卷积网络（DCGAN），它们专门用于图像生成。本文讨论了对抗性训练在图像识别和生成中的优势，并提出了构建和训练DCGAN的建议。</p>
+<h1 id="Steganographic-Generative-Adversarial-Networks"><a href="#Steganographic-Generative-Adversarial-Networks" class="headerlink" title="Steganographic Generative Adversarial Networks"></a>Steganographic Generative Adversarial Networks</h1><p>为了将GAN方法应用于隐写应用，我们引入了Steganographic Generative Adversarial Networks模型（SGAN），它包括：</p>
+<p>•生成器网络G，可从噪声中产生逼真的图像;</p>
+<p>鉴别器网络D，其分类图像是合成的还是真实的;</p>
+<p>•鉴别器网络S，即隐写分析器，其确定图像是否包含隐藏的秘密消息。</p>
+<p>通过stego（x），我们表示在容器x中嵌入一些隐藏消息的结果。</p>
+<p>由于我们希望生成器能够生成可用作安全消息嵌入容器的逼真图像，因此我们强制G同时与模型D和S竞争。如果我们用S（x）表示x有一些隐藏信息的概率，那么我们就会得到以下游戏：</p>
+<p><img src="/2019/12/02/SGAN/7514aea1fb5a4a33496cc8e21262f985.png" alt=""></p>
+<p>我们使用D和S的误差凸组合与参数α∈[0,1]，其控制生成的图像的真实性的重要性与作为容器的质量与隐写分析之间的权衡。对初步实验结果的分析表明，对于α≤0.7，生成的图像是不现实的，类似于噪声。</p>
+<p>SGAN的完整方案如图1所示。 1.每个箭头代表输出输入数据流。</p>
+<p><img src="/2019/12/02/SGAN/add1cf2521230da787f6f00cd70df340.png" alt=""></p>
+<p>下面列出了SGAN组件的随机小批量梯度下降更新规则：</p>
+<p><img src="/2019/12/02/SGAN/23a9338de574b8eeac1429efff14a43f.png" alt=""></p>
+<p><img src="/2019/12/02/SGAN/bb5a0b37820731493b2ae82fb100e4a5.png" alt=""></p>
+<p>与GAN模型的主要区别在于我们更新G以便不仅最大化D的误差，而且最大化分类器D和S的线性组合的误差。</p>
+<h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><h2 id="Data-Description"><a href="#Data-Description" class="headerlink" title="Data Description"></a>Data Description</h2><p>在我们的实验1中，我们使用包含200000张图像的名人数据集[ZLT15]。所有图像都裁剪为64X64像素。</p>
+<p>出于隐写分析的目的，我们将10％的数据视为测试集。我们用A表示训练集，用B表示测试集和用于隐藏信息的隐写算法stego(x)。在嵌入一些秘密信息后，我们获得了训练集A+Stego(A)和测试集B+Stego(B)，我们最终得到了38万张用于隐写分析训练的图像和20<br>000张用于测试的图像。为了训练SGAN模型，我们使用了所有20万个裁剪图像。经过8个epochs后，我们的SGAN会生成图像如图2所示。</p>
+<p><img src="/2019/12/02/SGAN/4cb536ddc8f7efb3a9e9747eae6464d1.png" alt=""></p>
+<h2 id="Experimental-Setup"><a href="#Experimental-Setup" class="headerlink" title="Experimental Setup"></a>Experimental Setup</h2><p>在本节中，我们将描述SGAN模型结构。通过C2D-BN-LR，我们表示卷积神经网络的以下结构块：Conv2d→批量归一化→Leaky ReLU。</p>
+<p>Steganalyser网络S和图像鉴别器网络具有相似的结构：四个C2D-BN-LR层，然后是完全连接的层（1个神经元）→Sigmoid函数用于计算输出。图像生成器网络G（按顺序）是完全连接的层（8192个神经元），四个具有Fractional-Strided反卷积的C2D-BN-LR，然后使用双曲正切函数层来计算归一化输出。</p>
+<p>训练SGAN模型以使用具有学习速率为2的-4次方的Adam优化算法[KB14]来解决（4）并更新参数β1=0.5和β2=0.999。对于每个小批量图像，我们更新D和S的权重一次，然后我们更新G的权重两次。</p>
+<p>在以下实验中，除了隐写分析器S，我们使用独立的隐写分析器S*。我们定义了一个特殊的滤波器F（0），用于隐写分析应用（参见[PJIC15]，[QDWT15b]，[TL14]），如下所示：</p>
+<p><img src="/2019/12/02/SGAN/52ca97dacd144e8115c06add079e25de.png" alt=""></p>
+<p>单个隐写分析器 S*的结构具有以下形式：使用F(0)过滤器进行2D卷积→Conv2D→Conv2D→最大池化→Conv2D→Conv2D→最大池化→完全连接层（1024个神经元）→完全连接层（1个神经元）→Sigmoid函数输出。这种结构提供了最先进的隐写分析精度[PJIC15]，滤波器F(0)可以提高隐身分析仪S*训练的收敛速度。</p>
+<p>对于这个steganalyser的训练，我们在损失（4）上使用Adam优化算法，学习速率等于5的-6次方，β1=0.9，β2=0.999。作为损失函数，我们使用二元交叉熵。</p>
+<p>实验的设置可以描述如下：</p>
+<p>•我们训练并使用SGAN或DCGAN模型用作容器生成的图像;</p>
+<p>•我们使用真实图像（第5.3节）或生成的图像（第5.4节）训练独立的隐写分析器S*;</p>
+<p>•我们测量隐写分析器S*的准确度。</p>
+<h2 id="Training-Testing-on-Real-Images"><a href="#Training-Testing-on-Real-Images" class="headerlink" title="Training/Testing on Real Images"></a>Training/Testing on Real Images</h2><p>在这组实验中，我们在真实图像上训练独立的隐写分析器S*。结果如表1所示，从结果我们得出结论，即使是通常的DCGAN也会产生合成的容器图像，这很容易欺骗一个隐写分析器。尽管专门设计用于欺骗隐写分析仪的SGAN模型产生的容器改善了DCGAN的结果，但改进并不显着。这些结果还表明S*可能已超过实际图像的数据分布，并且未能推广到合成图像域中数据分布的GAN近似。</p>
+<p><img src="/2019/12/02/SGAN/0942391b1081614c468a1f284daa06dc.png" alt=""></p>
+<p>另一个有趣的结果来自于HUGO隐写算法和SGAN生成容器的实验：</p>
+<p>•我们使用 ±1嵌入算法来训练SGAN模型;</p>
+<p>•我们在真实图像和由SGAN模型生成的图像上测试HUGO隐写分析仪。</p>
+<p>由SGAN模型生成的容器将HUGO隐写分析的准确度从0.624降低到0.499，这表明隐写生成对抗网络可以用作生成被调整以欺骗任何特定隐写分析算法的隐写容器的通用工具。</p>
+<h2 id="Training-Testing-on-Generated-Images"><a href="#Training-Testing-on-Generated-Images" class="headerlink" title="Training/Testing on Generated Images"></a>Training/Testing on Generated Images</h2><p>在这组实验中，我们在图像上训练隐写分析器S*，使用来自先前噪声分布Pnoise（z）的DCGAN模型生成一些固定的种子值。在所有实验中训练集的大小固定在≈160000。在训练之后，我们根据以下实验设置在DCGAN模型生成的图像上测试分析仪S*：</p>
+<p>C1。我们使用相同的种子值;</p>
+<p>C2。我们使用一些随机选择的种子值;</p>
+<p>C3。我们使用相同的种子值，如在C2中，我们另外调整DCGAN模型的几个时期。</p>
+<p><img src="/2019/12/02/SGAN/a3d561cb9c0784fecd0448f3f1f8a7c2.png" alt=""></p>
+<p>实验结果如表2，表明在生成容器时使用不同的种子值最有可能影响像素值位的分布，从而更容易欺骗隐写分析器，使其适合列车样本中的另一个分布。图像生成器G的附加调谐使得该效果更加明显。</p>
+<p>在下一组实验中，我们在图像上训练和测试隐写分析器S*，根据以下实验条件生成：</p>
+<p>C4。我们使用几个不同的随机选择的种子值为隐写分析器S*生成一组训练集，并且在生成测试集时，我们使用另一个固定的种子值;</p>
+<p>C5。我们使用许多不同的随机选择的种子值生成训练集和测试集;</p>
+<p>C6。我们使用相同的训练和测试集，如在C5中，我们还为几个时期训练DCGAN模型。</p>
+<p><img src="/2019/12/02/SGAN/8c001c59c157fa3ed54cda239fe78fb3.png" alt=""></p>
+<p>根据表3，C5的精度低于C4情况下的精度，这可以通过具有更多可变性的C5的测试集来解释，其由不同的随机选择的种子值生成。类似地，C4情况下的准确度高于C2中的准确度，因为在C4中，火车组由几个不同的随机选择的种子值生成，因此更具代表性。这些观察结果证实了从表2中得出的初步结论。</p>
+<p>我们还进行了生成图像分类的实验，没有隐写嵌入。为此，我们在MNIST数据集上训练DCGAN条件模型，并为MNIST分类任务训练单独的分类器。经过训练的分类器在保持的实际MNIST数据集和DCGAN产生的合成图像上都获得了几乎完美的准确度。这提供了证据，即可以训练在真实和合成图像上都显示出可接受的准确度的图像分类器。然而，正是人工生成的图像容器打破了通常的隐写分析方法。</p>
+<h1 id="Conclusions-and-future-work"><a href="#Conclusions-and-future-work" class="headerlink" title=" Conclusions and future work"></a> Conclusions and future work</h1><p>在这项工作中</p>
+<ol>
+<li><p>我们为Generative Adversarial<br>Networks的应用开辟了一个新领域，即隐写术应用的容器生成;</p>
+</li>
+<li><p>我们考虑±1嵌入算法并测试更多隐写分析安全信息嵌入的新方法：</p>
+</li>
+</ol>
+<blockquote>
+<p>  （a）我们证明了SGAN和DCGAN模型都能够将隐写分析方法的检测精度几乎降低到随机分类器的检测精度;</p>
+</blockquote>
+<blockquote>
+<p>  （b）如果我们初始化具有不同随机种子值的容器生成器，我们甚至可以进一步降低隐写检测精度。</p>
+</blockquote>
+<p>将来，我们计划在更高级的隐写算法上测试我们的方法，例如：哇[HF12]，HUGO[PFB10]和S-UNIWARD [HFD14]。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/GAN/" rel="tag"><i class="fa fa-tag"></i> GAN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/02/DCGAN/" rel="next" title="DCGAN">
+                <i class="fa fa-chevron-left"></i> DCGAN
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100017135643802" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                    
+                      FB Page
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.youtube.com/channel/UC8TkFUpWAS2wzj34ijgAZGA?view_as=subscriber" target="_blank" title="YouTube">
+                  
+                    <i class="fa fa-fw fa-youtube"></i>
+                  
+                    
+                      YouTube
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ws.binghamton.edu/fridrich/?tdsourcetag=s_pctim_aiomsg" title="Fridrich" target="_blank">Fridrich</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://imkira.com/" title="Kira" target="_blank">Kira</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Steganography"><span class="nav-number">3.</span> <span class="nav-text">Steganography</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Adversarial-Networks"><span class="nav-number">4.</span> <span class="nav-text">Adversarial Networks</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Steganographic-Generative-Adversarial-Networks"><span class="nav-number">5.</span> <span class="nav-text">Steganographic Generative Adversarial Networks</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Experiments"><span class="nav-number">6.</span> <span class="nav-text">Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Description"><span class="nav-number">6.1.</span> <span class="nav-text">Data Description</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Experimental-Setup"><span class="nav-number">6.2.</span> <span class="nav-text">Experimental Setup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Training-Testing-on-Real-Images"><span class="nav-number">6.3.</span> <span class="nav-text">Training/Testing on Real Images</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Training-Testing-on-Generated-Images"><span class="nav-number">6.4.</span> <span class="nav-text">Training/Testing on Generated Images</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Conclusions-and-future-work"><span class="nav-number">7.</span> <span class="nav-text"> Conclusions and future work</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"mobile":{"show":false},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>
