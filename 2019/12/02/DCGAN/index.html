@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="GAN," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="UNSUPERVISED REPRESENTATION LEARNING WITH DEEP CONVOLUTIONAL GENERATIVEADVERSARIAL NETWORKS 使用深度卷积生成对抗网络的无监督表征学习 摘要近年来，使用卷积神经网络的监督学习被大量应用于计算机视觉应用中。相对地，使用卷积神经网络的非监督学习则被较少的关注。在这项工作中，我们希望可以帮助缩小监督学习和非监督学习">
+<meta name="keywords" content="GAN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DCGAN">
+<meta property="og:url" content="http://fennudehaogua.top/2019/12/02/DCGAN/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="UNSUPERVISED REPRESENTATION LEARNING WITH DEEP CONVOLUTIONAL GENERATIVEADVERSARIAL NETWORKS 使用深度卷积生成对抗网络的无监督表征学习 摘要近年来，使用卷积神经网络的监督学习被大量应用于计算机视觉应用中。相对地，使用卷积神经网络的非监督学习则被较少的关注。在这项工作中，我们希望可以帮助缩小监督学习和非监督学习">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/DCGAN/30c68e5ab0d5a99d7348d091e29df566.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/DCGAN/a0d7f12a16e40dc4a3b4c7f769cc69be.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/DCGAN/d4c80b6d82ec5b5b6ce92bc7a48b22c1.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/DCGAN/b1036735f64033190d3599c2ba765fe3.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/DCGAN/6debf10de1cd0e8b185c6417ba1b6b13.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/DCGAN/e072f886784952db9033e480e32320b8.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/DCGAN/a350bfb02748eeab4d877de080b9a280.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/DCGAN/40f85d4deaa66f8b8b63bb270ec6e793.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/DCGAN/b681c03ea512f91dad004c15f95dcd01.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/DCGAN/65ba47b68d18e5dfb62948ba6f8e32c2.png">
+<meta property="og:updated_time" content="2019-12-02T12:42:26.735Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DCGAN">
+<meta name="twitter:description" content="UNSUPERVISED REPRESENTATION LEARNING WITH DEEP CONVOLUTIONAL GENERATIVEADVERSARIAL NETWORKS 使用深度卷积生成对抗网络的无监督表征学习 摘要近年来，使用卷积神经网络的监督学习被大量应用于计算机视觉应用中。相对地，使用卷积神经网络的非监督学习则被较少的关注。在这项工作中，我们希望可以帮助缩小监督学习和非监督学习">
+<meta name="twitter:image" content="http://fennudehaogua.top/2019/12/02/DCGAN/30c68e5ab0d5a99d7348d091e29df566.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2019/12/02/DCGAN/"/>
+
+
+
+
+
+  <title>DCGAN | fennudehaogua.top</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?727b9992a1a14607aebb47500e5bcc08";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2019/12/02/DCGAN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DCGAN</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-02T20:40:53+08:00">
+                2019-12-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>UNSUPERVISED REPRESENTATION LEARNING WITH DEEP CONVOLUTIONAL GENERATIVE<br>ADVERSARIAL NETWORKS</p>
+<p>使用深度卷积生成对抗网络的无监督表征学习</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>近年来，使用卷积神经网络的监督学习被大量应用于计算机视觉应用中。相对地，使用卷积神经网络的非监督学习则被较少的关注。在这项工作中，我们希望可以帮助缩小监督学习和非监督学习在CNN的成功上差距。我们介绍了CNN的一个类，称为深度卷积生成对抗网络（DCGANs），这个网络有着明确的结构约束，并且表明他们对非监督学习有着强烈的可信度。在不同的图像数据集上训练，我们展示出了令人信服的证据证明我们的深度卷积对抗对，从对象部分到场景，在生成器和判别器上都能学到层级的表示。此外，我们在一些新的任务上使用学习到的特征，表明了它们在一般化图像的表示上具有通用性。</p>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>从大量无标签数据集中学习可重复使用的特征表示已经是一个热门研究区域。在计算机视觉的背景下，实际上，可以利用不限数量的无标签图像和视频来学习一个好的中间表示，这个表示可以用在大量有监督的学习任务上，例如图像分类。我们提出一种方法，可以建立好的图像表示，通过训练对抗生成网络（GAN），并且反复利用生成网络和判别网络的一部分作为有监督任务的特征提取。GAN在极大似然技术方面有惊人的潜力。此外，一个有争议性的话题是，它们学习过程，和缺乏启发式的价值函数（例如独立像素的均方差）在表征学习是具有吸引人的前景。GAN被认为训练不稳定，经常导致生成器产生无意义的输出。目前，试图理解和可视化GAN学到了什么以及多层GAN的中间表示，只有有限的发表研究。</p>
+<p>在本文中，我们做了如下贡献：</p>
+<p>我们提出并验证了在卷积GAN上的结构技术的一系列限制，使其在大多数数据集中可以稳定的训练。我们称这个结构类为深度卷积GAN（DCGAN）。</p>
+<p>我们使用训练的判别器作用于图像分类任务，与其他无监督算法相比展示出了具有竞争力的表现。</p>
+<p>我们把从GAN中学到的滤波器形象化，实验表明，不同的滤波器可以绘制不同的对象。</p>
+<p>我们展示出，生成器的一个有趣的向量运算属性，生成样本的很多语义特征可以做出简单的计算。</p>
+<h1 id="Related-work"><a href="#Related-work" class="headerlink" title="Related work"></a>Related work</h1><h2 id="无标签数据的表示学习"><a href="#无标签数据的表示学习" class="headerlink" title="无标签数据的表示学习"></a>无标签数据的表示学习</h2><p>无监督表示学习不仅在一般的计算机视觉研究中，而且在图像的背景下，都是一个相当值得研究的问题。无监督表示学习的传统方法都是在数据集上使用聚类（如K-means），通过聚类器来提高分类上的得分。在图像的背景下，可以对图像块进行分层聚集，来学到更有力的图像表示。另一个流行的方法是训练自动编码器（卷积、堆积、分离编码中组件、梯形结构的内容和位置），这可以将图像编码为紧致码，并且将编码解码来尽可能准确地重新构建图像。这些方法在图像像素上展示出良好的特征表示。深度信念网络在学习层级结构的表示上也展示出了良好的效果。</p>
+<h2 id="自然图像生成"><a href="#自然图像生成" class="headerlink" title="自然图像生成"></a>自然图像生成</h2><p>图像生成模型有了成熟的发展并分成两个类别：参数的和无参数的。</p>
+<p><strong>无参数模型</strong>经常从一些已存在图像的数据集中做匹配，经常匹配图像块，已经用在了<strong>纹理合成、超分辨率和图像修复</strong>上。</p>
+<p><strong>参数模型</strong>对于生成图像已经有了广阔的探索（比如，MNIST数据集合纹理合成）。然而，生成真实世界中的自然图像直到最近也没有取得特别大的成功。对于生成图像一个变化的抽样方法已经取得了一些成功，但是样本经常受到模糊的影响。另一个生成图像的方法使用迭代前向扩散过程。生成对抗网络对于生成图像，需要承受噪音并且难以理解的。对这个方法的一个拉普拉斯金字塔的延伸展示了更高的图像质量，但是，由于链接多个模型引入了噪音，这仍要承受对象看起来不稳定的问题。一个递归网络方法和去卷积网络方法在自然图像的生成上取得了一些成功，但是它们并没有将生成器利用与监督学习。</p>
+<h2 id="CNN内部的可视化"><a href="#CNN内部的可视化" class="headerlink" title="CNN内部的可视化"></a>CNN内部的可视化</h2><p>对于使用神经网络一个一直受批评的问题就是它们是黑盒方法，对于网络那些在形式上简单的人类可读的算法只有很少的理解。在CNN的背景下，Zeiler等人展示出，通过去卷积和过滤最大激活，可以发现网络中每一个卷积滤波器的大致作用是什么。类似地，在输入上使用梯度下降法，可以让我们检查，这些作用于特定滤波器子集的理想图像。</p>
+<h1 id="方法与网络结构"><a href="#方法与网络结构" class="headerlink" title="方法与网络结构"></a>方法与网络结构</h1><p>历史上，尝试在模型图像上，使用CNN扩展GAN都没有取得成功。这激励了LAPGAN的作者开发了一种其他的方法来迭代高档低分辨率生成图像，使得建模更加稳定。我们在试图使用在有监督领域通用的CNN结构来扩展GAN时也遭遇了困难。不过，在广泛的模型探索之后，我们确认了一类结构族，即在一些列的数据集上可以稳定的训练，并且允许训练更高的分辨率、更深的生成模型。</p>
+<p>我们的方法的核心是采用并修改三个最近提出的对GAN架构的改进。</p>
+<p>第一个是，<strong>全卷积网络</strong>，使用步幅卷积替代确定性空间池化函数（比如最大池化），允许网络学习自身的空间下采样。我们将这个方法应用在生成网络和判别网络中，允许它学习自己的空间上采样。</p>
+<p>第二个是，<strong>倾向于在最顶层的卷积后面消除全连接层</strong>。一个强有力的例子就是全局平均池化已经应用于艺术图像分类上。我们发现，全局平均池化提高了模型的稳定性，但是降低了收敛速度。在最高卷积特征的中间地带，直接连接生成网络的输入和判别网络的输出也能工作的很好。GAN的第一层，取统一的噪音分布z作为输入，称其为全连接层只是因为这是个矩阵乘法，但结果被重组为一个4维的张量，并作为卷积叠加的开始。对于判别器，最后一个卷积层是平滑的，并喂进一个单个的sigmoid输出。在图1中可以看到一个示例模型架构的可视化。</p>
+<p>第三个是<strong>批量规范化</strong>。通过将输入的每个单元规范化为0均值与单位方差来稳定学习。这有助于处理初始化不良导致的训练问题和有助于梯度流向更深的网络。这证明了，关键是取得深层生成器来开始学习，防止生成器折叠全部的样本到一个点，这在GAN中是常见的故障模型。然而，直接对所有的层采用批处理规范化，会导致样本震荡和模型不稳定。通过对生成器的输出层和辨别器的输入层不采用批处理规范化来避免这种情况。</p>
+<p>ReLU激活函数使用在生成模型上，除了输出层使用Tanh激活函数。我们观察到，使用有界限的激活函数可以允许模型更快地学习达到饱和，并且覆盖训练分布的颜色空间。在辨别网络下，我们发现，leakyRelU激活函数可以工作的很好，特别是在更高分辨率的模型上。这与使用了maxout激活函数的原始GAN论文相反。</p>
+<p>稳定的深度卷积GAN 架构指南:</p>
+<p>所有的池化层使用步幅卷积(判别网络)和微步幅度卷积(生成网络)进行替换。</p>
+<p>在生成网络和判别网络上使用批处理规范化。</p>
+<p>对于更深的架构移除全连接隐藏层。</p>
+<p>在生成网络的所有层上使用ReLU激活函数，除了输出层使用Tanh激活函数。</p>
+<p>在判别网络的所有层上使用LeakyReLU激活函数。</p>
+<h1 id="对抗训练的细节"><a href="#对抗训练的细节" class="headerlink" title="对抗训练的细节"></a>对抗训练的细节</h1><p>我们在三个数据集上训练DCGAN，分别是Large-scale Scene Understanding<br>(LSUN)，Imagenet-1k和一个新进装配的人脸数据集。每一个数据集的使用细节在下面给出。</p>
+<p>训练图像除了放缩到tanh激活函数的[-1,+1]范围之外，没有经过其他的预处理。所有的模型都是通过小批量随机梯度下降法来训练的，小批量的大小是128。所有的权重的初始化都是均值为0，标准差为0.02的正态分布。在LeakyReLU激活函数中，所有模型的leay的斜率都设置为0.2。先前的GAN工作使用momentum来加速训练，DCGAN使用Adam<br>optimizer来调节超参数。我们发现建议使用学习速率为0.001，如果太高了，则替换为0.0002。此外，我们发现，将momentum<br>termβ1保持在建议值0.9，会导致训练震荡和不稳定，将其减少至0.5可以帮助稳定训练。</p>
+<p><img src="/2019/12/02/DCGAN/30c68e5ab0d5a99d7348d091e29df566.png" alt=""></p>
+<p>图1： LSUN<br>场景模型中使用的DCGAN生成网络。一个100维度的均匀分布z映射到一个有很多特征映射的小空间范围卷积。一连串的四个微步幅卷积（在最近的一些论文中它们错误地称为去卷积），将高层表征转换为64*64像素的图像。明显，没有使用全连接层和池化层。</p>
+<h2 id="LSUN"><a href="#LSUN" class="headerlink" title="LSUN"></a>LSUN</h2><p>随着生成图像模型的样本的视觉质量提高，也增加了对训练样本过拟合和记忆的担心。为了证实我们的模型规模在更多的数据和更高的分辨率上怎样生成，我们在LSUN卧室数据集上训练模型，这个数据集包含了超多300万的训练例子。最近的分析表示，模型学习的多快与他们的泛化性能有着直接的关系。我们展示出了训练一个周期的样本（图2），模仿在线学习，以及收敛后的样本（图3），这可以表明，我们的模型不是简单的通过过拟合和记忆训练样本，来产出高质量的样本。图像未进行数据扩充。</p>
+<h3 id="去除重复数据"><a href="#去除重复数据" class="headerlink" title="去除重复数据"></a>去除重复数据</h3><p>为了进一步降低生成器记忆输入样本（图2）的可能性，我们进行了一个简单的删除重复图像的过程。我们在训练样本的32x32下采样中心，采样拟合了一个3072-128-3072去噪dropout正则化RELU<br>自编码。所产生的代码层激活函数，接着通过RelU激活函数二值化，Relu激活函数被认为是有效信息保存技术，并且提供方便的语义哈希形式，允许线性时间内删除重复数据。哈希碰撞的视觉检查展示出高的精度，100个之中估计误判率小于1。此外，这项技术检测和移除大约275000左右的重复数据，表明了一个高召回。</p>
+<p><img src="/2019/12/02/DCGAN/a0d7f12a16e40dc4a3b4c7f769cc69be.png" alt=""></p>
+<p>图2：<br>在训练集上训练一个周期后生成的卧室图像。理论上，模型可以学习以记住训练样本，但是这在实验中是不太可能的，我们使用比较小的学习速率和小批量随机梯度下降。我们意识到没有任何先前的经验证据，可以表明随机梯度下降和小的学习速率存在记忆。</p>
+<p><img src="/2019/12/02/DCGAN/d4c80b6d82ec5b5b6ce92bc7a48b22c1.png" alt=""></p>
+<p>图3：<br>在五个训练周期之后生成的卧室图。这些展示是与多个样本通过反复的噪声纹理拟合的证据。</p>
+<h3 id="人脸数据"><a href="#人脸数据" class="headerlink" title="人脸数据"></a>人脸数据</h3><p>作者根据人名索引，随机的从网页图片上抓取包含人脸的图片。而人名是从dbpedia上获取的，作为一个标准就是他们都出生在现代的。这个数据集是来自1万人的300万张图像。我们在这些图像上运行了opencv的人脸检测器，保持高分辨率的检测，这样给了我们大约35万的人脸盒。我们使用这些人脸盒作为训练。图像未进行数据扩充。</p>
+<h3 id="IMAGENET-1K"><a href="#IMAGENET-1K" class="headerlink" title="IMAGENET-1K"></a>IMAGENET-1K</h3><p>我们使用Imagenet-1k数据集作为无监督训练中自然图像的来源。我们在32*32的中心采样上训练。图像未进行数据扩充。</p>
+<h1 id="DCGAN能力的经验验证"><a href="#DCGAN能力的经验验证" class="headerlink" title="DCGAN能力的经验验证"></a>DCGAN能力的经验验证</h1><h2 id="使用GAN作为特征提取器分类CIFAR-10"><a href="#使用GAN作为特征提取器分类CIFAR-10" class="headerlink" title="使用GAN作为特征提取器分类CIFAR-10"></a>使用GAN作为特征提取器分类CIFAR-10</h2><p>一个评价无监督表示学习算法质量的通用方法是，将它们作为有监督数据集上的一个特征提取，然后评价这个线性模型在这些特征上拟合的性能。</p>
+<p>在CIFAR-10数据集上，一个非常强大的基准性能已经被证明，通过使用k-means作为特征学习算法的单层特征提取管道。当使用大量的特征映射时（4800），这项技术实现了80.6%的准确度。基于这个算法的无监督多层的拓展实现了82.0%的准确度。为了验证DCGAN对于监督任务所学到的表示的质量，我们在Imagenet-1k上训练，并且使用判别网络所有层的卷积特征，最大池化每一层来产生一个4*4的空间网格。这些特征接着被平滑和串级形成一个28672维的向量，然后用一个正则化线性L2-SVM分类器在它们上面训练。这实现了82.8%的准确度，性能超过了所有基于k-means的方法。特别的，与基于k-means的方法比较，判别模型有较少的特征映射（最高层为512），但是由于很多层的4*4空间位置，结果有一个更大的总特征向量大小。DCGAN的性能仍然比不上2015<br>年Dosovitskiy<br>等提出的典型CNN，它是这样一项技术，一种以无监督的方式训练标准的判别式CNN，来区分是特定选择的样本，极大增强的样本还是来自源数据集的标准样本。通过调整判别器的表示可以做出进一步的改善，但是我们将其作为未来工作。此外，因为我们的DCGAN从来没有在CIFAR-10数据集上训练过，这个实验也表明了学习特征主要的鲁棒性。</p>
+<p>表1：<br>使用我们预训练模型得出的CIFAR-10分类结果。我们的DCGAN并没有在CIFAR-10上预训练，但是在Imagenet-1k数据集上做了训练，并且这些特征被用来分类CIFAR-10图像。</p>
+<p><img src="/2019/12/02/DCGAN/b1036735f64033190d3599c2ba765fe3.png" alt=""></p>
+<h2 id="使用GAN作为特征提取器分类SVHN"><a href="#使用GAN作为特征提取器分类SVHN" class="headerlink" title="使用GAN作为特征提取器分类SVHN"></a>使用GAN作为特征提取器分类SVHN</h2><p>在StreetView House<br>Numbers（SVHN）数据集上，当标签数据很缺乏的时候，对于有监督的任务，我们使用DCGAN的判别器的特征。遵循与CIFAR-10数据集实验上类似的数据预处理规则，我们从非额外数据集中分出了10000个样本的验证数据集，并且将其用在所有的超参数和模型选择上。随机选择1000个类分布均匀的训练样本，并将其用在线性正则化L2-SVM分类器上，同样，这个分类器也用在了CIFAR-10的相同特征提取管道的顶部。这实现了目前最高水平（对于1000个标签的分类来说），测试误差为22.48%，是利用无标签数据提高CNN设计的另一个改进。此外，通过在同一结构、同一数据上，训练纯粹的有监督CNN，并且通过随机搜索超过64个超参数实验来优化这个模型，我们验证了用在DAGAN的CNN架构在模型的性能中并不是关键的因素。它达到了明显更高的28.87%的验证误差。</p>
+<p>表2： 1000 个标签的SVHN 分类</p>
+<p><img src="/2019/12/02/DCGAN/6debf10de1cd0e8b185c6417ba1b6b13.png" alt=""></p>
+<h1 id="网络内部的探究与可视化"><a href="#网络内部的探究与可视化" class="headerlink" title="网络内部的探究与可视化"></a>网络内部的探究与可视化</h1><p>我们调查了用各种方式训练的判别器和生成器。我们并没有在训练集上做任何最邻近的搜索。通过小的图像转换，最邻近的像素或者特征空间最容易被欺骗。我们也没有使用对数似然函数度量在数量上来评估这个模型，因为这也是一个很差的度量。</p>
+<h2 id="在隐空间中徜徉"><a href="#在隐空间中徜徉" class="headerlink" title="在隐空间中徜徉"></a>在隐空间中徜徉</h2><p>我们做的第一个实验是理解隐变量的全景状态。多方面的学习了解通常可以告诉我们关于记忆的迹象（如果是尖锐的转换）和在空间中是分层坍塌的形式。如果在潜空间会导致图像生成（例如添加图像和移除图像）的语义变化，我们可以推论出，模型已经学会了与之相关并且有趣的表示。结果如图4所示。</p>
+<p><img src="/2019/12/02/DCGAN/e072f886784952db9033e480e32320b8.png" alt=""></p>
+<p>图4：<br>最上面一行：在Z空间一系列的9个随机点之间的插值表示出，所学到的空间有平滑转换，在这个空间的每个图像都非常像一个卧室。在第6行，你会看到有一个带窗户的房间慢慢转换为一个带有巨大窗户的房间。在第10行，你可以看到电视会慢慢转换为一个窗户。</p>
+<h2 id="判别特征之可视化"><a href="#判别特征之可视化" class="headerlink" title=" 判别特征之可视化"></a> 判别特征之可视化</h2><p>先前的工作证实了，在大型图像数据集上有监督的CNN的训练，会引起一个非常强大的学习到的特征。此外，在场景分类上训练的有监督CNN学习目标检测器。我们证实，在大型图像数据集上训练的无监督DCGAN也能学习到有趣的特征的层级结构。使用Springenberg等人提出的有向导的后向传播算法，我们在图5中展示出，通过判别器在卧室的典型部分，如床和窗户，学到的特征。为了对比，在同一个图像中，我们给出了，对于没有在任何语义相关或者有趣的事物上激活的随机初始化特征作为基准。</p>
+<p><img src="/2019/12/02/DCGAN/a350bfb02748eeab4d877de080b9a280.png" alt=""></p>
+<p>图5：<br>在右边，是对于从判别器的最后卷积层学习到的前6个卷积特征，最大轴对齐响应的有向导的反向传播可视化。注意，反映了床的少数有意义的特征是LSUN卧室数据集的中心对象。左边是卧室的基准滤波器，与先前的相应相比，几乎没有辨别和随机结构。</p>
+<h2 id="对于生成表示的操作"><a href="#对于生成表示的操作" class="headerlink" title="对于生成表示的操作"></a>对于生成表示的操作</h2><h3 id="忘记特定的物体"><a href="#忘记特定的物体" class="headerlink" title="忘记特定的物体"></a>忘记特定的物体</h3><p>除了判别器学习到的表示，这里也有一个问题，生成器学习到的表示是什么。样本的质量展示出，对于主要场景成分，例如床、窗户、灯具、门和混杂的家具，生成器学习特定的目标表示。为了探索这些表现所使用的形式，我们进行一个实验，尝试从生成器中完全去除窗户。</p>
+<p>在150个样本上，手工绘制了52个窗口边框。在第二高卷积特征上，通过使用标准，即绘制边界框内的激活是正的，来自同一个图像的随机样本是负的，用逻辑回归来拟合预测一个特征激活是否在窗口上。使用这个简单的模型，将所有的特征映射（权重都大于0，总共200），都从空间位置中移除出去。接着，随机生成的新样本是在有特征映射移除和没有特征映射移除的情况下生成的。</p>
+<p>图6中显示了有窗户移除和没有窗户移除的生成图像，有趣的是，网络通常会忘记在卧室内画窗户，而用其他物品替代。</p>
+<p><img src="/2019/12/02/DCGAN/40f85d4deaa66f8b8b63bb270ec6e793.png" alt=""></p>
+<p>图6：<br>最上面一行：模型中没有修改的样本。下面一行：去除窗户滤波器后生成的同一样本。一些窗户被去除，其他的转换为视觉外观相似的物品，如门和镜子。尽管视觉质量降低了，但整体的场景构图表示类似，这说明了生成器从目标表示中解决场景表示做的很好。扩展实验可以从这方面来做，去除图像中的其他目标，修改生成器绘制的目标。</p>
+<h3 id="在人脸样本集上的矢量算术"><a href="#在人脸样本集上的矢量算术" class="headerlink" title="在人脸样本集上的矢量算术"></a>在人脸样本集上的矢量算术</h3><p>在评估词汇的学习表示的背景下，证实了简单的算术运算揭示了表示空间中丰富的线性结构。一个标准的例子表明，vector(”King”)-vector(”Man”)+vector(”Woman”)的向量和Queen的向量是最接近的临近。我们在我们生成器上研究了Z表征是否会出现相似的结构。对于视觉概念，我们在标准样本空间的Z向量上执行了相似的结构。实验在每个概念的一次抽样样本上是不稳定的，但是对于三个例子取Z向量的平均值在遵循算术的语义上展示出一致性和稳定性。除了图7显示的对象操作，我们在图8中表明，人脸姿态在Z空间中也被线性训练。</p>
+<p>这些实例表明，可以使用模型学到的Z空间表示来开发一些有趣的应用。之前已经证明过条件生成模型可以学习有说服力的模型属性，例如规模、旋转和位置。据我们所知，这是首次在纯粹的无监督模型上的验证。上面提到的关于向量算法的进一步探索和开发，可以显著地减少，对于复杂图像分布的条件生成模型所需要的数据数量。</p>
+<p><img src="/2019/12/02/DCGAN/b681c03ea512f91dad004c15f95dcd01.png" alt=""></p>
+<p>图7：<br>视觉概念上的向量运算。对于每一列，Z向量的样本是平均的。在平均向量上进行运算创造一个新的向量Y。在右手边的中心样本是通过将Y喂给生成器产生的。为了表明生成器的篡改能力，在±0.25范围采样的统一噪音添加到Y中，来产生8个其他的样本。在输入空间上应用这一运算（最底下的两行），由于不一致的原因造成了噪音重叠。</p>
+<p><img src="/2019/12/02/DCGAN/65ba47b68d18e5dfb62948ba6f8e32c2.png" alt=""></p>
+<p>图8：<br>通过4个向左看和向右看的人脸平均样本的比较，一个“turn”向量产生了。通过沿着轴线向随机样本中添加插值，我们有能力可靠地转换他们的姿态。</p>
+<h1 id="总结与未来的工作"><a href="#总结与未来的工作" class="headerlink" title="总结与未来的工作"></a>总结与未来的工作</h1><p>对于训练生成对抗网络，我们提出了一个更稳定的架构集合，并且我们给出证据，对于有监督学习和生成模型来说，对抗网络可以学习到好的图像表示。这里仍然存在一些模型不稳定的形式，我们注意到，随着模型训练的越长，他们有时会折叠一些滤波器的子集，造成单一震荡的模式。</p>
+<p>未来工作需要处理这些不稳定的形式。我们认为，这个框架对于其他领域的延伸，例如，视频（对于框架预测）和声频（对于语音合成的预训练特征），应该会更有趣。学习隐写空间属性的进一步调查应该也会很有趣。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/GAN/" rel="tag"><i class="fa fa-tag"></i> GAN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/02/GAN/" rel="next" title="GAN">
+                <i class="fa fa-chevron-left"></i> GAN
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100017135643802" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                    
+                      FB Page
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.youtube.com/channel/UC8TkFUpWAS2wzj34ijgAZGA?view_as=subscriber" target="_blank" title="YouTube">
+                  
+                    <i class="fa fa-fw fa-youtube"></i>
+                  
+                    
+                      YouTube
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ws.binghamton.edu/fridrich/?tdsourcetag=s_pctim_aiomsg" title="Fridrich" target="_blank">Fridrich</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://imkira.com/" title="Kira" target="_blank">Kira</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Related-work"><span class="nav-number">3.</span> <span class="nav-text">Related work</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#无标签数据的表示学习"><span class="nav-number">3.1.</span> <span class="nav-text">无标签数据的表示学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自然图像生成"><span class="nav-number">3.2.</span> <span class="nav-text">自然图像生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CNN内部的可视化"><span class="nav-number">3.3.</span> <span class="nav-text">CNN内部的可视化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方法与网络结构"><span class="nav-number">4.</span> <span class="nav-text">方法与网络结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对抗训练的细节"><span class="nav-number">5.</span> <span class="nav-text">对抗训练的细节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LSUN"><span class="nav-number">5.1.</span> <span class="nav-text">LSUN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#去除重复数据"><span class="nav-number">5.1.1.</span> <span class="nav-text">去除重复数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#人脸数据"><span class="nav-number">5.1.2.</span> <span class="nav-text">人脸数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IMAGENET-1K"><span class="nav-number">5.1.3.</span> <span class="nav-text">IMAGENET-1K</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DCGAN能力的经验验证"><span class="nav-number">6.</span> <span class="nav-text">DCGAN能力的经验验证</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用GAN作为特征提取器分类CIFAR-10"><span class="nav-number">6.1.</span> <span class="nav-text">使用GAN作为特征提取器分类CIFAR-10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用GAN作为特征提取器分类SVHN"><span class="nav-number">6.2.</span> <span class="nav-text">使用GAN作为特征提取器分类SVHN</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络内部的探究与可视化"><span class="nav-number">7.</span> <span class="nav-text">网络内部的探究与可视化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#在隐空间中徜徉"><span class="nav-number">7.1.</span> <span class="nav-text">在隐空间中徜徉</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判别特征之可视化"><span class="nav-number">7.2.</span> <span class="nav-text"> 判别特征之可视化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对于生成表示的操作"><span class="nav-number">7.3.</span> <span class="nav-text">对于生成表示的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#忘记特定的物体"><span class="nav-number">7.3.1.</span> <span class="nav-text">忘记特定的物体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在人脸样本集上的矢量算术"><span class="nav-number">7.3.2.</span> <span class="nav-text">在人脸样本集上的矢量算术</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结与未来的工作"><span class="nav-number">8.</span> <span class="nav-text">总结与未来的工作</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"mobile":{"show":false},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>
