@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="GAN," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Generating steganographic images via adversarial training Abstract在计算机视觉任务中，对抗性训练被证明是与监督学习方法有竞争力的。然而，研究主要局限于生成任务，如图像合成。在本文中，我们将对抗训练技术应用于隐写算法的判别学习。隐写术是一种通过将信息嵌入到非秘密媒介(如cover文字或图像)来隐藏信息的技术。我们证明了对抗性训练可以产">
+<meta name="keywords" content="GAN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HayesGAN">
+<meta property="og:url" content="http://fennudehaogua.top/2019/12/02/HayesGAN/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="Generating steganographic images via adversarial training Abstract在计算机视觉任务中，对抗性训练被证明是与监督学习方法有竞争力的。然而，研究主要局限于生成任务，如图像合成。在本文中，我们将对抗训练技术应用于隐写算法的判别学习。隐写术是一种通过将信息嵌入到非秘密媒介(如cover文字或图像)来隐藏信息的技术。我们证明了对抗性训练可以产">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/HayesGAN/80e308b930f9c5319b17c0aab2ad9b43.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/HayesGAN/media/373e0b43b2dd604b46301ab080f4e215.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/HayesGAN/media/d59f15a6cd6c839cb88c2025172dbb7a.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/HayesGAN/media/ca505e168e91f491b3738cc6d0c35a09.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/HayesGAN/media/14bf65ba62ed3f32b3bf1ed5867f91a7.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/HayesGAN/media/a8ed9e20595fa6e54534890d0fdf0765.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/HayesGAN/05cea51b468b2c1254d81fd3780f6297.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/HayesGAN/a3d57fecfd3d1f2d47c9cf92c11b7476.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/HayesGAN/bfc2908ed6e23b69a594c6376d4f580d.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/HayesGAN/bc5ec517e90785a7ff0f5f87da713bd4.png">
+<meta property="og:updated_time" content="2019-12-02T13:08:35.976Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HayesGAN">
+<meta name="twitter:description" content="Generating steganographic images via adversarial training Abstract在计算机视觉任务中，对抗性训练被证明是与监督学习方法有竞争力的。然而，研究主要局限于生成任务，如图像合成。在本文中，我们将对抗训练技术应用于隐写算法的判别学习。隐写术是一种通过将信息嵌入到非秘密媒介(如cover文字或图像)来隐藏信息的技术。我们证明了对抗性训练可以产">
+<meta name="twitter:image" content="http://fennudehaogua.top/2019/12/02/HayesGAN/80e308b930f9c5319b17c0aab2ad9b43.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2019/12/02/HayesGAN/"/>
+
+
+
+
+
+  <title>HayesGAN | fennudehaogua.top</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?727b9992a1a14607aebb47500e5bcc08";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2019/12/02/HayesGAN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HayesGAN</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-02T21:06:39+08:00">
+                2019-12-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Generating steganographic images via adversarial training</p>
+<h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>在计算机视觉任务中，对抗性训练被证明是与监督学习方法有竞争力的。然而，研究主要局限于生成任务，如图像合成。在本文中，我们将对抗训练技术应用于隐写算法的判别学习。隐写术是一种通过将信息嵌入到非秘密媒介(如cover文字或图像)来隐藏信息的技术。我们证明了对抗性训练可以产生健壮的隐写术:我们的无监督训练方案产生了一个与最先进的隐写术技术相竞争的隐写术算法。我们还证明了对抗性模型的监督训练产生了一个健壮的隐写分析器，它执行判断图像是否包含秘密信息的鉴别任务。为了同时训练隐写算法和隐写分析器，我们定义了Alice、Bob和Eve三方之间的一个游戏。Alice和Bob试图想要传递包含在图像中的秘密信息，而eve窃听在他们的对话中，并试图确定图像中是否包含了秘密信息。我们用神经网络表示Alice、Bob和Eve，并在两个独立的图像数据集上验证了我们的方案，表明我们研究隐写问题的新颖方法与现有的隐写技术相比具有惊人的竞争力。</p>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>隐写术和密码学都提供了秘密通信的方法。通信的真实性和完整性是现代密码学的中心目标。然而，传统的密码方案并不旨在隐藏秘密通信的存在。隐写术通过将信息嵌入敌手认为不可疑的通信中来隐藏信息的存在。最近大规模监控项目的细节表明，通信的元数据可能导致毁灭性的隐私泄露。美国国家安全局官员曾表示，他们“基于元数据杀人”[8];即使内容不为人所知，仅仅是秘密通信的存在就可能产生生死攸关的后果。对于隐私敏感的通信来说，隐藏消息的内容和存在都是必要的。</p>
+<p>隐写术的算法被设计用来隐藏消息在cover信息中，这样cover传递的消息看起来不会被外部对手修改。我们花了大量的精力来设计隐写算法，使隐藏消息内嵌秘密消息时的扰动最小化，同时允许秘密消息的恢复。在这项工作中，我们问一个隐写算法是否可以在无监督的方式学习，没有领域知识。请注意，隐写术仅用于隐藏消息的存在。因此，在使用标准密码方案嵌入之前，消息几乎总是加密的;因此，嵌入的消息与随机字符串难以区分。然后隐写图像的接收方将进行解码以显示消息的密文，然后使用已建立的共享密钥进行解密。</p>
+<p>对于隐写术技术的无监督设计，我们利用了来自对抗训练[7]领域的想法。通常，对抗性训练被用来训练生成模型完成图像生成和语音合成等任务。我们设计了一个方案，旨在嵌入一个秘密信息的形象。我们的任务是有鉴别性的，嵌入算法获取一个cover图像并生成一个隐写图像，而对手试图了解嵌入算法的弱点，从而能够区分cover图像和隐写图像。</p>
+<p>隐写算法或隐写分析技术的成功与否取决于是否能够正确地建模cover分布[5]。到目前为止，隐写术方案已经使用基于人类的规则来“学习”这种分布，并以一种最少干扰的方式扰乱它。然而，隐写分析技术通常使用机器学习模型来学习cover和隐写图像分布的差异。基于这一观点，我们提出了以下假设:</p>
+<p><strong>假设:</strong>机器学习与基于人类的规则一样，能够完成cover分布的建模任务，因此很自然地适合于隐写算法的设计，以及隐写分析。在这篇论文中，我们介绍了第一个完全在无监督下产生的隐写算法，通过一个新的对抗训练方案。实验结果表明，该方案能够在通信双方之间的实际应用中得到成功的实现，并且在监督训练的情况下，该隐写分析者Eve能够与目前最先进的隐写分析方法相抗衡。据我们所知，这是对抗训练在现实世界中的第一次应用，除了传统的对抗学习应用，如图像生成任务。</p>
+<h1 id="Related-work"><a href="#Related-work" class="headerlink" title="Related work"></a><strong>Related work</strong></h1><h2 id="Adversarial-learning"><a href="#Adversarial-learning" class="headerlink" title="Adversarial learning"></a>Adversarial learning</h2><p>最近的两项设计将对抗性训练应用于密码和隐写术问题。Abadi和Andersen[2]使用对抗式训练来教两个神经网络加密一条短消息，这骗过了识别器。然而，很难评估该加密方案是否在计算上难以破解，也没有证据表明该加密方案与现有的公钥加密方案具有竞争力。对抗性训练也被应用到隐写术[4]中，但与我们的方案不同。虽然我们试图训练一个模型来学习隐写技术，Volkhonskiy等人的工作扩展了原始的GAN过程来生成更容易被已建立的隐写算法影响的图像。除了普通的GAN鉴别器之外，它们还引入了一个隐写式分析器，该分析器可以从生成器接收可能包含也可能不包含秘密消息的示例。该生成器通过欺骗GAN的鉴别器来学习生成真实的图像，通过欺骗隐写分析者来学习成为一个安全的容器。然而，他们没有根据最先进的隐写术技术来衡量性能，因此很难估计他们的方案的健壮性。</p>
+<h2 id="Steganography"><a href="#Steganography" class="headerlink" title="Steganography"></a>Steganography</h2><p>隐写术的研究可以分为两个子领域:隐写算法的研究和隐写分析的研究。对隐写术算法的研究主要集中在寻找将秘密信息嵌入媒体的方法，同时最小化媒体中的扰动。隐写分析研究试图发现检测这种扰动的方法。隐写分析是一项二进制分类任务:发现消息中是否存在秘密信息，因此机器学习分类器通常用作隐写分析器。</p>
+<p>LSB[16]是一种简单的隐写算法，用于在cover图像中嵌入秘密消息。图像中的每个像素由三个RGB颜色通道(或一个用于灰度图像)组成，每个颜色通道由若干位表示。例如，通常用8位二进制序列表示灰度图像中的一个像素。然后，LSB技术用秘密消息的位元替换cover图像中最不重要的位。通过对cover图像中最不重要的部分进行处理，可以最小化原始图像的颜色变化。然而，在使用LSB技术时，来自原始图像的信息总是丢失，并且很容易受到[6]隐写分析的影响。</p>
+<p>大多数图像隐写方案使用一种失真函数，迫使嵌入过程定位到图像中被认为有噪声或难以建模的部分。先进的隐写算法试图最小化cover图像C和隐写图像C‘之间的失真函数：</p>
+<p><img src="/2019/12/02/HayesGAN/80e308b930f9c5319b17c0aab2ad9b43.png" alt=""></p>
+<p>它是函数f的选择，不同的隐写算法对一个像素进行失真代价是不同的。</p>
+<p>HUGO[18]被认为是最安全的隐写技术之一。该方法根据像素内嵌入信息的效果，将像素的空间压缩成特征空间，利用加权范数函数对像素进行赋值，从而定义了一个失真函数域。[9]是另一种先进的隐写方法，它根据复杂区域将信息嵌入到cover图像中。如果图像的一个区域比另一个区域的纹理更复杂，那么该区域内的像素值将被修改得更多。最后，S-UNIWARD[10]提出了一个通用的失真函数，它与嵌入域无关。但是，最终的目标是一样的:最小化这个失真函数，将信息嵌入到cover图像嘈杂区域或复杂纹理中，避免的平滑区域。在第4.2节中，我们比较了与最先进的隐写分析器ATS[13]的结果。ATS使用带标签的数据建立cover和隐写图像的人工训练集，并使用带高斯核的SVM进行训练。他们表明这种技术比其他流行的隐写分析工具表现得更好。</p>
+<h1 id="Steganographic-adversarial-training"><a href="#Steganographic-adversarial-training" class="headerlink" title="Steganographic adversarial training"></a>Steganographic adversarial training</h1><p>本节讨论我们的隐写方案、我们使用的模型以及各方希望隐藏或透露的信息。在奠定了理论基础之后，我们提出了实验来支持我们的观点。</p>
+<h2 id="Learning-objectives"><a href="#Learning-objectives" class="headerlink" title="Learning objectives"></a>Learning objectives</h2><p>我们的训练计划包括三个方面:Alice、Bob和Eve。Alice向Bob发送了一条消息，Eve可以窃听Alice和Bob之间的连接，并希望发现他们的通信中是否嵌入了一条秘密消息。在经典的隐写术中，Eve(隐写分析仪)既传递未修改的图像(称为cover图像)，也传递包含秘密信息的图像，被称为隐写图像。给定一幅图像，Eve对这幅图像成为cover或隐写图像的可能性进行了信心评分。Alice在cover图像中嵌入一个秘密消息，生成一个隐写图像，并将其传递给Bob。Bob知道嵌入过程，因此可以恢复消息。在我们的方案中，Alice,Bob和Eve是神经网络。Alice被训练学习生成一个隐写图像，这样Bob可以恢复秘密信息，而Eve只能随机猜测样本是cover还是隐写图像。</p>
+<p>整个方案如图1a所示:Alice接收一个cover图像C和一个秘密加密消息M作为输入。Alice输出一个隐写图像C‘，这是给定给Bob和Eve的。Bob输出M‘，这是他试图从C’恢复的秘密消息。如果M= M‘，我们说Bob执行得很好。除了隐写图像，Eve还收到了cover图像。给定一个输入X,Eve输出X=C的概率p。Alice试图学习一个嵌入方案，使得Eve总是输出p=1/2。我们没有训练Eve最大化它的预测误差，因为它可以简单地翻转她的决定并以完美的分类精度执行。图1b显示了如何在实践中使用该方案，如果两个人希望使用我们的方案来传达隐写信息。将加密的模型信息从Carol发送到David的成本很低，平均为70MB。注意，在图1b中，步骤(1)和(2)，共享密钥的设置和模型信息的共享，是离线完成的。我们假设，就像密码研究中常见的那样，这个初始设置阶段对对手来说是不可见的。</p>
+<p><img src="/2019/12/02/HayesGAN/media/373e0b43b2dd604b46301ab080f4e215.png" alt=""></p>
+<p>在训练开始时，人类可以很容易地将cover图像与隐写图像分开，因为Alice还没有学会如何嵌入秘密信息，从而cover图像和隐写图像没有明显的区别。然而，我们把Eve训练成一个GAN中的判别器，把它的预测能力和Alice的嵌入能力联系起来。当Alice生成的隐写图像与cover图像不相似时，Eve没有能力将cover与隐写图像完美地分开。随着训练的继续，Eve在任务上做得越来越好，而Alice的权重也随着Eve的消失而增加。</p>
+<p>类似于Abadi和Andersen[2],我们让θA,θB,θC表示的参数Alice、Bob和Eve,分别。我们写一个A(θA, C,M)代表Alice输入C和M的输出, B(θb, C‘)代表Bob输入C‘的输出，和E(θE, C,C’)代表Eve输入C和C‘的输出。令LA, LB, LC分别表示Alice, Bob,Eve的损失。然后，我们有以下关系：</p>
+<p><img src="/2019/12/02/HayesGAN/media/d59f15a6cd6c839cb88c2025172dbb7a.png" alt=""></p>
+<p>我们设Bob的损失(秘密信息重构损失)为M与M‘之间的欧式距离：</p>
+<p><img src="/2019/12/02/HayesGAN/media/ca505e168e91f491b3738cc6d0c35a09.png" alt=""></p>
+<p>和一般的GAN鉴别器实现一样，我们将Eve的损失设为sigmoid交叉熵损失:</p>
+<p><img src="/2019/12/02/HayesGAN/media/14bf65ba62ed3f32b3bf1ed5867f91a7.png" alt=""></p>
+<p>当x=C时，y=0;当x=C时，y=1。Alice的损失是Bob的损失，Eve的损失和隐写图像的损失的加权和，还有一个额外的重构损失项：</p>
+<p><img src="/2019/12/02/HayesGAN/media/a8ed9e20595fa6e54534890d0fdf0765.png" alt=""></p>
+<p>d (C,C‘)之间的欧几里得距离cover图片和隐写图像和λA，λB，λE∈R定义重量给每个词各自的损失。</p>
+<p>我们的目标不仅是探索神经网络是否能以无监督的方式产生隐写嵌入算法，而且它们是否能与由隐写学专家设计的HUGO、WOW和S-UNIWARD等隐写算法相竞争。我们并不打算在神经网络中对特定的算法进行编码，而是希望给网络设计自己的算法的机会。</p>
+<h2 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h2><p>Alice(隐编码器)。Alice接受一个cover图像和一个随机的n位二进制消息作为输入。将cover图像平铺并与秘密信息连接，然后将秘密信息输入神经网络。我们希望嵌入过程的位置是学习的而不是固定的;第一层完全连接到下一层，允许秘密信息与cover图像的任何区域相结合。然后将其重塑为44i·8，其中I为cover图像的宽度。接下来的四层分别是向上采样的部分横切卷积、批量归一化和ReLU[17]，最后一层使用tanh[12]作为激活函数。</p>
+<p>Bob(隐写解码器)。Bob接受Alice输出的隐写图像作为输入。Bob使用深度卷积架构从Alice的输出中提取重要的位。它是由四个反卷积和最后一个完全连接的层组成的。除了使用tanh的最后一层之外，所有层都使用漏的ReLU[15]。每一层都应用批处理规范化。</p>
+<p>Eve(隐写分析)。Eve既接受cover图像，也接受隐写图像作为输入。Eve的架构与Bob类似，但是在最后一层使用sigmoid激活函数而不是tanh来输出logit的概率。</p>
+<h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><p>作为概念验证，我们在两个图像数据集上实现了对抗训练方案:野外名人面孔(celebA)[14]和标准隐写术研究数据集BOSS2。我们用每个数据集的每个样本连接一个n位随机消息。我们改变消息的大小n，以测试能够有效隐藏在cover图像中的信息量的限制。这相当于隐写算法可以隐藏的每像素比特数(bpp)，隐写算法是衡量隐写研究成功与否的常用方法。平均而言，隐写算法可以成功隐藏大约0.4bpp。我们的数据集是由32个32像素的图像组成的，所以我们在100到400之间变化n，这相当于隐藏在大约0.1到0.4bpp之间。我们故意将秘密消息随机化，这样网络就不会学习与特定消息组相关的特定函数。我们希望确保我们的模型可以泛化到任何小于n位的消息。对于每一个实验,我们执行网格搜索Alice最优权重损失,λAλB,λE。本节的所有实验均在TensorFlow[1,3]中进行，实验在使用Tesla<br>K40 GPU卡的工作站上进行。</p>
+<h2 id="CelebA-dataset"><a href="#CelebA-dataset" class="headerlink" title="CelebA dataset"></a>CelebA dataset</h2><p>我们首先通过展示我们的模型可以生成与cover图像几乎无法区分的隐写图像来激发我们的工作。我们改变了嵌入的秘密消息的大小，以探索隐藏图像中可以存储多少位，而不会被隐写分析器检测到。正如预期的那样，我们发现在cover图像中一个较大的扰动会导致更多的通信比特，但是会带来更大的检测风险。</p>
+<p>celebA数据库包含202,599张来自10,177个不同身份的名人的照片。我们以32个批次进行训练，并使用Adam optimizer[11]，学习率为2*10-4。在每一批训练中，我们轮流训练Alice、Bob和Eve。</p>
+<p>图2b和图2c为Alice经过150步训练后输出的隐写图像，其嵌入率分别为0.1bpp和0.4bpp。我们的方案很容易处理332图像的嵌入率为0.1bpp，这相当于一个简短的12个字符的ASCII消息。图3a和图3c分别显示了每个模型的训练损失和Bob解码秘密消息的成功时间。在前几轮训练中，Alice输出的视觉质量很低，Bob基本上是随机猜测信息。经过大约30步后，Alice学会了成功地将信息嵌入到一个cover图像中，这样Eve就被骗了，Bob学会了正确地解码消息。经过150个训练步骤后，Bob解码信息的平均成功率为100%，而Eve的失败率保持不变。图3b和图3d显示了相似的结果，训练结束时，样本质量和解码成功率都很高。隐藏0.4bpp相当于成功地隐藏了一条包含51个ASCII字符的消息。由于Alice和Bob之间的信息量比较大，Alice发现有效的嵌入方案和Bob正确发现秘密信息的时间都比较长。经过150个训练步骤，Bob可以成功地解码100%的消息。在0.1bpp和0.4bpp之间没有明显的图像质量下降，但是经过0.4bpp之后，我们发现图像质量下降了，不可能再平衡具有欺骗能力的真实图像创建和消息解码的收敛性。在嵌入率为0.1bpp和0.4bpp时，Eve的损失保持在1.4左右。Eve的损失是隐写图像和cover图像的损失之和，两者都保持在约0.69的稳定水平。由于损失函数中的对数项，这相当于随机猜测一幅图像是否携带秘密信息。</p>
+<p><img src="/2019/12/02/HayesGAN/05cea51b468b2c1254d81fd3780f6297.png" alt=""></p>
+<p><img src="/2019/12/02/HayesGAN/a3d57fecfd3d1f2d47c9cf92c11b7476.png" alt=""></p>
+<h2 id="BOSS-dataset"><a href="#BOSS-dataset" class="headerlink" title="BOSS dataset"></a>BOSS dataset</h2><p>除了在celebA数据集上的实验外，我们还在BOSS图像数据集上训练了我们的隐写方案，BOSS图像数据集通常用作隐写研究的基准。BOSS是由10,000张灰度图像组成的，描绘了各种各样的场景，如风景、建筑和动物。我们预计我们的方案执行情况会比在celebA数据集上差，因为cover图像不是来自单一的分布。然而，我们发现我们的方案仍然能够成功地嵌入秘密信息。</p>
+<p>图4b展示了嵌入率为0.1bpp的隐写图像的样本质量，图4c和图4d分别展示了Alice、Bob和Eve的错误率和Bob解码秘密消息成功的概率。虽然图像质量比celebA数据集稍差，但我们的方案仍然能够学习隐写算法。我们的方案是输出样本与原始数据集没有什么不同，而Bob能够成功地解码消息。Alice和Bob都在相对较短的时间内学习了各自的任务，之后在隐藏或恢复秘密消息方面没有太大的改进。训练结束后，Bob能够以99.8%的准确率成功解码这个秘密信息。</p>
+<p><img src="/2019/12/02/HayesGAN/bfc2908ed6e23b69a594c6376d4f580d.png" alt=""></p>
+<h2 id="Comparison-with-related-work"><a href="#Comparison-with-related-work" class="headerlink" title="Comparison with related work"></a>Comparison with related work</h2><p>欺骗一个隐写分析者,Eve，在设计上是很容易的，因为我们训练的方式使得Eve从来没有明显的竞争优势。因此，我们还证明了最后得到的训练有素的隐写模型Alice可以欺骗一个独立的隐写分析器。我们将我们的方案与最先进的隐写算法和隐写分析工具进行了比较，结果表明它具有竞争力。</p>
+<p>对于BOSS和CelebA，我们将我们的方案与隐写算法HUGO、WOW和S-UNIWARD进行比较。此外，我们使用监督训练实现了Eve模型，并与表1中的隐写分析者ATS进行了比较。按照设计，Eve的性能只比random好一点点。人们可能会想，为夏娃选择模型是否明智;为什么不用一个已经建立的steganalyzer来代替Eve模型呢?通过以监督的方式训练Eve，我们证明Eve有能力成为一个强大的隐写字分析器，与现有的技术(如ATS)竞争，因此是隐写字分析器的一个很好的选择。此外，Eve不需要像ATS那样的特征提取预处理步骤，而且从我们的实验来看，训练速度要快一个数量级。老板和CelebA数据集,我们使用10,000个样本,分成两半,创建一个训练集和测试集。爱丽丝当时在5000年样本训练集训练。然后,我们创建了一个额外的10,000隐写图像隐写算法(Alice,HUGO,WOW,S-UNIWARD)。现在每个隐写算法都有一个相关的训练集和测试集，每个包含5000个cover图像和5000个隐写图像。对于每个隐写算法，我们在相关的训练集上对ATS和Eve进行训练，然后在测试集上报告隐写分析仪的准确性。虽然我们的方案并没有显著地改进当前流行的隐写术方法，但是很明显，它的性能并没有显著地下降，并且无监督的训练方法能够与专家领域知识竞争。</p>
+<p><img src="/2019/12/02/HayesGAN/bc5ec517e90785a7ff0f5f87da713bd4.png" alt=""></p>
+<h2 id="Evaluating-robust-decryption"><a href="#Evaluating-robust-decryption" class="headerlink" title="Evaluating robust decryption"></a>Evaluating robust decryption</h2><p>由于训练方案中模型的不凸性，我们不能保证在相同图像上训练的两个独立的方会收敛到相同的模型权值，从而学习相同的嵌入和解码算法。因此，在隐写通信之前，我们要求通信方中的一方对方案进行本地训练，加密模型信息，并将其与训练图像集的信息一起传递给另一方。这确保双方学习相同的模型权重。为了验证我们的想法的实用性，我们在本地(机器A)训练方案，然后将模型信息发送到另一个工作站(机器B)，该工作站将重建所学习的模型。然后，我们将由Alice模型嵌入的隐写图像从机器A传递到机器B，机器B使用Bob模型来恢复秘密消息。使用隐藏0.1bpp对应长度的消息，并随机选择10%的CelebA数据集，B机能够恢复到A机发送的99.1%的消息，超过100次试验;我们的方案可以成功地从隐写图像中解码出加密信息。请注意，我们的方案并不要求完美的解码精度，以随后解密的消息。如果加密模式可以容忍错误，隐写信息的接收者可以成功地解码和解密秘密消息。例如，使用诸如AES-CTR这样的流密码，可以确保未正确解码的比特不会影响对消息其余部分的解密能力。</p>
+<h1 id="Discussion-amp-conclusion"><a href="#Discussion-amp-conclusion" class="headerlink" title="Discussion &amp; conclusion"></a>Discussion &amp; conclusion</h1><p>我们已经提供了大量的证据证明我们的假设是正确的，机器学习可以有效地用于隐写分析和隐写算法设计。特别是，它与使用基于人的规则的设计竞争。通过利用对抗性训练游戏，我们证实了神经网络能够发现隐写算法，而且，这些隐写算法在最先进的技术下表现良好。我们的方案不需要领域知识来设计隐写方案。我们将攻击者建模为另一个神经网络，并证明该攻击者具有足够的表达能力，可以在最先进的隐写分析仪上表现良好。</p>
+<p>我们期望这项工作将导致进一步研究的富有成果的途径。目前通过网格搜索来寻找cover图像重建丢失、Bob丢失和Eve丢失之间的平衡点，从而发现有效的嵌入方案是一个非常耗时的过程。发现一种更精细的方法将大大提高训练过程的效率。实际上，发现一种方法来快速检查cover图像是否具有接收秘密消息的能力，这与当前实现的反复试验方法相比是一个很大的改进。很明显，Alice和Bob是通过相对较少的训练步骤来学习他们的任务的，如果Alice和Bob因为模型的局限性或者训练方案的缺陷而不能提高，还需要进一步的研究来探索。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/GAN/" rel="tag"><i class="fa fa-tag"></i> GAN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/02/SSGAN/" rel="next" title="SSGAN">
+                <i class="fa fa-chevron-left"></i> SSGAN
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100017135643802" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                    
+                      FB Page
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.youtube.com/channel/UC8TkFUpWAS2wzj34ijgAZGA?view_as=subscriber" target="_blank" title="YouTube">
+                  
+                    <i class="fa fa-fw fa-youtube"></i>
+                  
+                    
+                      YouTube
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ws.binghamton.edu/fridrich/?tdsourcetag=s_pctim_aiomsg" title="Fridrich" target="_blank">Fridrich</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://imkira.com/" title="Kira" target="_blank">Kira</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Related-work"><span class="nav-number">3.</span> <span class="nav-text">Related work</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Adversarial-learning"><span class="nav-number">3.1.</span> <span class="nav-text">Adversarial learning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Steganography"><span class="nav-number">3.2.</span> <span class="nav-text">Steganography</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Steganographic-adversarial-training"><span class="nav-number">4.</span> <span class="nav-text">Steganographic adversarial training</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-objectives"><span class="nav-number">4.1.</span> <span class="nav-text">Learning objectives</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Architecture"><span class="nav-number">4.2.</span> <span class="nav-text">Architecture</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Experiments"><span class="nav-number">5.</span> <span class="nav-text">Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CelebA-dataset"><span class="nav-number">5.1.</span> <span class="nav-text">CelebA dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BOSS-dataset"><span class="nav-number">5.2.</span> <span class="nav-text">BOSS dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Comparison-with-related-work"><span class="nav-number">5.3.</span> <span class="nav-text">Comparison with related work</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Evaluating-robust-decryption"><span class="nav-number">5.4.</span> <span class="nav-text">Evaluating robust decryption</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Discussion-amp-conclusion"><span class="nav-number">6.</span> <span class="nav-text">Discussion &amp; conclusion</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"mobile":{"show":false},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>

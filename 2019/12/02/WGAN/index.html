@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="GAN," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Wasserstein GAN Introduction本文所关注的问题是无监督学习。主要是，学习概率分布意味着什么？对此的经典答案是学习概率密度。这通常通过定义参数密度族（Pθ）θ∈R并找到最大化我们数据似然比来完成：如果我们有实际数据示例{x(i)}，我们将解决问题:  如果真实数据分布为Pr允许密度并且Pθ是参数化密度Pθ的分布，则渐近地，这相当于最小化Kullback-Leibler散度K">
+<meta name="keywords" content="GAN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WGAN">
+<meta property="og:url" content="http://fennudehaogua.top/2019/12/02/WGAN/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="Wasserstein GAN Introduction本文所关注的问题是无监督学习。主要是，学习概率分布意味着什么？对此的经典答案是学习概率密度。这通常通过定义参数密度族（Pθ）θ∈R并找到最大化我们数据似然比来完成：如果我们有实际数据示例{x(i)}，我们将解决问题:  如果真实数据分布为Pr允许密度并且Pθ是参数化密度Pθ的分布，则渐近地，这相当于最小化Kullback-Leibler散度K">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/91682099e1aae71d91f86c88e0e679cb.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/71cbb3dec732220859fcac2888d0864f.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/acf49f8ad0b68e4e6d091101ab276645.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/693e3685b309a3ce6fe126020492e38a.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/20ec104e21066efc9e5f40d7e766ded0.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/b55953a471dfd386482069d89b7f1cea.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/d7bfc521f82bd7ccee4d7133c2731175.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/f2ad81f79bd84289738874fe4ee9912d.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/bd811c480e995b27a61e0d4ba9744bcf.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/d07331f70f3665da93bd3949aec8dada.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/4acecda94137c8eaf1c17bb0f0809a64.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/20ef253dfa5b867ec8e4475a51535f45.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/58bdd9facf587904a0322051ecb6ee2a.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/acc0f3b6efb626c795a7cb389758c2fa.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/49e19b04e774ae6207543da604de955b.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/871b70b8084f21b090c2f9d0470b6ce8.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/566a4170a5d77cae698b33de65ad2a2f.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/fdb4fe4617159aca30f895d3c64c3494.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/e7d4936c910381cb0b954d3114f27caa.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/359ac848bd894527d997b4bdda5dae31.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/WGAN/2e1725343ed8efc47feaaef3acca8348.png">
+<meta property="og:updated_time" content="2019-12-02T12:57:25.504Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WGAN">
+<meta name="twitter:description" content="Wasserstein GAN Introduction本文所关注的问题是无监督学习。主要是，学习概率分布意味着什么？对此的经典答案是学习概率密度。这通常通过定义参数密度族（Pθ）θ∈R并找到最大化我们数据似然比来完成：如果我们有实际数据示例{x(i)}，我们将解决问题:  如果真实数据分布为Pr允许密度并且Pθ是参数化密度Pθ的分布，则渐近地，这相当于最小化Kullback-Leibler散度K">
+<meta name="twitter:image" content="http://fennudehaogua.top/2019/12/02/WGAN/91682099e1aae71d91f86c88e0e679cb.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2019/12/02/WGAN/"/>
+
+
+
+
+
+  <title>WGAN | fennudehaogua.top</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?727b9992a1a14607aebb47500e5bcc08";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2019/12/02/WGAN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">WGAN</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-02T20:53:46+08:00">
+                2019-12-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Wasserstein GAN</p>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>本文所关注的问题是无监督学习。主要是，学习概率分布意味着什么？对此的经典答案是学习概率密度。这通常通过定义参数密度族（Pθ）θ∈R并找到最大化我们数据似然比来完成：如果我们有实际数据示例{x(i)}，我们将解决问题:</p>
+<p><img src="/2019/12/02/WGAN/91682099e1aae71d91f86c88e0e679cb.png" alt=""></p>
+<p>如果真实数据分布为Pr允许密度并且Pθ是参数化密度Pθ的分布，则渐近地，这相当于最小化Kullback-Leibler散度KL（Pr||Pθ）。</p>
+<p>为此，我们需要存在模型密度Pθ。在我们处理低维流形支持的分布的这种相当普遍的情况下，情况并非如此。然后，模型流形和真实分布的支持不可能具有不可忽略的交点（参见[1]），这意味着KL距离不是定义的（或仅仅是有限的）。</p>
+<p>典型的补救措施是在模型分布中添加噪声项。这就是为什么在经典机器学习文献中描述的几乎所有生成模型都包括噪声分量。在最简单的情况下，假设具有相对高带宽的高斯噪声以覆盖所有示例。例如，众所周知，在图像生成模型的情况下，这种噪声会降低样本的质量并使其模糊。例如，我们可以在最近的论文[23]中看到，当像素已被归一化到[0,1]范围内时，当生成似然时最大似然性时加到模型中的噪声的最佳标准偏差约为0.1到每个像素。这是一个非常大量的噪音，当论文展示他们的模型样例时，他们不会添加他们展示似然数的噪音项。换句话说，增加的噪声项对于问题显然是不正确的，但需要使最大似然法有效。</p>
+<p>我们可以定义随机变量Z使用固定分布p(z)而不是估计可能不存在的密度Pr，并将其传递给直接生成样本的参数函数gθ：Z→x（通常是某种神经网络）遵循一定的分布Pθ。通过改变θ，我们可以改变这种分布并使其接近实际数据分布Pr。这在两个方面很有用。首先，与密度不同，这种方法可以表示分布在低维流形上的分布。其次，容易生成样本的能力通常比知道密度的数值更有用（例如，在考虑给定输入图像的输出图像的条件分布时，在图像超分辨率或语义分割中）。一般而言，在任意高维密度下生成样本在计算上是困难的[16]。</p>
+<p>变分自动编码器（VAE）[9]和生成性对抗网络（GAN）[4]是这种方法的众所周知的例子。由于VAE关注的是示例的近似可能性，因此它们共享标准模型的限制，需要使用额外的噪声项。GAN在目标函数的定义方面具有更大的灵活性，包括Jensen-Shannon[4]，以及所有f-散度[17]以及一些奇异的组合[6]。另一方面，由于[1]中理论上研究的原因，训练GAN因其微妙和不稳定而众所周知。</p>
+<p>在本文中，我们将注意力集中在各种方法上，以测量模型分布与实际分布的接近程度，或等效地确定距离或散度的各种方法ρ（Pθ，Pr）。这些距离之间最基本的差异是它们对概率分布序列的收敛的影响。当且仅当存在分布P∞使得ρ（Pt，P∞）倾向于零时，分布序列（Pt）t∈N会收敛，这取决于距离ρ的确切精确程度。非正式地，当距离ρ使得分布序列更容易收敛时，距离ρ会引起较弱的拓扑。第2节概述了在这方面流行的概率距离的差异程度。</p>
+<p>为了优化参数θ，当然希望以使θ→Pθ映射连续的方式定义我们的模型分布Pθ。连续性意味着当一系列参数θt收敛到θ时，分布Pθt也会收敛到Pθ。但是，必须记住，分布Pθt的收敛概念取决于我们计算分布之间距离的方式。这个距离越弱，就越容易定义从θ空间到Pθ空间的连续映射，因为分布更容易收敛。我们关心θ→Pθ映射是连续的主要原因如下。如果ρ是我们两个分布之间距离的概念，我们希望有一个连续的损失函数θ→ρ（Pθ，Pr），这相当于当使用分布ρ之间的距离时，映射θ→Pθ是连续的。</p>
+<p>准确地说，当ρ下的收敛序列集是ρ‘下的收敛序列时，由ρ引起的拓扑弱于由ρ‘引起的拓扑。</p>
+<p>本文的贡献是：</p>
+<p>•在第2节中，我们提供了一个全面的理论分析，分析了Earth Mover（EM）距离与学习分布环境中使用的流行概率距离和差异相比如何表现。</p>
+<p>在第3节中，我们定义了一种称为Wasserstein-GAN的GAN形式，它最小化了EM距离的合理和有效近似，并且我们理论上表明相应的优化问题是合理的。</p>
+<p>在第4节中，我们凭经验证明WGAN可以解决GAN的主要训练问题。特别是，训练WGAN不需要在判别器和生成器的训练中保持谨慎的平衡，也不需要仔细设计网络架构。GAN中典型的模型崩塌现象也大大减少。WGAN最引人注目的实际益处之一是通过训练判别器达到最优性来连续估计EM距离。绘制这些学习曲线不仅对调试和超参数搜索有用，而且与观察到的样本质量非常相关。</p>
+<h1 id="Diﬀerent-Distances"><a href="#Diﬀerent-Distances" class="headerlink" title="Diﬀerent Distances"></a>Diﬀerent Distances</h1><p>我们现在介绍我们的符号。令X为紧致度量集（例如图像[0,1]d的空间），并且让Σ表示X的所有Borel子集的集合。设Prob（X）表示在X上定义的概率测量的空间。我们现在可以定义两个分布Pr,Pg∈ Prob（X）之间的基本距离和差异：</p>
+<p><img src="/2019/12/02/WGAN/71cbb3dec732220859fcac2888d0864f.png" alt=""></p>
+<p>假设Pr和Pg都是绝对连续的，因此允许密度相对于在X上定义的相同测量值. 当点Pg(x)=0和Pr(x) >时，KL散度是出了名的不对称且可能是无限的。</p>
+<p><img src="/2019/12/02/WGAN/acf49f8ad0b68e4e6d091101ab276645.png" alt=""></p>
+<p>其中Π(Pr, Pg)表示所有联合分布γ(x, y)的集合，其边界值分别为Pr和Pg。直观地，γ(x,y)表示多少“质量”必须运输从x到y为了变换分布Pr成为分布Pg。那么EM距离就是最优运输计划的“成本”。</p>
+<p>以下示例说明了概率分布的简单序列如何在EM距离下收敛但不会收敛于上面定义的其他距离和差异。</p>
+<p>例1（学习平行线）。让Z~U[0,1]在单位间隔上均匀分布。令P0为（0,Z）∈R2（x轴上的0和y轴上的随机变量Z）的分布，在穿过原点的直线垂直线上是均匀的。现在让gθ(z)=（θ，z）与θ一个实参数。很容易看出，在这种情况下，</p>
+<p><img src="/2019/12/02/WGAN/693e3685b309a3ce6fe126020492e38a.png" alt=""></p>
+<p>当θt趋近于0时，序列（Pθt）t∈N在EM距离下收敛到P0，但在JS，KL，反向KL或TV分歧下根本不会收敛。图1针对EM和JS距离的情况说明了这一点。</p>
+<p><img src="/2019/12/02/WGAN/20ec104e21066efc9e5f40d7e766ded0.png" alt=""></p>
+<p>例1给出了一个案例，我们可以通过对EM距离进行梯度下降来学习低维流形上的概率分布。这不能用其他距离和偏差来完成，因为所产生的损失函数甚至不是连续的。虽然这个简单的例子具有不相交支持的分布，但当支持在一组度量零中包含非空交集时，同样的结论成立。当两个低维流形在一般位置[1]相交时，就会发生这种情况。</p>
+<p>因为Wasserstein距离比JS距离弱得多,我们现在可以问W(Pr、Pθ)是否为一个持续的损失函数在θ温和的假设下。正如我们现在所陈述和证明的那样，这一点以及更多的事实都是正确的。</p>
+<p><img src="/2019/12/02/WGAN/b55953a471dfd386482069d89b7f1cea.png" alt=""></p>
+<p><img src="/2019/12/02/WGAN/d7bfc521f82bd7ccee4d7133c2731175.png" alt=""></p>
+<p>所有这些表明，对于我们的问题，EM是一个比JS-香农散度更合理的成本函数。下列定理描述了由这些距离和散度引起的拓扑的相对强度，KL最强，其次是JS和TV,EM最弱。</p>
+<p><img src="/2019/12/02/WGAN/f2ad81f79bd84289738874fe4ee9912d.png" alt=""></p>
+<p>这突出了这样一个事实:在学习由低维流形支持的分布时，KL、JS和TV距离不是合理的成本函数。然而，EM距离是合理的设置。这显然引导我们进入下一节，在那里我们将介绍优化EM距离的实用近似值。</p>
+<h1 id="Wasserstein-GAN"><a href="#Wasserstein-GAN" class="headerlink" title="Wasserstein GAN"></a>Wasserstein GAN</h1><p>同样，定理2指出W（Pr, Pθ）在优化时可能比J S（Pr,Pθ）具有更好的属性。然而，（1）中的下确界最重要的是非常难以处理的。另一方面，Kantorovich-Rubinstein二元性[22]告诉我们</p>
+<p><img src="/2019/12/02/WGAN/bd811c480e995b27a61e0d4ba9744bcf.png" alt=""></p>
+<p>其中，上确界是在所有的1-Lipschitz函数f: X→R注意，如果我们将||f||L ≤1替换为||f||L≤K(考虑K- lipschitz为某个常数K)，则最终得到K·W(Pr,Pg)。因此，如果我们有一个参数化的族函数{fw}w∈W，这些都是K-lipschitz对于某些K，我们可以考虑解决这个问题</p>
+<p><img src="/2019/12/02/WGAN/d07331f70f3665da93bd3949aec8dada.png" alt=""></p>
+<p>如果某个w∈W达到（2）中的上限（一个非常强的假设，类似于证明估计量一致性时的假设），这个过程将产生W（(Pr,Pθ）直到乘法常数的计算。此外，我们可以考虑通过估计Ez∼p(z)[∇θfw(gθ(z))]，通过等式（2）反向推进W（Pr,Pθ）（再次，直到常数）。虽然这是直觉，但我们现在证明这个过程是在最优性假设下的原则。</p>
+<p><img src="/2019/12/02/WGAN/4acecda94137c8eaf1c17bb0f0809a64.png" alt=""></p>
+<p>我们现在遇到的问题是找到解决方程（2）中最大化问题的函数f。为了粗略估计这一点，我们可以做的是训练一个参数化的神经网络，其中权重w位于一个紧凑的空间W中，然后通过Ez∼p(z)[∇θfw(gθ(z))],进行反推，就像我们对典型的GAN一样。注意，W是紧凑的这一事实意味着fw的所有函数对于某些K而言将是K-Lipschitz，其仅取决于W而不是单独的权重，因此近似于（2）直到不相关的缩放因子和’的容量。评论家fw。为了让参数w位于一个紧凑的空间中，我们可以做的一件事就是在每次梯度更新后将权重钳制到一个固定的盒子（比如W= [-0.01,0.01] l）。Wasserstein生成对抗网络（WGAN）过程在算法1中描述。</p>
+<p>权重削减是强制执行Lipschitz约束的一种明显可怕的方法。如果裁剪参数很大，那么任何权重都可能需要很长时间才能达到极限，从而使评论员更难以进行最优化。如果削波很小，当层数很大或不使用批量归一化时（例如在RNN中），这很容易导致梯度消失。我们尝试了简单的变体（例如将重量投射到球体上），差别很小，并且由于其简单性和良好的性能，我们坚持减重。但是，我们确实将Lipschitz约束的主题留在神经网络设置中以供进一步调查，我们积极鼓励感兴趣的研究人员改进这种方法。</p>
+<p><img src="/2019/12/02/WGAN/20ef253dfa5b867ec8e4475a51535f45.png" alt=""></p>
+<p>事实上，EM距离是连续的，并且是不可靠的a.e.意味着我们可以（并且应该）训练评论家直到最优。这个论点很简单，我们训练批评者的次数越多，我们得到的Wasserstein的梯度越可靠，这实际上是因为Wasserstein几乎无处不在。对于JS，随着鉴别器变得更好，梯度变得更可靠，但真正的梯度为0，因为JS局部饱和并且我们得到消失的梯度，如本文的图1和[1]的定理2.4所示。在图2中，我们展示了这一概念的证明，其中我们训练GAN鉴别器和WGAN评论者直到最优。鉴别器学得很快以区分假和真实，并且如预期的那样不提供可靠的梯度信息。然而，评论家不能饱和，并且收敛于线性函数，在任何地方都给出了非常干净的渐变。我们约束权重的事实限制了函数的可能增长在空间的不同部分中最多线性，迫使最优评论者具有这种行为。</p>
+<p>也许更重要的是，我们可以训练评论家直到达到最优状态，这样我们就无法崩溃模式。这是因为模式崩溃来自以下事实：固定鉴别器的最佳生成器是鉴别器分配最高值的点上的增量之和，如[4]所示，并在[11]中突出显示。</p>
+<p>在下一节中，我们将展示新算法的实际效益，并对其行为与传统GAN的行为进行深入比较。</p>
+<p><img src="/2019/12/02/WGAN/58bdd9facf587904a0322051ecb6ee2a.png" alt=""></p>
+<h1 id="Empirical-Results"><a href="#Empirical-Results" class="headerlink" title="Empirical Results"></a>Empirical Results</h1><p>我们使用我们的Wasserstein-GAN算法进行图像生成实验，结果表明，与标准GANs中使用的配方相比，它具有显著的实际效益。</p>
+<p>我们声称有两个主要好处：</p>
+<p>•一个与生成器的收敛和样品质量相关的有意义的损耗度量</p>
+<p>•提高优化过程的稳定性</p>
+<h2 id="Experimental-Procedure"><a href="#Experimental-Procedure" class="headerlink" title="Experimental Procedure"></a>Experimental Procedure</h2><p>我们进行图像生成实验。要学习的目标分布是LSUN-Bedrooms数据集[24] -室内卧室的自然图像集合。我们的基线比较是DCGAN [18]，一个使用-logD技巧[4]用标准GAN程序训练的卷积结构的GAN。生成的样本是尺寸为64x64像素的3通道图像。我们使用算法1中指定的超参数进行所有实验。</p>
+<p><img src="/2019/12/02/WGAN/acc0f3b6efb626c795a7cb389758c2fa.png" alt=""></p>
+<p>图3：在不同的训练阶段训练曲线和样本。我们可以看到较低误差与较好样本质量之间的明确相关性。左上角：生成器是一个MLP，每层有4个隐藏层和512个单元。随着训练的进行和样品质量的提高，损失会持续下降。右上：生成是标准DCGAN。损失迅速减少，样品质量也随之增加。在两个上图中，评论家都是没有sigmoid的DCGAN，因此可以对损失进行比较。下半部分：生成器和鉴别器都是具有相当高学习率的MLP（因此训练失败）。损失是恒定的，样本也是恒定的。为了可视化目的，训练曲线通过中值滤波器。</p>
+<h2 id="Meaningful-loss-metric"><a href="#Meaningful-loss-metric" class="headerlink" title="Meaningful loss metric"></a>Meaningful loss metric</h2><p>因为WGAN算法试图在每次生成器更新（算法1中的第10行）之前相对较好地训练批评者f（算法1中的第2-8行），此时的损失函数是EM距离的估计，直到常数与我们约束f的Lipschitz常数的方式有关的因素。</p>
+<p>我们的第一个实验说明了这种估计如何与生成的样本的质量很好地相关。除了卷积DCGAN架构，我们还进行了实验，我们用4层ReLU-MLP和512个隐藏单元替换生成器或生成器和评论家。</p>
+<p>图3绘制了WGAN训练期间所有三种架构的EM距离的WGAN估计（3）的演变。该图清楚地表明这些曲线与所生成样品的视觉质量很好地相关。</p>
+<p>据我们所知，这是GAN文献中第一次显示出这样的属性，其中GAN的丢失显示了收敛性。在对抗网络中进行研究时，此属性非常有用，因为不需要盯着生成的样本来确定故障模式并获取有关哪些模型比其他模型做得更好的信息。</p>
+<p><img src="/2019/12/02/WGAN/49e19b04e774ae6207543da604de955b.png" alt=""></p>
+<p>图4：使用标准GAN过程训练的MLP生成器（左上）和DCGAN生成器（右上）的JS估计。两者都有DCGAN鉴别器。两条曲线的误差都在增加。DCGAN的样本变得更好，但JS估计增加或保持不变，表明样本质量和损失之间没有显着的相关性。底部：带有生成器和鉴别器的MLP。无论样品质量如何，曲线都会上下波动。所有训练曲线都通过与图3相同的中值滤波器。</p>
+<p>但是，我们并未声称这是一种定量评估生成模型的新方法。依赖于评论家架构的恒定比例因子意味着很难将模型与不同的评论家进行比较。更重要的是，在实践中，评论家没有有限的能力这一事实使我们很难知道我们的估计到底有多接近EM距离。话虽这么说，我们已经成功地使用损失度量来反复验证我们的实验而没有失败，我们认为这是训练GAN的巨大改进，以前没有这样的设施。</p>
+<p>相比之下，图4描绘了GAN训练期间JS距离的GAN估计的演变。更确切地说，在GAN训练期间，训练器被训练为最大化</p>
+<p><img src="/2019/12/02/WGAN/871b70b8084f21b090c2f9d0470b6ce8.png" alt=""></p>
+<p>这是2JS（(Pr,Pθ）-2log2的下限。在图中，我们绘制了数量2 L（D, gθ）+ log2，它是JS距离的下限。</p>
+<p>该数量明显与样品质量相关。另请注意，JS估计通常保持不变或上升而不是下降。实际上它通常仍然非常接近log2≈0.69，这是JS距离所采用的最高值。换句话说，JS距离饱和，鉴别器具有零损失，并且生成的样本在某些情况下是有意义的（DCGAN生成器，右上图），并且在其他情况下折叠成单个无意义的图像[4]。最后一种现象在[1]中已在理论上得到解释，并在[11]中得到了强调。</p>
+<p>当使用-logD技巧[4]时，鉴别器损失和生成器损失是不同的。附录E中的图8报告了GAN训练的相同图，但使用生成器损失而不是鉴别器丢失。这不会改变结论。</p>
+<p>最后，作为否定结果，我们报告说，当一个人使用基于动量的优化器（例如Adam [8]（β1>0）对评论者或者使用高学习率时，WGAN训练变得不稳定。由于评论家的损失是非平稳的，基于动量的方法似乎表现更差。我们认为动量是潜在的原因，因为随着损失的爆发和样本变得更糟，亚当步和梯度之间的余弦通常变为负值。这个余弦是负面的唯一地方是在这些不稳定的情况下。因此，我们改用RMSProp<br>[21]，即使在非常不稳定的问题上也能表现良好[13]。</p>
+<h2 id="Improved-stability"><a href="#Improved-stability" class="headerlink" title="Improved stability"></a>Improved stability</h2><p>WGAN的一个好处是它允许我们训练批评者直到最优。当评论家接受训练完成时，它只会为生成器提供损失，我们可以像任何其他神经网络那样进行训练。这告诉我们，我们不再需要正确平衡生成器和鉴别器的容量。评论者越好，我们用来训练生成器的梯度越高。</p>
+<p>我们观察到，当改变生成器的架构选择时，WGAN比GAN更强大。我们通过在三个生成器架构上运行实验来说明这一点：（1）卷积DCGAN发生器，（2）卷积DCGAN发生器，没有批量归一化和恒定数量的滤波器，以及（3）4层ReLU-MLP和512隐藏的单位。已知最后两个与GAN表现非常差。我们为WGAN评论家或GAN鉴别器保留了卷积DCGAN架构。</p>
+<p>图5,6和7示出了使用WGAN和GAN算法为这三种体系结构生成的样本。我们将读者引用附录F了解生成样本的完整表格。样品没有择优挑选。</p>
+<p>在没有实验的情况下，我们看到了WGAN算法模式崩溃的证据。</p>
+<p><img src="/2019/12/02/WGAN/566a4170a5d77cae698b33de65ad2a2f.png" alt=""></p>
+<p><em>图5：使用DCGAN生成器训练的算法。左：WGAN算法。右：标准GAN配方。两种算法都能生成高质量的样本</em></p>
+<p><em>图6：使用没有批量标准化的生成器训练的算法和每层的固定数量的过滤器（而不是每次都复制它们，如[18]）。除了取出批量归一化之外，参数的数量因此减少了一个数量级以上。左：WGAN算法。右：标准GAN配方。我们可以看到标准GAN未能学习，而WGAN仍然能够生成样本。</em></p>
+<p><em>图7：使用MLP发生器训练的算法，该生成器具有4层和512个具有ReLU非线性的单元。参数的数量类似于DCGAN的数量，但它缺乏用于图像生成的强诱导偏差。左：WGAN算法。右：标准GAN配方。<br>WGAN方法仍然能够生产比DCGAN质量更低的样品，并且质量高于标准GAN的MLP。请注意GAN<br>MLP中模式崩溃的重要程度。</em></p>
+<h1 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h1><p>关于所谓的积分概率矩阵(IPMs)有很多研究[15]。给定F从X到R的一系列函数，我们可以定义</p>
+<p><img src="/2019/12/02/WGAN/fdb4fe4617159aca30f895d3c64c3494.png" alt=""></p>
+<p>作为与f类函数相关的一个积分概率度量，很容易证明，如果对于每一个f∈f我们都有−f∈f(比如我们要考虑的所有例子)，那么dF是非负的，满足三角不等式，并且是对称的。因此，dF是Prob(X)上的伪度量。</p>
+<p>尽管IPMs似乎共享一个类似的公式，但是我们将看到不同的函数类可以使用完全不同的度量。</p>
+<p>•根据Kantorovich-Rubinstein二元性[22],我们知道W(Pr、Pθ)= dF(Pr、Pθ)当F是1-Lipschitz函数的集合时。进一步，如果F是K-Lipschitz函数的集合时我们得到了K·W(Pr、Pθ)=dF(Pr、Pθ)。</p>
+<p>•当F是-1和1之间的所有可测量函数的集合（或-1和1之间的所有连续函数）时，我们得到dF(Pr, Pθ) = δ(Pr,Pθ)总变差距离[15]。这已经告诉我们，从1-Lipschitz到1-Bounded函数会彻底改变空间的拓扑结构，并将dF(Pr, Pθ)的规律性作为损失函数（如定理1和2所示）。</p>
+<p>•基于能量的GAN（EBGAN）[25]可以被认为是总变差距离的生成方法。这种联系在附录D中有详细说明和证明。连接的核心是鉴别器将起到最大化方程（4）的作用，而对于某些常数m，它的唯一限制是在0和m之间。这将与限制在介于-1和1之间的行为相同，直到与优化无关的恒定缩放因子。因此，当鉴别器接近最优性时，生成器的代价将使总变化距离δ近似（Pr,Pθ）。由于总变差距离显示出与JS相同的规律性，可以看出EBGAN将从经典GAN的相同问题中获得关于不能将鉴别器训练到最优性并且因此将其自身限制为非常不完美的梯度的问题。</p>
+<p>•最大均值差异（MMD）[5]是F = {f ∈ H : ||f||∞ ≤1}对于与给定内核k相关的H某些再生核Hilbert空间（RKHS）的整数概率度量的具体情况：X×X→R。正如[5]所证明的那样，我们知道MMD是一个合适的度量标准，而且当内核是通用的时候，它不仅是伪测量的。在特定情况下，H= L（X , m）对于m的标准化Lebesgue度量，我们知道{f ∈ Cb(X ), ||f||∞ ≤1}将包含在F中，因此dF (Pr, Pθ) ≤ δ(Pr,Pθ)因此规律性作为损失函数的MMD距离将至少与总变差之一一样差。然而，这是一个非常极端的情况，因为我们需要一个非常强大的内核来逼近整个L2。然而，即使是高斯核也能够检测出微小的噪声模式，如[20]所证明的那样。这表明特别是对于低带宽内核，距离可能接近与总变化或JS类似的饱和状态。这显然不一定是每个内核的情况，并确定如何以及哪些不同的MMD更接近Wasserstein或总变差距离是一个有趣的研究课题。</p>
+<p>MMD的一个重要方面是通过核心技巧，不需要训练单独的网络来最大化RKHS球的方程（4）。然而，这具有以下缺点：评估MMD距离具有与用于估计（4）中的期望的样本量成二次方增长的计算成本。最后一点使MMD具有有限的可扩展性，并且有时因此而无法应用于许多实际应用程序。MMD具有线性计算成本的估计[5]在很多情况下，MMD非常有用，但它们的样本复杂性也较差。</p>
+<p>•生成矩匹配网络（GMMNs）[10,2]是MMD的生成对应物。通过对公式（4）的核化公式进行反向推导，它们直接优化dMMD(Pr,Pθ)（当F与上一项相同时为IPM）。如上所述，这具有不需要单独的网络来近似最大化等式（4）的优点。但是，GMMN的适用性有限。对于不成功的部分解释是二次成本作为样本数量和低带宽内核消失梯度的函数。此外，实际使用的某些内核可能不适合捕获高维样本空间（例如自然图像）中的非常复杂的距离。[19]表明，对于典型的高斯MMD测试来说，可靠性（因为它的统计测试接近1时的功率），我们需要样本数随着维数的增加而线性增长。由于MMD计算成本随着用于估计等式（4）的批次中的样本数量呈二次方式增长，这使得具有可靠估计器的成本随着维度的数量呈二次方增长，这使得它非常不适用于高维问题。实际上，对于像64x64图像那样标准的东西，我们需要尺寸至少为4096的微型计算机（不考虑[19]范围内的常数，这会使这个数字显着增大），每次迭代的总成本为40962，使用标准批量大小为64时，比GAN迭代多5个数量级。</p>
+<p>话虽如此，这些数字对于MMD来说可能有点不公平，因为我们正在将GAN的经验样本复杂性与MMD的理论样本复杂性进行比较，后者往往更糟糕。然而，在最初的GMMN论文[10]中，他们确实使用了1000的小批量，比标准的32或64大得多（即使这是因为二次计算成本）。虽然存在具有作为样本数量函数的线性计算成本的估计[5]，但它们具有更差的样本复杂性，并且据我们所知，它们尚未应用于诸如GMMN中的生成上下文中。、</p>
+<p>在另一个伟大的研究领域，[14]的最近的工作探讨了在限制玻尔兹曼机器学习离散空间的背景下使用Wasserstein距离。乍一看的动机可能看起来相当不同，因为流形设置仅限于连续空间，而在有限离散空间中，弱和强拓扑（分别为W和JS的拓扑）重合。然而，最后通用的不仅仅是我们的动机。我们都希望以一种利用底层空间几何的方式比较分布，而Wasserstein允许我们这样做。</p>
+<p>最后，[3]的工作显示了计算不同分布之间的Wasserstein距离的新算法。我们相信这个方向非常重要，也许可能会导致评估生成模型的新方法。</p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>我们引入了一种算法，我们认为WGAN是传统GAN训练的替代方案。在这个新模型中，我们展示了我们可以提高学习的稳定性，摆脱模式崩溃等问题，并提供有用的调试和超参数搜索的有意义的学习曲线。此外，我们表明相应的优化问题是合理的，并提供了广泛的理论工作，突出了与分布之间的其他距离的深层连接。</p>
+<p><img src="/2019/12/02/WGAN/e7d4936c910381cb0b954d3114f27caa.png" alt=""></p>
+<p><img src="/2019/12/02/WGAN/359ac848bd894527d997b4bdda5dae31.png" alt=""></p>
+<p><img src="/2019/12/02/WGAN/2e1725343ed8efc47feaaef3acca8348.png" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/GAN/" rel="tag"><i class="fa fa-tag"></i> GAN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/02/SGAN/" rel="next" title="SGAN">
+                <i class="fa fa-chevron-left"></i> SGAN
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/02/WGAN-GP/" rel="prev" title="WGAN-GP">
+                WGAN-GP <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100017135643802" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                    
+                      FB Page
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.youtube.com/channel/UC8TkFUpWAS2wzj34ijgAZGA?view_as=subscriber" target="_blank" title="YouTube">
+                  
+                    <i class="fa fa-fw fa-youtube"></i>
+                  
+                    
+                      YouTube
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ws.binghamton.edu/fridrich/?tdsourcetag=s_pctim_aiomsg" title="Fridrich" target="_blank">Fridrich</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://imkira.com/" title="Kira" target="_blank">Kira</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Diﬀerent-Distances"><span class="nav-number">2.</span> <span class="nav-text">Diﬀerent Distances</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Wasserstein-GAN"><span class="nav-number">3.</span> <span class="nav-text">Wasserstein GAN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Empirical-Results"><span class="nav-number">4.</span> <span class="nav-text">Empirical Results</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Experimental-Procedure"><span class="nav-number">4.1.</span> <span class="nav-text">Experimental Procedure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Meaningful-loss-metric"><span class="nav-number">4.2.</span> <span class="nav-text">Meaningful loss metric</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Improved-stability"><span class="nav-number">4.3.</span> <span class="nav-text">Improved stability</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Related-Work"><span class="nav-number">5.</span> <span class="nav-text">Related Work</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Conclusion"><span class="nav-number">6.</span> <span class="nav-text">Conclusion</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"mobile":{"show":false},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>

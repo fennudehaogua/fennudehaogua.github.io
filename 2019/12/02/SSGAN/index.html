@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="GAN," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="SSGAN: Secure Steganography Based on Generative Adversarial Networks(v1) Abstract如何设计一种安全的隐写术方法一直是研究人员关注的问题。传统的隐写法设计是一种启发式的方法，它没有完全自主地考虑检测端(隐写分析)。在这篇论文中，我们提出了一种新的策略，使用对抗学习方案生成更合适和更安全的cover进行隐写术，称为SSGA">
+<meta name="keywords" content="GAN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSGAN">
+<meta property="og:url" content="http://fennudehaogua.top/2019/12/02/SSGAN/index.html">
+<meta property="og:site_name" content="fennudehaogua.top">
+<meta property="og:description" content="SSGAN: Secure Steganography Based on Generative Adversarial Networks(v1) Abstract如何设计一种安全的隐写术方法一直是研究人员关注的问题。传统的隐写法设计是一种启发式的方法，它没有完全自主地考虑检测端(隐写分析)。在这篇论文中，我们提出了一种新的策略，使用对抗学习方案生成更合适和更安全的cover进行隐写术，称为SSGA">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SSGAN/311b2050ebb1e67ad8cdd9c5f86382be.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SSGAN/ed7680676e3f4e981761db54ab612421.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SSGAN/3cbe831e686cb779e7dfbbc7354d42bd.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SSGAN/78ac1c3551e7eadb4bcf8c053fdc099e.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SSGAN/b4cea3629c72d1f62b95b6d47c1639fc.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SSGAN/4c7fb44ed87d1195dbb738184cb18d38.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SSGAN/65626de96b2e705fac7dadc5784aa888.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SSGAN/e3349ae370528afcdf7f277069903651.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SSGAN/8c75c39da974a3208e14a70ac9e9b8e7.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SSGAN/6b654a1ccf7d895addcaed0629a1f4bf.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SSGAN/352bc563046e4c259ef8bca43d45a963.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SSGAN/d31cf51f82445214d366a8171353987e.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SSGAN/3482bbcef2cc0d34012b1634d00f503e.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SSGAN/0fceed23b490c1b70db9f97817933cb2.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SSGAN/020665e7d603145fa2e6d3b0b91c9ccc.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SSGAN/8d95c67afee7e1c72ac9766908268518.png">
+<meta property="og:image" content="http://fennudehaogua.top/2019/12/02/SSGAN/4914c62a34b0e88f5f384ced0d50cc4a.png">
+<meta property="og:updated_time" content="2019-12-02T13:05:45.844Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SSGAN">
+<meta name="twitter:description" content="SSGAN: Secure Steganography Based on Generative Adversarial Networks(v1) Abstract如何设计一种安全的隐写术方法一直是研究人员关注的问题。传统的隐写法设计是一种启发式的方法，它没有完全自主地考虑检测端(隐写分析)。在这篇论文中，我们提出了一种新的策略，使用对抗学习方案生成更合适和更安全的cover进行隐写术，称为SSGA">
+<meta name="twitter:image" content="http://fennudehaogua.top/2019/12/02/SSGAN/311b2050ebb1e67ad8cdd9c5f86382be.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fennudehaogua.top/2019/12/02/SSGAN/"/>
+
+
+
+
+
+  <title>SSGAN | fennudehaogua.top</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?727b9992a1a14607aebb47500e5bcc08";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/fennudehaogua"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fennudehaogua.top</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fennudehaogua.top/2019/12/02/SSGAN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Tian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jiansheng.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fennudehaogua.top">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SSGAN</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-02T21:04:04+08:00">
+                2019-12-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>SSGAN: Secure Steganography Based on Generative Adversarial Networks(v1)</p>
+<h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>如何设计一种安全的隐写术方法一直是研究人员关注的问题。传统的隐写法设计是一种启发式的方法，它没有完全自主地考虑检测端(隐写分析)。在这篇论文中，我们提出了一种新的策略，使用对抗学习方案生成更合适和更安全的cover进行隐写术，称为SSGAN。该体系结构有一个生成网络G，两个判别网络D和S，其中D对生成图像的视觉质量进行隐写评价，S对生成图像是否适合信息隐藏进行评价。与现有的工作不同，为了更快的收敛速度，更稳定的训练，更高质量的图像，我们使用了WGAN代替GAN，并使用更复杂的隐写分析网络重新设计了S网络。实验结果证明了该方法的有效性。。</p>
+<p>Keywords：隐写，隐写分析，生成对抗网络</p>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>隐写术是一种通过cover媒体修改来隐藏通信的技术。它是近年来信息安全研究的一个热点问题，越来越受到人们的重视。安全问题至关重要。现有的隐写方案通常要求cover对象的概率分布具有先验性，而在实际中很难实现。隐写术经常用于秘密通信，它具有重要的意义，特别是对于当今社会网络中广泛传播的图像和视频。因此，设计一个安全的隐写方案至关重要。</p>
+<p>数字图像最常用的嵌入方法之一是最小有效位(LSB)[11]替换，即将单个cover元素的LSBs替换为消息位。在LSB替换中，我们所需要做的就是用我们想要隐藏的秘密消息的篡改1个最不重要的位。由于许多简单的图像统计特征已经被破坏，因此这种方法很容易被检测到。在LSB-matching中，同样地，我们也使用秘密消息的1位来修改LSB。不同之处在于，它使用一些概率和统计操作来将隐藏的信息传播到整个cover文件中，而不修改包含秘密消息部分的所有位。为了方便和简单的实现，LSB算法隐藏了每个像素在给定图像通道中最小有效位的秘密。对LSB算法的修改多称为±1-嵌入[2]。它随机地从通道像素中添加或减去1，这样最后的位就会与所需的位相匹配。因此，本文考虑±1嵌入算法。</p>
+<p>除了LSB算法外，一些复杂的隐写方案还使用失真函数来选择图像的嵌入定位。这些算法致力于最小化cover图像X和隐写图像Y之间的失真函数。</p>
+<p><img src="/2019/12/02/SSGAN/311b2050ebb1e67ad8cdd9c5f86382be.png" alt=""></p>
+<p>其中f(X, Y)表示像素失真的代价。</p>
+<p>HUGO[12]是一种隐写方案，它根据在像素中嵌入某些信息的效果，将代价分配给像素，从而定义一个失真函数域。利用加权范数函数表示特征空间。HUGO被认为是最安全的隐写技术之一。</p>
+<p>WOW[8]是另一种内容自适应隐写方法，它根据区域的纹理复杂性将信息嵌入到cover图像中。在WOW中显示，图像区域越复杂，在该区域内修改的像素值就越多。</p>
+<p>S-UNIWARD提出了一种与嵌入域无关的通用失真函数。尽管实现细节不同，但最终目标是一致的，即最小化失真函数，将信息嵌入到cover图像噪声区域或复杂纹理中，避免平滑的区域。</p>
+<p>在隐写分析方面，GNCNN[17]提出了一种新的隐写分析范式，通过深度学习模型自动学习特征。该模型消除了对隐写分析有用的复杂依赖关系。与现有方案相比，该模型可以自动学习多个卷积层的特征表示。特征提取和分类步骤统一在一个单一的架构下，这意味着在特征提取步骤中可以使用分类的指导。</p>
+<p>据我们所知，当人们设计隐写术算法时，他们通常会启发式地考虑隐写分析。例如，消息应该嵌入到图像的噪声和纹理区域，这样更安全。在本文中，我们提出了一种新的SSGAN算法，它实现了基于生成对抗网络的安全隐写。我们从丹尼斯和伯纳耶夫[5]的工作中得到启发，在对抗性学习框架下考虑这个问题。我们使用WGAN[3]生成更合适的cover来提高隐写术的安全性。所提出的SSGAN首先生成cover。然后我们采用最先进的嵌入算法，比如HUGO，将信息嵌入到生成的图像中。与广泛使用的方法相比，本文的贡献如下::</p>
+<p>(1)我们使用WGAN代替DCGAN生成cover图像，达到更高的视觉质量生成图像，保证更快的训练过程。</p>
+<p>(2)我们使用更复杂的网络GNCNN来评估生成图像的适配性，而不是使用[5]提出的隐写分析网络。</p>
+<p>(3)我们也使用GNCNN与生成网络竞争，生成网络可以使生成的图像更适合嵌入。。</p>
+<h1 id="Secure-Steganography-Based-on-Generative-Adversarial-Networks"><a href="#Secure-Steganography-Based-on-Generative-Adversarial-Networks" class="headerlink" title="Secure Steganography Based on Generative Adversarial Networks"></a>Secure Steganography Based on Generative Adversarial Networks</h1><h2 id="Adversarial-Learning"><a href="#Adversarial-Learning" class="headerlink" title="Adversarial Learning"></a>Adversarial Learning</h2><p>采用博弈论的对抗性学习方法，并结合无监督的方法对模型进行联合训练。独立的模型被训练成相互竞争，迭代地改进每个模型的输出。在生成对抗网络中，生成模型G试图将噪声训练成样本，而判别模型D试图将生成的样本与真实样本区分开来。在欺骗D的基础上，更新G的权值，同时通过区分真假样本来更新D的权值。</p>
+<p>近年来，使用卷积神经网络(convolutional neural networks,CNNs)的生成器G和判别器D组成的GANs已成功应用于图像生成任务[14]。因为损失函数的收敛性与样品质量之间没有明显的关系。通常，人们选择通过查看生成的样本来停止训练。因此，最近出现了一个设计，WGAN[3]，使用Wasserstein距离而不是JensenShannon散度，将数据集分布与生成器G学习的分布进行比较。显然，他们表明样本质量与网络的收敛性密切相关，训练率确实得到了提高。</p>
+<p>对抗训练也应用于隐写术。对抗训练过程可以被描述为一个极大极小游戏:</p>
+<p><img src="/2019/12/02/SSGAN/ed7680676e3f4e981761db54ab612421.png" alt=""></p>
+<p>其中D(x)表示x是一个真正的图像而不是合成的概率,G(z)是输入噪声z合成图像。在这个过程中,有两个网络,G和D,同时训练:</p>
+<ul>
+<li><p>生成网络，它的输入是一个来自先验分布𝑝𝑛𝑜𝑖𝑠𝑒(𝑧)的噪声z，然后把它转换为数据分布𝑝𝑑𝑎𝑡𝑎(𝑥)，生成一个类似于的数据样本𝑝𝑑𝑎𝑡𝑎(𝑥)。</p>
+</li>
+<li><p>判别网络，它的输入是真实数据和由生成网络生成的虚假数据，并确定真实和虚假数据样本之间的真样本。</p>
+</li>
+</ul>
+<p>为了解决极大极小问题,在每个迭代中mini-batch随机梯度的优化,我们第一次在D中执行梯度上升的步骤,然后在G中执行梯度下降法的步骤.所以我们让𝜔N代表了神经网络N,然后我们可以看到优化的步骤：</p>
+<ul>
+<li>我们让判别器D固定更新生成器G，通过：𝜔𝐺 ← 𝜔𝐺− 𝛾𝐺∇𝐺𝐽</li>
+</ul>
+<p>其中</p>
+<p><img src="/2019/12/02/SSGAN/3cbe831e686cb779e7dfbbc7354d42bd.png" alt=""></p>
+<ul>
+<li>我们让生成器G固定更新判别器D，通过：𝜔𝐷 ← 𝜔𝐷 + 𝛾𝐷∇𝐷𝐽</li>
+</ul>
+<p>其中</p>
+<p><img src="/2019/12/02/SSGAN/78ac1c3551e7eadb4bcf8c053fdc099e.png" alt=""></p>
+<p>在这篇论文中，我们使用WGANs来讨论使用对抗训练过程生成和识别图像的优点。</p>
+<h2 id="Model-Design"><a href="#Model-Design" class="headerlink" title="Model Design"></a>Model Design</h2><p>我们介绍了一个我们称为SSGAN的模型，它包含一个生成网络和两个判别网络。模型如图1所示:</p>
+<p><img src="/2019/12/02/SSGAN/b4cea3629c72d1f62b95b6d47c1639fc.png" alt=""></p>
+<p>因为我们想让G生成真实的图像，这些图像可以作为隐写术的安全cover，所以我们迫使G同时与D和S竞争。我们使用𝑆(𝑥)代表了隐写算法,那么游戏就能显示如下:</p>
+<p><img src="/2019/12/02/SSGAN/4c7fb44ed87d1195dbb738184cb18d38.png" alt=""></p>
+<p>为了控制现实生成的图像与隐写分析评价之间的权衡,我们使用参数α∈[0,1]来控制一个凸组合包括D和S网络。我们表明,当我们给α≤0.7,结果更接近噪音。</p>
+<h3 id="Generator-G"><a href="#Generator-G" class="headerlink" title="Generator G"></a>Generator G</h3><p>对于生成器G，它用于生成安全cover。我们使用了一个全连接层，和四个反卷积层，然后是一个双曲正切函数层。该网络结构如图2所示:</p>
+<p><img src="/2019/12/02/SSGAN/65626de96b2e705fac7dadc5784aa888.png" alt=""></p>
+<h3 id="Discriminator-D"><a href="#Discriminator-D" class="headerlink" title="Discriminator D"></a>Discriminator D</h3><p>对于鉴别器D，用来评价生成图像的视觉质量。为了将其与S网络区分开来，我们在网络中加入了一个高通滤波器D网络，主要用于隐写分析。我们使用了四个卷积层，然后是一个全连接层。该网络结构如图3所示:</p>
+<p><img src="/2019/12/02/SSGAN/e3349ae370528afcdf7f277069903651.png" alt=""></p>
+<h3 id="Discriminator-S"><a href="#Discriminator-S" class="headerlink" title="Discriminator S"></a>Discriminator S</h3><p>对于S网络，它被用来评估生成的图像的适用性。我们首先使用一个预定义的高通滤波器进行滤波操作。然后是四个卷积层。最后，我们使用一个分类层，它包括几个完全连接的层。其结构如图4所示。</p>
+<p><img src="/2019/12/02/SSGAN/8c75c39da974a3208e14a70ac9e9b8e7.png" alt=""></p>
+<h3 id="Update-Rules"><a href="#Update-Rules" class="headerlink" title="Update Rules"></a>Update Rules</h3><p>我们可以使用随机梯度下降（SGD）更新规则:</p>
+<p>对于生成器G，𝜔𝐺 ← 𝜔𝐺− 𝛾𝐺∇𝐺𝐽，它计算通过：</p>
+<p><img src="/2019/12/02/SSGAN/6b654a1ccf7d895addcaed0629a1f4bf.png" alt=""></p>
+<p>对于判别器D，𝜔𝐷 ← 𝜔𝐷 + 𝛾𝐷∇𝐺𝐽，它计算通过：</p>
+<p><img src="/2019/12/02/SSGAN/352bc563046e4c259ef8bca43d45a963.png" alt=""></p>
+<p>对于判别器S，𝜔𝑆 ← 𝜔𝑆 + 𝛾𝑆∇𝑆𝐽，它计算通过：</p>
+<p><img src="/2019/12/02/SSGAN/d31cf51f82445214d366a8171353987e.png" alt=""></p>
+<p>我们更新G，不仅使D的误差最大，而且使D和S的归一化误差最大。</p>
+<h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><h2 id="Data-preparation"><a href="#Data-preparation" class="headerlink" title="Data preparation"></a>Data preparation</h2><p>所有的实验都是在TensorFlow[1]中进行的，使用的是TitanXGPU工作站。在我们的实验中，我们使用了包含200,000多张图像的CelebA数据集。</p>
+<p>我们对图像进行了预处理，所有的图像裁剪为64×64像素。</p>
+<p>为了进行隐写分析，我们使用了90%的数据来构造一个训练集，其余的作为测试数据。我们将训练集表示为TRAIN，测试集表示为TEST。我们使用S(x)来表示用于隐藏信息的隐写算法。实验涉及两个数据集。一个是TRAIN+S(TRAIN)，其中S(TRAIN)是嵌入在一些秘密信息中的训练集，另一个是TEST+S(TEST)。最后，我们得到了38万张用于隐写术训练的图像，2万张用于测试。为了训练模型，我们使用所有200,000个裁剪图像来生成图像。经过7个epoch后，我们的生成模型生成的图像和我们在[5]中提出的模型，用SGAN表示，如图5所示。</p>
+<p><img src="/2019/12/02/SSGAN/3482bbcef2cc0d34012b1634d00f503e.png" alt=""></p>
+<p>同时，我们使用LSB匹配算法，该算法为±1嵌入算法，有效载荷大小为0.4位/像素，我们使用一篇随笔文章的文本作为嵌入信息。</p>
+<p>实验结果如下，我们的SSGAN模型生成的图像的视觉质量高于相应的模型。</p>
+<p>实验结果表明，通过使用WGAN，收敛速度比DCGAN快，效果更明显，如表1所示。</p>
+<p><img src="/2019/12/02/SSGAN/0fceed23b490c1b70db9f97817933cb2.png" alt=""></p>
+<h2 id="Experimental-Setup"><a href="#Experimental-Setup" class="headerlink" title="Experimental Setup"></a>Experimental Setup</h2><p>生成网络G设计为一个完全连接层→四个反卷积层→𝐵𝑎𝑡𝑐ℎ 𝑁𝑜𝑟𝑚𝑎𝑙𝑖𝑧𝑎𝑡𝑖𝑜𝑛→𝐿𝑒𝑎𝑘𝑦<br>𝑅𝑒𝐿𝑈层,和一个双曲正切函数层。判别网络D 包含四个卷积层→𝐵𝑎𝑡𝑐ℎ<br>𝑁𝑜𝑟𝑚𝑎𝑙𝑖𝑧𝑎𝑡𝑖𝑜𝑛→𝐿𝑒𝑎𝑘𝑦𝑅𝑒𝐿𝑈层,一个完全连接层。至于隐写分析网络S,我们使用一个预定义的高通滤波器进行过滤操作,在训练中这是保持固定,和四个卷积层对应于三种操作,即卷积、非线性,池化,紧随其后的是一个完全连接层和一层softmax分类。</p>
+<p>我们使用RMSProp训练模型，优化算法的学习速率为2−4和更新参数𝛽1 = 0.5和𝛽2 =<br>0.99。D和S的权值更新一次，当G的权值在每个mini-batch中更新两次。在隐写分析中，我们称S为隐写分析器。除了S网络，我们还使用了一个独立的网络，称为S*[17]。为了使S网络有效,我们也使用[17]的过滤器,它定义如下:</p>
+<p><img src="/2019/12/02/SSGAN/020665e7d603145fa2e6d3b0b91c9ccc.png" alt=""></p>
+<p>我们也训练网络使用RMSProp优化算法，学习速率5−6和更新参数𝛽1 = 0.9和𝛽2 =0.99。并采用二进制交叉熵的形式来计算损耗。</p>
+<p>我们分别对真实图像和生成图像进行了实验，结果如下:</p>
+<p>在我们的第一个实验中，我们将生成的图像的安全性与真实图像的安全性进行了比较。我们将秘密信息嵌入到真实图像中，首先对真实图像使用隐写分析网络，然后将秘密信息嵌入生成图像中，再对生成图像使用隐写分析网络。</p>
+<p>我们在真实图像上训练S网络，从结果中我们得出结论，即使通常的WGAN可以生成合成图像，它也可以很容易地被隐写分析仪检测到。我们的方法增加了分类错误率的结果，这意味着我们的模型生成的图像作为隐写术图像的载体更加安全。</p>
+<p><img src="/2019/12/02/SSGAN/8d95c67afee7e1c72ac9766908268518.png" alt=""></p>
+<p>我们使用HUGO隐写方案在真实图像和生成图像。</p>
+<p>在第二个实验中，我们研究了不同种子值下生成图像的安全性。我们对不同设置生成的图像进行了实验。</p>
+<p>在这组实验中，我们使用Qian的网络[17]，也就是所谓的隐写分析器S*，来处理由SSGAN生成的图像。之前输入的噪声分布𝑝𝑛𝑜𝑖𝑠𝑒(𝑧)对一些固定的种子值。我们在图像上测试S。实验设置如下:</p>
+<p>S1。我们使用相同的种子值;</p>
+<p>S2。我们使用一些随机选择的种子值。</p>
+<p>S3。我们使用与S2相同的种子值，并且针对几个epoch对WGAN模型进行了额外的调优。</p>
+<p><img src="/2019/12/02/SSGAN/4914c62a34b0e88f5f384ced0d50cc4a.png" alt=""></p>
+<p>如表3所示，我们可以看到，通过在生成图像时使用不同的种子值，可以使隐写分析网络更容易被欺骗。</p>
+<h2 id="Discussion"><a href="#Discussion" class="headerlink" title="Discussion"></a>Discussion</h2><p>实验结果表明，[5]中提出的方法存在一定的局限性，实验表明该方法存在一定的安全性。实验表明，Denis文章中的S*网络适合嵌入相同的密钥，但是在使用随机密钥时，他们的网络不是很有用，所以我们使用GNCNN[17]。我们已经证实，他们使用的隐写分析网络不是很有用。我们的结果表明，一方面，生成的图像更难以检测，表明安全性能更高。另一方面，生成的图像的视觉质量更好，更真实。</p>
+<h1 id="Conclusion-And-Future-Work"><a href="#Conclusion-And-Future-Work" class="headerlink" title="Conclusion And Future Work"></a>Conclusion And Future Work</h1><p>在这篇论文中，我们介绍了隐写术的生成式对抗网络，以生成更适合和更安全的隐写术cover。基于WGANs，我们提出了一种用于隐写术的SSGAN模型。该模型能够有效地生成具有较高视觉质量的图像。我们的模型适合于随机密钥的嵌入。大多数情况下，它可以为隐写术提供更安全的保护。我们已经使用celebA数据集评估了我们的模型的性能。结果通过分类精度证明了SSGAN模型的有效性，我们认为它在未来可以用于社交网络的自适应隐写算法。我们相信，通过探索更多的隐写术性能，可以获得更好的性能。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/GAN/" rel="tag"><i class="fa fa-tag"></i> GAN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/02/WGAN-GP/" rel="next" title="WGAN-GP">
+                <i class="fa fa-chevron-left"></i> WGAN-GP
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/02/HayesGAN/" rel="prev" title="HayesGAN">
+                HayesGAN <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+  <div id="container" style="display:none"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+  const myTheme = {
+  render(state, instance) {
+  const container = document.createElement('div');
+  container.lang = "en-US";
+    container.className = 'gitment-container gitment-root-container';
+   container.appendChild(instance.renderHeader(state, instance));
+    container.appendChild(instance.renderEditor(state, instance));
+    container.appendChild(instance.renderComments(state, instance));
+    container.appendChild(instance.renderFooter(state, instance));
+    return container;
+    }
+}
+function showGitment() {
+$("#gitment_title").attr("style", "display:none");
+$("#container").attr("style", "").addClass("gitment_container");
+var gitment = new Gitment({
+id: window.location.pathname,
+theme: myTheme,
+owner: '',
+repo: '',
+oauth: {
+client_id: '9f634ff1d663061b7b31',
+client_secret: '45166540e0b361ee1919e27f29ad9aac978d8437'
+}
+});
+gitment.render('container');
+}
+</script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jiansheng.jpg"
+               alt="Wu Tian" />
+          <p class="site-author-name" itemprop="name">Wu Tian</p>
+           
+              <p class="site-description motion-element" itemprop="description">Record</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fennudehaogua" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100017135643802" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                    
+                      FB Page
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.youtube.com/channel/UC8TkFUpWAS2wzj34ijgAZGA?view_as=subscriber" target="_blank" title="YouTube">
+                  
+                    <i class="fa fa-fw fa-youtube"></i>
+                  
+                    
+                      YouTube
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ws.binghamton.edu/fridrich/?tdsourcetag=s_pctim_aiomsg" title="Fridrich" target="_blank">Fridrich</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://imkira.com/" title="Kira" target="_blank">Kira</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Secure-Steganography-Based-on-Generative-Adversarial-Networks"><span class="nav-number">3.</span> <span class="nav-text">Secure Steganography Based on Generative Adversarial Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Adversarial-Learning"><span class="nav-number">3.1.</span> <span class="nav-text">Adversarial Learning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model-Design"><span class="nav-number">3.2.</span> <span class="nav-text">Model Design</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Generator-G"><span class="nav-number">3.2.1.</span> <span class="nav-text">Generator G</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Discriminator-D"><span class="nav-number">3.2.2.</span> <span class="nav-text">Discriminator D</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Discriminator-S"><span class="nav-number">3.2.3.</span> <span class="nav-text">Discriminator S</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Update-Rules"><span class="nav-number">3.2.4.</span> <span class="nav-text">Update Rules</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Experiments"><span class="nav-number">4.</span> <span class="nav-text">Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-preparation"><span class="nav-number">4.1.</span> <span class="nav-text">Data preparation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Experimental-Setup"><span class="nav-number">4.2.</span> <span class="nav-text">Experimental Setup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Discussion"><span class="nav-number">4.3.</span> <span class="nav-text">Discussion</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Conclusion-And-Future-Work"><span class="nav-number">5.</span> <span class="nav-text">Conclusion And Future Work</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Tian</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"mobile":{"show":false},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"}});</script></body>
+</html>
